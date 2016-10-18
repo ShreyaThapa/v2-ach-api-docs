@@ -841,7 +841,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
   </span><span class="nt">"error_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Expired refresh token."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='application-access-token'>Application access token</h2>
-<p>Some endpoints require an <em>application access token</em>, which is different from a user access token.  Application access tokens don&rsquo;t require any particular user&rsquo;s authorization, since they grant your application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.</p>
+<p>Some endpoints require an <em>application access token</em>, which is different from a user <strong>account access token</strong>.  Application access tokens don&rsquo;t require any particular user&rsquo;s authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -883,7 +883,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </thead><tbody>
 <tr>
 <td>access_token</td>
-<td>A new access token with requested scopes</td>
+<td>A new access token that is used to authenticate against resources that belong to the app itself.</td>
 </tr>
 <tr>
 <td>expires_in</td>
@@ -895,15 +895,18 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>scope</td>
-<td>Pipe <code>&#124;</code> delimited list of permission scopes granted</td>
+<td>Pipe <code>&#124;</code> delimited list of permission scopes granted. <strong>Deprecation note:</strong> This response parameter will be removed on <strong>November 23, 2016</strong>.</td>
 </tr>
 </tbody></table>
-<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"client_credentials"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='successful-response'>Successful response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+<h3 id='request'>Request</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://www.dwolla.com/oauth/v2/token
+Content-Type: application/json
+
+{
+  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
+  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
+  "grant_type": "client_credentials"
+}
+</code></pre></div></div><h3 id='successful-response'>Successful response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SF8Vxx6H644lekdVKAAHFnqRCFy8WGqltzitpii6w2MVaZp1Nw"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">
@@ -1849,7 +1852,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>verify-with-document</td>
-<td>If the Customer has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the Customer&rsquo;s identity.  Read about <a href="#documents">Documents</a>.</td>
+<td>If the Verified Customer of type <code class="prettyprint">personal</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the Customer&rsquo;s identity.  Read about <a href="#documents">Documents</a>.</td>
+</tr>
+<tr>
+<td>verify-authorized-representative-with-document</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the identity of the authorized representative of the business.  Read about <a href="#documents">Documents</a>.</td>
+</tr>
+<tr>
+<td>verify-business-with-document</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about <a href="#documents">Documents</a>.</td>
+</tr>
+<tr>
+<td>verify-authorized-representative-and-business-with-document</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about <a href="#documents">Documents</a>.</td>
 </tr>
 </tbody></table>
 <h3 id='customer-resource'>Customer resource</h3>
