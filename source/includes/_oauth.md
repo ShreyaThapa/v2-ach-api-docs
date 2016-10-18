@@ -254,7 +254,7 @@ account_id | A unique user account ID for the associated user account
 
 ## Application access token
 
-Some endpoints require an *application access token*, which is different from a user access token.  Application access tokens don't require any particular user's authorization, since they grant your application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.
+Some endpoints require an *application access token*, which is different from a user **account access token**.  Application access tokens don't require any particular user's authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.
 
 ### HTTP request
 
@@ -273,12 +273,17 @@ Some endpoints require an *application access token*, which is different from a 
 
 Parameter | Description
 ----------|------------
-access_token | A new access token with requested scopes
+access_token | A new access token that is used to authenticate against resources that belong to the app itself. 
 expires_in | The lifetime of the access token, in seconds.  Default is 3600.
 token_type | Always `bearer`.
-scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
+scope | Pipe <code>&#124;</code> delimited list of permission scopes granted. **Deprecation note:** This response parameter will be removed on **November 23, 2016**.
+
+### Request
 
 ```noselect
+POST https://www.dwolla.com/oauth/v2/token
+Content-Type: application/json
+
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
