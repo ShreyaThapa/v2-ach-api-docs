@@ -27,8 +27,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | transfers | GET this link to list the Customer's transfers
 | send | (optional) If this link exists, this Customer can send funds.  POST to this URL to create a transfer.
 | retry-verification | If the Customer has a `status` of `retry`, POST to this link to attempt to correct their identity verification information.
-| verify-with-document | If the Verified Customer of type `personal` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity.  Read about [Documents](#documents).
-| verify-authorized-representative-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the authorized representative of the business.  Read about [Documents](#documents).
+| verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the authorized representaive of the business. Read about [Documents](#documents).
 | verify-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about [Documents](#documents).
 | verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about [Documents](#documents).
 
