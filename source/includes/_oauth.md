@@ -132,7 +132,7 @@ Once the user returns to your application via the `redirect_uri` you specified, 
 |-----------|----------|----------------|-------------|
 | client_id | yes | string | Application key. |
 | client_secret | yes | string | Application secret. |
-| code | yes | string | The authorization code included in the redirect URL. Single use `code` with an expiration of 30 minutes. |
+| code | yes | string | The authorization code included in the redirect URL. Single use `code` with an expiration of 60 seconds. |
 | grant_type | yes | string | This must be set to `authorization_code`. |
 | redirect_uri | yes | string | The same redirect_uri specified in the intiation step. |
 
@@ -150,6 +150,9 @@ scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
 account_id | A unique user account ID for the associated user account
 
 ```noselect
+POST https://www.dwolla.com/oauth/v2/token
+Content-Type: application/json
+
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
