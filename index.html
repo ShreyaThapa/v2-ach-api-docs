@@ -2077,7 +2077,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>phone</td>
-<td>yes</td>
+<td>no</td>
 <td>string</td>
 <td>Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
@@ -2321,8 +2321,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "state": "NY",
   "postalCode": "11101",
   "dateOfBirth": "1970-01-01",
-  "ssn": "1234",
-  "phone": "5155555555"
+  "ssn": "1234"
 }
 
 HTTP/1.1 201 Created
@@ -2354,8 +2353,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 </span>
   <span class="c1"># If the entire SSN is provided,
 </span>  <span class="c1"># it will still be accepted
-</span>  <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span><span class="p">,</span>
-  <span class="s1">'phone'</span> <span class="o">=&gt;</span> <span class="s1">'5155555555'</span>
+</span>  <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span>
 <span class="p">]);</span>
 
 <span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
@@ -2385,8 +2383,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="c1"># If the entire SSN is provided,</span>
   <span class="c1"># it will still be accepted</span>
 
-  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span><span class="p">,</span>
-  <span class="ss">:phone</span> <span class="o">=&gt;</span> <span class="s1">'5155555555'</span>
+  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span>
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
@@ -2418,8 +2415,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="c"># last 4 digits of SSN required</span>
   <span class="c"># If the entire SSN is provided,</span>
   <span class="c"># it will still be accepted</span>
-  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'1234'</span><span class="p">,</span>
-  <span class="s">'phone'</span><span class="p">:</span> <span class="s">'5155555555'</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'1234'</span>
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
@@ -2452,8 +2448,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="c1">// last 4 digits of SSN required</span>
   <span class="c1">// If the entire SSN is provided,</span>
   <span class="c1">// it will still be accepted</span>
-  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'1234'</span><span class="p">,</span>
-  <span class="na">phone</span><span class="p">:</span> <span class="s1">'5155555555'</span>
+  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'1234'</span>
 <span class="p">};</span>
 
 <span class="nx">accountToken</span>
@@ -3165,7 +3160,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 </tr>
 <tr>
 <td>phone</td>
-<td>yes</td>
+<td>no</td>
 <td>string</td>
 <td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code></td>
 </tr>
