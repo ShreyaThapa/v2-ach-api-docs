@@ -118,7 +118,7 @@ For more information on verified Customers, reference our [Customer verification
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
 | dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format.
 | ssn | yes | string | Last four digits of the Customer's Social Security Number.
-| phone | yes | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
+| phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
 
 ### Additional request parameters for verified Customer with type=business
 | Parameter | Required | Type | Description |
@@ -245,8 +245,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "state": "NY",
   "postalCode": "11101",
   "dateOfBirth": "1970-01-01",
-  "ssn": "1234",
-  "phone": "5155555555"
+  "ssn": "1234"
 }
 
 HTTP/1.1 201 Created
@@ -272,8 +271,7 @@ $customer = $customersApi->create([
 
   # If the entire SSN is provided,
   # it will still be accepted
-  'ssn' => '1234',
-  'phone' => '5155555555'
+  'ssn' => '1234'
 ]);
 
 $customer; # => "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
@@ -297,8 +295,7 @@ request_body = {
   # If the entire SSN is provided,
   # it will still be accepted
 
-  :ssn => '1234',
-  :phone => '5155555555'
+  :ssn => '1234'
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
@@ -324,8 +321,7 @@ request_body = {
   # last 4 digits of SSN required
   # If the entire SSN is provided,
   # it will still be accepted
-  'ssn': '1234',
-  'phone': '5155555555'
+  'ssn': '1234'
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
@@ -352,8 +348,7 @@ var requestBody = {
   // last 4 digits of SSN required
   // If the entire SSN is provided,
   // it will still be accepted
-  ssn: '1234',
-  phone: '5155555555'
+  ssn: '1234'
 };
 
 accountToken
@@ -881,7 +876,7 @@ accountToken
 | postalCode | yes | string | Postal code of Customer's permanent residence |
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format |
 | ssn | yes | string | Customer's **full** Social Security Number |
-| phone | yes | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777` |
+| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777` |
 
 ### Errors
 | HTTP Status | Message |
