@@ -654,7 +654,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>code</td>
 <td>yes</td>
 <td>string</td>
-<td>The authorization code included in the redirect URL. Single use <code class="prettyprint">code</code> with an expiration of 30 minutes.</td>
+<td>The authorization code included in the redirect URL. Single use <code class="prettyprint">code</code> with an expiration of 60 seconds.</td>
 </tr>
 <tr>
 <td>grant_type</td>
@@ -709,14 +709,17 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>A unique user account ID for the associated user account</td>
 </tr>
 </tbody></table>
-<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h6TvQZH+5BsV//O43uOJ0uRkBLk="</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"authorization_code"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myredirect.com/redirect"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='successful-response'>Successful response:</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://www.dwolla.com/oauth/v2/token
+Content-Type: application/json
+
+{
+  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
+  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
+  "code": "h6TvQZH+5BsV//O43uOJ0uRkBLk=",
+  "grant_type": "authorization_code",
+  "redirect_uri": "https://www.myredirect.com/redirect"
+}
+</code></pre></div></div><h3 id='successful-response'>Successful response:</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
