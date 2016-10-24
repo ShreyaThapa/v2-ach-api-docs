@@ -354,13 +354,17 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-rubynohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rubynohide" data-lang="rubynohide"><span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
 
-<span class="c1"># see dwolla.com/applications for your client id and secret</span>
-<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="s2">"..."</span><span class="p">,</span> <span class="ss">secret: </span><span class="s2">"..."</span><span class="p">)</span>
+<span class="c1"># see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="n">consumer_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">consumer_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">environment</span> <span class="o">=</span> <span class="ss">:sandbox</span> <span class="c1"># optional - defaults to production</span>
+<span class="k">end</span>
 
-<span class="c1"># generate a token on dwolla.com/applications</span>
-<span class="n">account_token</span> <span class="o">=</span> <span class="vg">$dwolla</span><span class="p">.</span><span class="nf">tokens</span><span class="p">.</span><span class="nf">new</span> <span class="ss">access_token: </span><span class="s2">"..."</span>
+<span class="c1"># create an application token</span>
+<span class="n">app_token</span> <span class="o">=</span> <span class="vg">$dwolla</span><span class="p">.</span><span class="nf">auths</span><span class="p">.</span><span class="nf">client</span>
 
-<span class="n">customers</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
+<span class="n">customers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
 </code></pre></div></div><h3 id='dwollaswagger-ruby'>DwollaSwagger Ruby</h3>
 <p><code class="prettyprint">dwolla-swagger-ruby</code> is available on <a href="https://rubygems.org/gems/dwolla_swagger">RubyGems</a> with <a href="https://github.com/Dwolla/dwolla-swagger-ruby">source code</a> available on our GitHub page. More information is available on the project&rsquo;s README.</p>
 <h3 id='installation'>Installation</h3><div class="code-snippet js-code-snippet language-bashnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-bashnohide" data-lang="bashnohide">gem install dwolla_swagger
@@ -375,7 +379,26 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <span class="k">end</span>
 
 <span class="n">my_custies</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">CustomersApi</span><span class="p">.</span><span class="nf">list</span><span class="p">(</span><span class="ss">:limit</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div><h2 id='python'>Python</h2>
+</code></pre></div></div><h2 id='dwollav2-python-recommended'>DwollaV2 Python (Recommended)</h2>
+<p><code class="prettyprint">dwollav2</code> is available on <a href="https://pypi.python.org/pypi/dwollav2/1.1.7">PyPi</a> with
+<a href="https://github.com/Dwolla/dwolla-v2-python">source code</a> available on our GitHub page. More
+information is available on the project&rsquo;s README.</p>
+<h3 id='installation'>Installation</h3><div class="code-snippet js-code-snippet language-bashnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-bashnohide" data-lang="bashnohide">pip install dwollav2
+</code></pre></div></div><h3 id='quickstart'>Quickstart</h3>
+<p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
+<div class="code-snippet js-code-snippet language-pythonnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-pythonnohide" data-lang="pythonnohide"><span class="kn">import</span> <span class="nn">dwollav2</span>
+
+<span class="c"># you can find your consumer key and secret at dwolla.com/applications</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="n">consumer_key</span><span class="p">,</span>
+                         <span class="n">secret</span> <span class="o">=</span> <span class="n">consumer_secret</span><span class="p">,</span>
+                         <span class="n">environment</span> <span class="o">=</span> <span class="s">'sandbox'</span><span class="p">)</span> <span class="c"># optional - defaults to production</span>
+
+<span class="n">app_token</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="o">.</span><span class="n">client</span><span class="p">()</span>
+
+<span class="n">customers</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="p">{</span><span class="s">'limit'</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+</code></pre></div></div><h2 id='dwollaswagger-python'>DwollaSwagger Python</h2>
 <p><code class="prettyprint">dwolla-swagger-python</code> is available on <a href="https://pypi.python.org/pypi/dwollaswagger">PyPi</a> with <a href="https://github.com/Dwolla/dwolla-swagger-python">source code</a> available on our GitHub page. More information is available on the project&rsquo;s README.</p>
 <h3 id='installation'>Installation</h3><div class="code-snippet js-code-snippet language-bashnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-bashnohide" data-lang="bashnohide">pip install dwollaswagger
 </code></pre></div></div><h3 id='quickstart'>Quickstart</h3>
@@ -425,19 +448,21 @@ mvn install package
 <h3 id='installation'>Installation</h3><div class="code-snippet js-code-snippet language-bashnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-bashnohide" data-lang="bashnohide">npm install dwolla-v2
 </code></pre></div></div><h3 id='quickstart'>Quickstart</h3>
 <p>Let&rsquo;s fetch a page of customers:</p>
-<div class="code-snippet js-code-snippet language-rubynohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rubynohide" data-lang="rubynohide"><span class="n">var</span> <span class="n">dwolla</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s1">'dwolla-v2'</span><span class="p">);</span>
+<div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="kr">const</span> <span class="nx">dwolla</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dwolla-v2'</span><span class="p">);</span>
 
-<span class="c1"># see dwolla.com/applications for your client id and secret</span>
-<span class="n">var</span> <span class="n">client</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">dwolla</span><span class="o">.</span><span class="no">Client</span><span class="p">({</span><span class="ss">id: </span><span class="s2">"..."</span><span class="p">,</span> <span class="ss">secret: </span><span class="s2">"..."</span><span class="p">});</span>
+<span class="c1">// see dwolla.com/applications or uat.dwolla.com/applications for your consumer key and secret</span>
+<span class="kr">const</span> <span class="nx">consumerKey</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">consumerSecret</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">dwolla</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">consumerKey</span><span class="p">,</span>
+  <span class="na">secret</span><span class="p">:</span> <span class="nx">consumerSecret</span><span class="p">,</span>
+  <span class="na">environment</span><span class="p">:</span> <span class="s1">'sandbox'</span> <span class="c1">// optional - defaults to production</span>
+<span class="p">});</span>
 
-<span class="c1"># generate a token on dwolla.com/applications</span>
-<span class="n">var</span> <span class="n">accountToken</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">client</span><span class="o">.</span><span class="no">Token</span><span class="p">({</span><span class="ss">access_token: </span><span class="s2">"..."</span><span class="p">});</span>
-
-<span class="n">accountToken</span>
-  <span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="p">{</span> <span class="ss">limit: </span><span class="mi">10</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nf">then</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="nf">body</span><span class="p">);</span>
-  <span class="p">});</span>
+<span class="c1">// create a token</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">client</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">appToken</span> <span class="o">=&gt;</span> <span class="nx">appToken</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="p">{</span> <span class="na">limit</span><span class="p">:</span> <span class="mi">10</span> <span class="p">}))</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
 </code></pre></div></div>
 <hr>
 
@@ -555,8 +580,14 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># you can find your client id and secret at dwolla.com/applications</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="s">'...'</span><span class="p">,</span> <span class="n">secret</span> <span class="o">=</span> <span class="s">'...'</span><span class="p">)</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">dwollav2</span>
+
+<span class="c"># you can find your consumer key and secret at dwolla.com/applications</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="n">consumer_key</span><span class="p">,</span>
+                         <span class="n">secret</span> <span class="o">=</span> <span class="n">consumer_secret</span><span class="p">,</span>
+                         <span class="n">environment</span> <span class="o">=</span> <span class="s">'sandbox'</span><span class="p">)</span> <span class="c"># optional - defaults to production</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">b2a_hex</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
 <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="p">(</span><span class="n">redirect_uri</span> <span class="o">=</span> <span class="s">'https://yoursite.com/callback'</span><span class="p">,</span>
@@ -566,8 +597,8 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <span class="c"># redirect the user to dwolla.com for authorization</span>
 <span class="n">redirect_to</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 
-<span class="c"># exchange the code for a token</span>
-<span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">callback</span><span class="p">({</span><span class="s">'code'</span><span class="p">:</span> <span class="s">'...'</span><span class="p">,</span> <span class="s">'state'</span><span class="p">:</span> <span class="n">state</span><span class="p">})</span>
+<span class="c"># exchange the code for a token using the query params provided to the redirect_uri</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="p">)</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -590,8 +621,14 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># config/initializers/dwolla.rb</span>
-<span class="c1"># you can find your client id and secret at dwolla.com/applications</span>
-<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="s2">"..."</span><span class="p">,</span> <span class="ss">secret: </span><span class="s2">"..."</span><span class="p">)</span>
+<span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
+
+<span class="c1"># see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret</span>
+<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="n">consumer_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">consumer_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">environment</span> <span class="o">=</span> <span class="ss">:sandbox</span> <span class="c1"># optional - defaults to production</span>
+<span class="k">end</span>
 
 <span class="c1"># app/controllers/your_auth_controller.rb</span>
 <span class="k">class</span> <span class="nc">YourAuthController</span>
@@ -602,7 +639,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 
   <span class="c1"># exchange the code for a token</span>
   <span class="k">def</span> <span class="nf">callback</span>
-    <span class="n">token</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="nf">callback</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">account_token</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="nf">callback</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="kp">private</span>
@@ -845,6 +882,8 @@ Content-Type: application/json
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='application-access-token'>Application access token</h2>
 <p>Some endpoints require an <em>application access token</em>, which is different from a user <strong>account access token</strong>.  Application access tokens don&rsquo;t require any particular user&rsquo;s authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.</p>
+
+<p><strong>Note:</strong> If an application has the <code class="prettyprint">ManageCustomers</code> scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -955,7 +994,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"/"</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"/"</span>
 <span class="n">root</span><span class="p">.</span><span class="nf">_links</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">href</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -977,7 +1016,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">root</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
 <span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_links'</span><span class="p">][</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -992,11 +1031,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">accountToken</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_links</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">href</span><span class="p">;</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_links</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 </code></pre></div></div>
 <hr>
 
@@ -1148,6 +1185,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">account</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">account_url</span>
 <span class="n">account</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe"</span>
 
@@ -1194,11 +1232,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">accountUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// =&gt; 'Jane Doe'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane Doe'</span>
 </code></pre></div></div><h2 id='create-a-funding-source-for-an-account'>Create a funding source for an account</h2>
 <p>This section details how to add a bank account to a Dwolla account. The bank account will have a status of <code class="prettyprint">unverified</code> upon creation. Before a Dwolla account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.</p>
 
@@ -1383,6 +1420,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">funding_sources</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/funding-sources"</span>
 <span class="n">funding_sources</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe's Checking"</span>
 
@@ -1429,11 +1467,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/funding-sources`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// =&gt; 'ABC Bank Checking'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'ABC Bank Checking'</span>
 </code></pre></div></div><h2 id='list-and-search-transfers-for-an-account'>List and search transfers for an account</h2>
 <p>This section covers how to retrieve an Account&rsquo;s list of transfers. Transaction search is supported by passing in optional querystring parameters such as: <code class="prettyprint">search</code> which represents a term to search on, <code class="prettyprint">startAmount</code>, <code class="prettyprint">endAmount</code>, <code class="prettyprint">startDate</code>, and <code class="prettyprint">endDate</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -1631,6 +1668,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/transfers'</span> <span class="o">%</span> <span class="n">account_url</span><span class="p">)</span>
 <span class="n">transfers</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; "processed"</span>
 
@@ -1648,11 +1686,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/transfers`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">.[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; 'processed'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">.[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processed'</span>
 </code></pre></div></div><h2 id='list-mass-payments-for-an-account'>List mass payments for an account</h2>
 <p>This section covers how to retrieve an Account&rsquo;s list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -1791,6 +1828,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/mass-payments'</span> <span class="o">%</span> <span class="n">account_url</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">transfers</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; "complete"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -1803,11 +1841,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/mass-payments`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; 'complete'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'complete'</span>
 </code></pre></div></div>
 <hr>
 
@@ -2231,7 +2268,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -2273,7 +2310,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -2295,11 +2332,9 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="na">ipAddress</span><span class="p">:</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h3 id='verified-customer'>Verified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2390,7 +2425,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -2422,7 +2457,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -2454,11 +2489,9 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="na">ssn</span><span class="p">:</span> <span class="s1">'1234'</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h3 id='receive-only-customer'>Receive-only customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2501,7 +2534,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -2546,7 +2579,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -2570,11 +2603,9 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="na">ipAddress</span><span class="p">:</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h2 id='list-business-classifications'>List business classifications</h2>
 <p>Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a <code class="prettyprint">business</code> in order to better analyze the nature of a business.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -3009,7 +3040,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">id</span> <span class="c1"># =&gt; "FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -3040,7 +3071,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="nb">id</span> <span class="c"># =&gt; 'FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -3071,11 +3102,9 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="na">ssn</span><span class="p">:</span> <span class="s2">"202-99-1516"</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span> <span class="c1">// =&gt; 'FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; 'FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h3 id='if-you-try-more-than-once-or-customer-is-not-in-retry-state'>If you try more than once, or Customer is not in retry state:</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"InvalidResourceState"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resource cannot be modified."</span><span class="w">
@@ -3270,7 +3299,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customers</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
+<span class="n">customers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
 <span class="n">customers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -3299,7 +3328,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'customers'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'firstName'</span><span class="p">]</span> <span class="c"># =&gt; 'Jane'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -3314,11 +3343,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">accountToken</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="p">{</span> <span class="na">limit</span><span class="p">:</span> <span class="mi">10</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">firstName</span><span class="p">;</span> <span class="c1">// =&gt; 'Jane'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
 </code></pre></div></div><h2 id='retrieve-a-customer'>Retrieve a customer</h2>
 <p>This section shows you how to retrieve a Customer belonging to the authorized user. Each <code class="prettyprint">Customer</code> id is a part of its location resource. The developer can pass either an <code class="prettyprint">id</code> or the entire <code class="prettyprint">location</code> resource to make this request.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -3393,7 +3420,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">customer_url</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">customer_url</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -3426,7 +3453,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">customer_url</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">customer_url</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'firstName'</span><span class="p">]</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -3443,11 +3470,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">;</span> <span class="c1">// =&gt; 'Jane'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
 </code></pre></div></div><h2 id='create-an-on-demand-transfer-authorization'>Create an on-demand transfer authorization</h2>
 <p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#new-funding-source-for-a-customer">new Customer funding source</a>.</p>
 
@@ -3499,7 +3524,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">on_demand_authorization</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"on-demand-authorizations"</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">on_demand_authorization</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"on-demand-authorizations"</span>
 <span class="n">on_demand_authorization</span><span class="p">.</span><span class="nf">buttonText</span> <span class="c1"># =&gt; "Agree &amp; Continue"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3521,7 +3546,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">on_demand_authorization</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'on-demand-authorizations'</span><span class="p">)</span>
+<span class="n">on_demand_authorization</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'on-demand-authorizations'</span><span class="p">)</span>
 <span class="n">on_demand_authorization</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'buttonText'</span><span class="p">]</span> <span class="c"># =&gt; 'Agree &amp; Continue'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3531,11 +3556,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">accountToken</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'on-demand-authorizations'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">buttonText</span><span class="p">;</span> <span class="c1">// =&gt; "Agree &amp; Continue"</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">buttonText</span><span class="p">);</span> <span class="c1">// =&gt; "Agree &amp; Continue"</span>
 </code></pre></div></div><h2 id='create-a-funding-source-for-a-customer'>Create a funding source for a customer</h2>
 <p>There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer&rsquo;s bank account information and pass it to Dwolla via the <a href="#new-funding-source-for-a-customer">new Customer funding source</a> endpoint, or you can send the Customer through the the <a href="#instant-account-verification-iav">Instant Account Verification</a> (IAV) flow which will add and verify a bank account within seconds.</p>
 
@@ -3666,7 +3689,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">funding_source</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">funding_source</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -3689,7 +3712,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -3712,11 +3735,9 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
   <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Jane Doe’s Checking'</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/funding-sources`, requestBody</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
 </code></pre></div></div><h3 id='instant-account-verification-iav'>Instant account verification (IAV)</h3>
 <p>IAV is a simple and secure process which requires both server-side and client-side interaction. Your server requests a <a href="#generate-an-iav-token">single-use token</a> which is used to represent the Customer that is adding or verifying their bank. The client-side implementation includes the dwolla.js library on the page that is used to render the IAV flow.</p>
 <div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"https://cdn.dwolla.com/1/dwolla.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
@@ -3793,7 +3814,7 @@ HTTP/1.1 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">customer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/iav-token"</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/iav-token"</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">token</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -3810,11 +3831,9 @@ HTTP/1.1 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node</span>
 <span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/iav-token`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">token</span><span class="p">;</span> <span class="c1">// =&gt; 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span> <span class="c1">// =&gt; 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -4024,7 +4043,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer</span><span class="si">}</span><span class="s2">/funding-sources"</span>
+<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer</span><span class="si">}</span><span class="s2">/funding-sources"</span>
 <span class="n">funding_sources</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe’s Checking"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -4057,7 +4076,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
 <span class="n">funding_sources</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'name'</span><span class="p">]</span> <span class="c"># =&gt; 'Jane Doe’s Checking'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -4074,11 +4093,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/funding-sources`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// =&gt; 'Jane Doe’s Checking'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane Doe’s Checking'</span>
 </code></pre></div></div><h2 id='list-and-search-transfers-for-a-customer'>List and search transfers for a customer</h2>
 <p>This section details how to retrieve a Customer&rsquo;s list of transfers. Transaction search is supported by passing in optional querystring parameters such as: <code class="prettyprint">search</code> which represents a term to search on, <code class="prettyprint">startAmount</code>, <code class="prettyprint">endAmount</code>, <code class="prettyprint">startDate</code>, and <code class="prettyprint">endDate</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -4255,7 +4272,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/transfers"</span>
+<span class="n">transfers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/transfers"</span>
 <span class="n">transfers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -4288,7 +4305,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/transfers'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">transfers</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/transfers'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
 <span class="n">transfers</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'pending'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -4305,11 +4322,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/transfers`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; "pending"</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-mass-payments-for-a-customer'>List mass payments for a customer</h2>
 <p>This section covers how to retrieve a <a href="#customers">verified Customer&rsquo;s</a> list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -4424,7 +4439,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/mass-payments"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
+<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/mass-payments"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
 <span class="n">mass_payments</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "complete"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4448,7 +4463,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/mass-payments'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/mass-payments'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
 <span class="n">mass_payments</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'complete'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4460,11 +4475,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/mass-payments`, { limit: 10 }</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">;</span> <span class="err">#</span> <span class="o">=&gt;</span> <span class="s2">"complete"</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "complete"</span>
 </code></pre></div></div>
 <hr>
 
@@ -4562,7 +4575,7 @@ Location: https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'</span>
 
 <span class="n">file</span> <span class="o">=</span> <span class="no">Faraday</span><span class="o">::</span><span class="no">UploadIO</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">,</span> <span class="s1">'image/jpeg'</span><span class="p">)</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/documents"</span><span class="p">,</span> <span class="ss">file: </span><span class="n">file</span><span class="p">,</span> <span class="ss">documentType: </span><span class="s1">'license'</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/documents"</span><span class="p">,</span> <span class="ss">file: </span><span class="n">file</span><span class="p">,</span> <span class="ss">documentType: </span><span class="s1">'license'</span>
 <span class="n">document</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4575,7 +4588,7 @@ Location: https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'mclovin.jpg'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">),</span> <span class="n">documentType</span> <span class="o">=</span> <span class="s">'license'</span><span class="p">)</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'mclovin.jpg'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">),</span> <span class="n">documentType</span> <span class="o">=</span> <span class="s">'license'</span><span class="p">)</span>
 <span class="n">document</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4606,11 +4619,9 @@ Location: https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
 <span class="p">});</span>
 <span class="nx">body</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'documentType'</span><span class="p">,</span> <span class="s1">'license'</span><span class="p">);</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/documents`, requestBody</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
 </code></pre></div></div><h2 id='list-documents'>List documents</h2>
 <p>This section contains information on how to retrieve a list of documents that belong to a Customer.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -4724,7 +4735,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">documents</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
 <span class="n">documents</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 2</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -4743,9 +4754,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/documents`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">;</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div><h2 id='retrieve-a-document'>Retrieve a document</h2>
 <p>This section contains information on how to retrieve a document by its id.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -4803,7 +4812,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">document_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">document_url</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">document_url</span>
 <span class="n">document</span><span class="p">.</span><span class="nf">type</span> <span class="c1"># =&gt; "passport"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -4836,7 +4845,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">document_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">documents</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">document_url</span><span class="p">)</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">document_url</span><span class="p">)</span>
 <span class="n">documents</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="c"># =&gt; 'passport'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -4853,11 +4862,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">documentUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span><span class="p">;</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">document_url</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span> <span class="c1">// =&gt; "passport"</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span> <span class="c1">// =&gt; "passport"</span>
 </code></pre></div></div>
 <hr>
 
@@ -5099,9 +5106,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// =&gt; "Test checking account"</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test checking account"</span>
 </code></pre></div></div><h2 id='update-a-funding-source'>Update a funding source</h2>
 <p>This section covers how to update a <code class="prettyprint">bank</code> funding source name.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Funding</code> scope.</p>
@@ -5234,9 +5239,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// =&gt; "Test Checking - 1234"</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test Checking - 1234"</span>
 </code></pre></div></div><h2 id='initiate-micro-deposits'>Initiate micro-deposits</h2>
 <p>This section covers how to initiate micro-deposits for bank verification. Reference the <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article for more information on the micro-deposit method of bank account verification.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Funding</code> scope.</p>
@@ -6013,6 +6016,7 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"transfers"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">transfer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
 
@@ -6078,6 +6082,7 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'transfers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">transfer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
 
@@ -6112,11 +6117,10 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
   <span class="p">}</span>
 <span class="p">};</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'transfers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
 </code></pre></div></div><h2 id='retrieve-a-transfer'>Retrieve a transfer</h2>
 <p>This section covers how to retrieve a transfer belonging to an Account or Customer by its id.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -6199,6 +6203,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">transfer_url</span>
 <span class="n">transfer</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
 
@@ -6232,6 +6237,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">fees</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'stats'</span><span class="p">]</span> <span class="c"># =&gt; 'pending'</span>
 
@@ -6249,11 +6255,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">transferUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; 'pending'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'pending'</span>
 </code></pre></div></div><h2 id='list-fees-for-a-transfer'>List fees for a transfer</h2>
 <p>This section outlines how to retrieve fees charged on a created transfer. Fees are visible to the <code class="prettyprint">Customer</code> or <code class="prettyprint">Account</code> that is charged the fee, as well as the Dwolla <code class="prettyprint">Account</code> that is involved in receiving the fee.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -6363,6 +6368,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/fees"</span>
 <span class="n">fees</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6387,6 +6393,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/fees'</span> <span class="o">%</span> <span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">fees</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6399,11 +6406,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/fees`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 2</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
 </code></pre></div></div><h2 id='retrieve-a-transfer-failure-reason'>Retrieve a transfer failure reason</h2>
 <p>When a bank transfer fails for an Account or Customer, Dwolla returns a <code class="prettyprint">failure</code> link when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This failure link is used to retrieve the return code and description. For reference, the list of possible failure codes and descriptions are shown in the <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">Transfer failures</a> resource article.</p>
 
@@ -6459,6 +6465,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">failure</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/failure"</span>
 <span class="n">failure</span><span class="p">.</span><span class="nf">code</span> <span class="c1"># =&gt; "R1"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6483,6 +6490,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">failure</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/failure'</span> <span class="o">%</span> <span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">failure</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'code'</span><span class="p">]</span> <span class="c"># =&gt; 'R1'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6495,11 +6503,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/failure`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span> <span class="c1">// =&gt; 'R1'</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// =&gt; 'R1'</span>
 </code></pre></div></div><h2 id='cancel-a-transfer'>Cancel a transfer</h2>
 <p>When a bank transfer is eligible for cancellation, Dwolla returns a <code class="prettyprint">cancel</code> link  when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -6916,11 +6923,10 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
   <span class="p">}</span>
 <span class="p">}</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'mass-payments'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
 </code></pre></div></div><h2 id='retrieve-a-mass-payment'>Retrieve a mass payment</h2>
 <p>This section outlines how to retrieve a mass payment by its id. All mass payments will have a status of <code class="prettyprint">pending</code> upon creation and will move to <code class="prettyprint">processing</code> and finally <code class="prettyprint">complete</code> as the service runs. It is recommended that you retrieve your <a href="#list-items-for-a-mass-payment">list of mass payment items</a> when your mass payment has a status of <code class="prettyprint">complete</code> to determine if any items failed to process successfully.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -7030,11 +7036,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; 'processing'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processing'</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
 <p>A mass payment contains a list of payments called <code class="prettyprint">items</code>. An <code class="prettyprint">item</code> is distinct from the transfer which it creates. An item can contain a status of either <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, or <code class="prettyprint">success</code> depending on whether the payment was created by the Dwolla service or not. A mass payment item status of <code class="prettyprint">success</code> is an indication that a transfer was successfully created. A mass payment&rsquo;s items will be returned in the <code class="prettyprint">_embedded</code> object as a list of <code class="prettyprint">items</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -7218,11 +7223,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">massPaymentUrl</span><span class="p">}</span><span class="sr">/items`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 2</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
 </code></pre></div></div><h2 id='retrieve-a-mass-payment-item'>Retrieve a mass payment item</h2>
 <p>This section covers how to retrieve a mass payment item by its unique identifier. An item can contain <code class="prettyprint">_links</code> to: the mass payment the item belongs to, the transfer created from the item, and the destination user.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -7349,11 +7353,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentItemUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span><span class="p">;</span>
 
+<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentItemUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span> <span class="c1">// =&gt; 'success'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'success'</span>
 </code></pre></div></div>
 <hr>
 
@@ -7766,7 +7769,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">events</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"events"</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"events"</span>
 <span class="n">events</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 4</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -7795,7 +7798,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">events</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'events'</span><span class="p">)</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'events'</span><span class="p">)</span>
 <span class="n">events</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 4</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -7812,9 +7815,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'events'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 4</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 4</span>
 </code></pre></div></div><h2 id='retrieve-an-event'>Retrieve an event</h2>
 <p>This section covers how to retrieve an event by id.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
@@ -7893,7 +7894,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">event_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">event</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">event_url</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">event_url</span>
 <span class="n">event</span><span class="p">.</span><span class="nf">topic</span> <span class="c1"># =&gt; "customer_transfer_created"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -7926,7 +7927,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">event_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">event</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_url</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_url</span><span class="p">)</span>
 <span class="n">event</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'topic'</span><span class="p">]</span> <span class="c"># =&gt; 'customer_transfer_created'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -7945,9 +7946,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">eventUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">;</span> <span class="c1">// =&gt; 'customer_transfer_created'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span> <span class="c1">// =&gt; 'customer_transfer_created'</span>
 </code></pre></div></div>
 <hr>
 
@@ -8152,7 +8151,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">subscription</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"webhook-subscriptions"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"webhook-subscriptions"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">subscription</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -8173,9 +8172,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8190,7 +8187,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">retries</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'webhook-subscriptions'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">retries</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'webhook-subscriptions'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">retries</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 1</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -8285,7 +8282,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">webhook_subscription_url</span>
+<span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">webhook_subscription_url</span>
 <span class="n">webhook_subscription</span><span class="p">.</span><span class="nf">created</span> <span class="c1"># =&gt; 2015-10-28T16:20:47+00:00</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -8303,9 +8300,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">created</span><span class="p">;</span> <span class="c1">// =&gt; '2016-04-20T15:49:50.340Z'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">created</span><span class="p">);</span> <span class="c1">// =&gt; '2016-04-20T15:49:50.340Z'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8317,7 +8312,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
+<span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
 <span class="n">webhook_subscription</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'created'</span><span class="p">]</span> <span class="c"># =&gt; '2015-10-28T16:20:47+00:00'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -8395,7 +8390,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">subscription</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_subscription_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_subscription_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8412,9 +8407,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">paused</span><span class="p">;</span> <span class="c1">// =&gt; 'true'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">paused</span><span class="p">);</span> <span class="c1">// =&gt; 'true'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8430,7 +8423,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">subscription</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">subscription</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'paused'</span><span class="p">]</span> <span class="c"># =&gt; true</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -8502,7 +8495,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">webhook_subscriptions</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"webhook-subscriptions"</span>
+<span class="n">webhook_subscriptions</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"webhook-subscriptions"</span>
 <span class="n">webhook_subscriptions</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 1</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -8518,9 +8511,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 1</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 1</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8530,7 +8521,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">webhook_subscriptions</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'webhook-subscriptions'</span><span class="p">)</span>
+<span class="n">webhook_subscriptions</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'webhook-subscriptions'</span><span class="p">)</span>
 <span class="n">webhook_subscriptions</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 1</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -8606,7 +8597,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">application_token</span><span class="p">.</span><span class="nf">delete</span> <span class="n">webhook_subscription_url</span>
+<span class="n">app_token</span><span class="p">.</span><span class="nf">delete</span> <span class="n">webhook_subscription_url</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">WebhooksubscriptionApi</span><span class="p">.</span><span class="nf">delete_by_id</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
@@ -8632,7 +8623,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">application_token</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
+<span class="n">app_token</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">webhook_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">WebhooksubscriptionsApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
@@ -8736,7 +8727,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">hooks</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_subscription_url</span><span class="si">}</span><span class="s2">/webhooks"</span>
+<span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_subscription_url</span><span class="si">}</span><span class="s2">/webhooks"</span>
 <span class="n">hooks</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 5</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -8754,9 +8745,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookSubscriptionUrl</span><span class="p">}</span><span class="sr">/webhooks`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 5</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 5</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8768,7 +8757,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">hooks</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/hooks'</span> <span class="o">%</span> <span class="n">webhook_subscription_url</span><span class="p">)</span>
+<span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/hooks'</span> <span class="o">%</span> <span class="n">webhook_subscription_url</span><span class="p">)</span>
 <span class="n">hooks</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 5</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -9022,7 +9011,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">webhook</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">webhook_url</span>
+<span class="n">webhook</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">webhook_url</span>
 <span class="n">webhook</span><span class="p">.</span><span class="nf">topic</span> <span class="c1"># =&gt; "transfer_created"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -9055,7 +9044,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">webhook</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transfer_url</span><span class="p">)</span>
+<span class="n">webhook</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">webhook</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'topic'</span><span class="p">]</span> <span class="c"># =&gt; 'transfer_created'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -9074,9 +9063,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">webhookUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">;</span> <span class="c1">// =&gt; 'transfer_created'</span>
-  <span class="p">});</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span> <span class="c1">// =&gt; 'transfer_created'</span>
 </code></pre></div></div><h2 id='retry-a-webhook'>Retry a webhook</h2>
 <p>This section details how to retry a webhook by id.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
@@ -9138,7 +9125,7 @@ Location: https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8/r
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">application_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_url</span><span class="si">}</span><span class="s2">/retries"</span>
+<span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_url</span><span class="si">}</span><span class="s2">/retries"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">WebhooksApi</span><span class="p">.</span><span class="nf">retry_webhook</span><span class="p">(</span><span class="n">webhook_url</span><span class="p">)</span>
@@ -9168,7 +9155,7 @@ Location: https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8/r
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">application_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/retries'</span> <span class="o">%</span> <span class="n">webhook_url</span><span class="p">)</span>
+<span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/retries'</span> <span class="o">%</span> <span class="n">webhook_url</span><span class="p">)</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">webhooks_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">WebhooksApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
@@ -9266,7 +9253,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">retries</span> <span class="o">=</span> <span class="n">application_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_url</span><span class="si">}</span><span class="s2">/retries"</span>
+<span class="n">retries</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_url</span><span class="si">}</span><span class="s2">/retries"</span>
 <span class="n">retries</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 1</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
@@ -9299,7 +9286,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">retries</span> <span class="o">=</span> <span class="n">application_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/retries'</span> <span class="o">%</span> <span class="n">webhook_url</span><span class="p">)</span>
+<span class="n">retries</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/retries'</span> <span class="o">%</span> <span class="n">webhook_url</span><span class="p">)</span>
 <span class="n">retries</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 1</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
@@ -9318,9 +9305,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">;</span> <span class="c1">// =&gt; 1</span>
-  <span class="p">});</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 1</span>
 </code></pre></div></div>
           <footer>
             <div class="page-wrap">
