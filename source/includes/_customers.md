@@ -1227,8 +1227,9 @@ IAV is a simple and secure process which requires both server-side and client-si
 ```javascriptnoselect
 <script src="https://cdn.dwolla.com/1/dwolla.js"></script>
 <script type="text/javascript">
+  var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
   dwolla.configure('sandbox');
-  dwolla.iav.start('container', token.value, function(err, res) {
+  dwolla.iav.start(iavToken, { container: 'iavContainer' }, function(err, res) {
     console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res))
   })
 </script>
@@ -1356,8 +1357,8 @@ dwolla.configure('prod');
 <script type="text/javascript">
 $('#start').click(function() {
   var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
-  dwolla.config.dwollaUrl = 'https://uat.dwolla.com';
-  dwolla.iav.start('iavContainer', iavToken, function(err, res) {
+  dwolla.configure('sandbox');
+  dwolla.iav.start(iavToken, { container: 'iavContainer' }, function(err, res) {
     console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
   });
 });
