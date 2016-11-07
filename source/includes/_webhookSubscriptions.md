@@ -450,6 +450,8 @@ This section covers how to view all fired [webhooks](#webhooks) for a webhook su
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Webhook subscription unique identifier. |
+| limit | no | integer | How many results to return. Defaults to 25. |
+| offset | no | integer | How many results to skip. |
 
 ### Request and response
 
