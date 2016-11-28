@@ -2,21 +2,8 @@
 
 Create a webhook subscription to receive `POST` requests from Dwolla (called webhooks) when events associated with your application occur.  [Webhooks](#webhooks) are sent to a URL which you provide when creating a webhook subscription. If you are a white label partner, you will use these events to notify your customers via email as described in the white label terms of service. Refer to the [events](#events) section for the list of events that trigger webhooks.
 
-```noselect
-{
-  "_links": {
-    "self": {
-      "href": "https://api.dwolla.com/webhook-subscriptions/034a0ae2-fc7f-4922-8e4e-6fb9855ed43b"
-    },
-    "webhooks": {
-      "href": "https://api.dwolla.com/webhook-subscriptions/034a0ae2-fc7f-4922-8e4e-6fb9855ed43b/webhooks"
-    }
-  },
-  "id": "034a0ae2-fc7f-4922-8e4e-6fb9855ed43b",
-  "url": "http://requestb.in/vbxb1bvb",
-  "created": "2015-10-06T01:11:36.000Z"
-}
-```
+##### **Automatic pause of a webhook subscription** 
+Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after **400 consecutive failures**. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling [this endpoint](https://docsv2.dwolla.com/#update-a-webhook-subscription).
 
 ### Acknowledgement and retries
 When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than a HTTP 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.
@@ -34,33 +21,14 @@ Dwolla will re-attempt delivery 8 times over the course of 72 hours according th
 |       7      |              24 h                 |                  48 h                   |
 |       8      |              24 h                 |                  72 h                   |
 
-### Webhook resource
-
-| Parameter      | Description                                       |
-|----------------|---------------------------------------------------|
-| id             | Webhook unique identifier                         |
-| topic          | Type of webhook subscription                      |
-| accountId      | Account associated with the webhook notification  |
-| eventId        | Event id for this webhook                         |
-| subscriptionId | Webhook subscription id for this event            |
-| attempts       | Array of attempt JSON object                      |
-
-### Attempt JSON object
-
-| Parameter      | Description                             |
-|----------------|-----------------------------------------|
-| id             | Unique id of webhook delivery attempt.  |
-| request        | Request JSON object                     |
-| response       | Response JSON object                    |
-
-### Request/response JSON object
+### Webhook subscription resource
 
 | Parameter      | Description                                                                   |
 |----------------|-------------------------------------------------------------------------------|
+| id             | Webhook subscription unique identifier.                                       |
+| url            | Subscribed url where Dwolla should deliver the webhook notification.          |
+| paused         | A boolean `true` or `false` value indicating if the webhook subscription is paused. A webhook subscription will be automatically paused after 400 consecutive failures. In addition, a subscription can be paused or unpaused by calling [this endpoint](https://docsv2.dwolla.com/#update-a-webhook-subscription) in the API.  |
 | created        | ISO-8601 timestamp                                                            |
-| url            | URL where data was sent to/received from                                      |
-| headers        | Array of objects with keys `name` and `value` representative of HTTP headers  |
-| body           | Event id for this webhook                                                     |
 
 ## Create a webhook subscription
 
