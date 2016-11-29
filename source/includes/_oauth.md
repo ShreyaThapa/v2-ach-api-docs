@@ -293,7 +293,7 @@ Parameter | Description
 access_token | A new access token that is used to authenticate against resources that belong to the app itself.
 expires_in | The lifetime of the access token, in seconds.  Default is 3600.
 token_type | Always `bearer`.
-scope | Pipe <code>&#124;</code> delimited list of permission scopes granted. **Deprecation note:** This response parameter will be removed on **November 23, 2016**.
+scope | Pipe <code>&#124;</code> delimited list of permission scopes granted. **Deprecation note:** This response parameter will be removed on **December 1, 2016**.
 
 ### Request
 

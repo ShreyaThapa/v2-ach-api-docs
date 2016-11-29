@@ -8,7 +8,7 @@ Parameter | Description
 ----------|------------
 id | The funding source unique identifier
 status | Is the funding source verified?
-type | Type of funding source
+type | Type of funding source. Either `bank` or `balance`.
 name | Customer’s arbitrary nickname for the funding source
 created | ISO-8601 timestamp
 removed | A value of `true` if the funding source has been [removed](#remove-a-funding-source) or `false` if the funding source is not removed.

@@ -1131,6 +1131,7 @@ Create a new Funding Source for a Customer.  Customers can have a maximum of 6 f
 | accountNumber | yes | string | The bank account number. |
 | type | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [White Label](https://www.dwolla.com/white-label) partners. |
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description |
