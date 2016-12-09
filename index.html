@@ -5861,6 +5861,12 @@ HTTP 200 OK
 <td>array</td>
 <td>an array of fee JSON objects that contain unique fee transfers. <a href="#a-fee-json-object">See below</a>.</td>
 </tr>
+<tr>
+<td>clearing</td>
+<td>no</td>
+<td>object</td>
+<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for Dwolla <a href="https://www.dwolla.com/white-label">White Label</a> partners. Next-day ACH functionality must be enabled.</td>
+</tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
 <table><thead>
