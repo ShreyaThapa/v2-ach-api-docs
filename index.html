@@ -5824,7 +5824,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h2 id='initiate-a-transfer'>Initiate a transfer</h2>
-<p>This section covers how to initiate a transfer for either an <a href="#accounts">Account</a> or <a href="#customers">Customer</a> resource.</p>
+<p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or White Label <a href="#customers">Customer</a> resource.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/transfers</code></p>
@@ -5958,7 +5958,9 @@ HTTP 200 OK
 <td>OAuth token does not have Send scope.</td>
 </tr>
 </tbody></table>
-<h3 id='request-and-response-transfer-from-account-to-customer'>Request and response (transfer from Account to Customer)</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<h3 id='request-and-response-using-same-day-ach'>Request and response (using Same Day ACH)</h3>
+<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a White Label Customer&rsquo;s bank account, part of Dwolla&rsquo;s premium White Label service. </p>
+<div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -5966,18 +5968,19 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST /transfers
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
+
 {
     "_links": {
-        "destination": {
-            "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-        },
         "source": {
             "href": "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+        },
+        "destination": {
+            "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
         }
     },
     "amount": {
@@ -5985,22 +5988,12 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "value": "10.00"
     },
     "metadata": {
-        "foo": "bar",
-        "baz": "boo"
+        "paymentId": "12345678",
+        "note": "payment for completed work Dec. 1"
     },
-   "fees":[  
-      {  
-         "_links":{  
-            "charge-to":{  
-               "href":"http://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-            }
-         },
-         "amount":{  
-            "value":"1.00",
-            "currency":"USD"
-         }
-      }
-   ]
+    "clearing": {
+        "destination": "next-available"
+  }
 }
 
 ...
@@ -6017,11 +6010,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"</span>
-    <span class="p">},</span>
     <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
+    <span class="p">},</span>
+    <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -6029,8 +6022,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
     <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"1.00"</span>
   <span class="p">},</span>
   <span class="ss">:metadata</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="ss">:foo</span> <span class="o">=&gt;</span> <span class="s2">"bar"</span><span class="p">,</span>
-    <span class="ss">:baz</span> <span class="o">=&gt;</span> <span class="s2">"boo"</span>
+    <span class="ss">:paymentId</span> <span class="o">=&gt;</span> <span class="s2">"12345678"</span><span class="p">,</span>
+    <span class="ss">:note</span> <span class="o">=&gt;</span> <span class="s2">"payment for completed work Dec. 1"</span>
+  <span class="p">},</span>
+  <span class="ss">:clearing</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s2">"next-available"</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
@@ -6055,20 +6051,23 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 
 <span class="nv">$transfer</span> <span class="o">=</span> <span class="nv">$transfersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
   <span class="s1">'_links'</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="p">[</span>
-      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
-    <span class="p">],</span>
     <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="p">[</span>
       <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span><span class="p">,</span>
     <span class="p">],</span>
+    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
+    <span class="p">]</span>
   <span class="p">],</span>
   <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
     <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'1.00'</span>
   <span class="p">],</span>
   <span class="s1">'metadata'</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
-    <span class="s1">'baz'</span> <span class="o">=&gt;</span> <span class="s1">'boo'</span><span class="p">,</span>
+    <span class="s1">'paymentId'</span> <span class="o">=&gt;</span> <span class="s1">'12345678'</span><span class="p">,</span>
+    <span class="s1">'note'</span> <span class="o">=&gt;</span> <span class="s1">'payment for completed work Dec. 1'</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="s1">'clearing'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="s1">'next-available'</span>
   <span class="p">]</span>
 <span class="p">]);</span>
 <span class="nv">$transfer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
@@ -6083,11 +6082,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">'destination'</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
-    <span class="p">},</span>
     <span class="s">'source'</span><span class="p">:</span> <span class="p">{</span>
       <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">},</span>
+    <span class="s">'destination'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
@@ -6095,8 +6094,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
     <span class="s">'value'</span><span class="p">:</span> <span class="s">'1.00'</span>
   <span class="p">},</span>
   <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">'foo'</span><span class="p">:</span> <span class="s">'bar'</span><span class="p">,</span>
-    <span class="s">'baz'</span><span class="p">:</span> <span class="s">'boo'</span>
+    <span class="s">'paymentId'</span><span class="p">:</span> <span class="s">'12345678'</span><span class="p">,</span>
+    <span class="s">'note'</span><span class="p">:</span> <span class="s">'payment for completed work Dec. 1'</span>
+  <span class="p">},</span>
+  <span class="s">'clearing'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'destination'</span><span class="p">:</span> <span class="s">'next-available'</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
@@ -6119,11 +6121,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
-    <span class="p">},</span>
     <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
       <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">},</span>
+    <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -6131,8 +6133,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
     <span class="na">value</span><span class="p">:</span> <span class="s1">'1.00'</span>
   <span class="p">},</span>
   <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">foo</span><span class="p">:</span> <span class="s1">'bar'</span><span class="p">,</span>
-    <span class="na">baz</span><span class="p">:</span> <span class="s1">'boo'</span>
+    <span class="na">paymentId</span><span class="p">:</span> <span class="s1">'12345678'</span><span class="p">,</span>
+    <span class="na">note</span><span class="p">:</span> <span class="s1">'payment for completed work Dec. 1'</span>
+  <span class="p">},</span>
+  <span class="na">clearing</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">destination</span><span class="p">:</span> <span class="s1">'next-available'</span>
   <span class="p">}</span>
 <span class="p">};</span>
 
