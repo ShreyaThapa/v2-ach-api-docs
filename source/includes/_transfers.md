@@ -52,6 +52,7 @@ This section covers how to initiate a transfer for either an [Account](#accounts
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for Dwolla [White Label](https://www.dwolla.com/white-label) partners. Next-day ACH functionality must be enabled.
 
 ### Source and destination types
 
