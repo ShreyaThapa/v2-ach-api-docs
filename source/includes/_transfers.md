@@ -36,7 +36,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 ## Initiate a transfer
 
-This section covers how to initiate a transfer for either an [Account](#accounts) or [Customer](#customers) resource.
+This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or White Label [Customer](#customers) resource.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
@@ -100,21 +100,23 @@ For more information on collecting fees on payments, reference the [facilitator 
 | 400 | Transfer failed. |
 | 403 | OAuth token does not have Send scope. |
 
-### Request and response (transfer from Account to Customer)
+### Request and response (using Same Day ACH)
+The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a White Label Customer's bank account, part of Dwolla's premium White Label service. 
 
 ```raw
-POST /transfers
+POST https://api.dwolla.com/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
+
 {
     "_links": {
-        "destination": {
-            "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-        },
         "source": {
             "href": "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+        },
+        "destination": {
+            "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
         }
     },
     "amount": {
@@ -122,22 +124,12 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "value": "10.00"
     },
     "metadata": {
-        "foo": "bar",
-        "baz": "boo"
+        "paymentId": "12345678",
+        "note": "payment for completed work Dec. 1"
     },
-   "fees":[  
-      {  
-         "_links":{  
-            "charge-to":{  
-               "href":"http://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-            }
-         },
-         "amount":{  
-            "value":"1.00",
-            "currency":"USD"
-         }
-      }
-   ]
+    "clearing": {
+        "destination": "next-available"
+  }
 }
 
 ...
@@ -148,11 +140,11 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```ruby
 request_body = {
   :_links => {
-    :destination => {
-      :href => "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-    },
     :source => {
       :href => "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+    },
+    :destination => {
+      :href => "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
     }
   },
   :amount => {
@@ -160,8 +152,11 @@ request_body = {
     :value => "1.00"
   },
   :metadata => {
-    :foo => "bar",
-    :baz => "boo"
+    :paymentId => "12345678",
+    :note => "payment for completed work Dec. 1"
+  },
+  :clearing => {
+    :destination => "next-available"
   }
 }
 
@@ -180,20 +175,23 @@ $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
 $transfer = $transfersApi->create([
   '_links' => [
-    'destination' => [
-      'href' => 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
-    ],
     'source' => [
       'href' => 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4',
     ],
+    'destination' => [
+      'href' => 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+    ]
   ],
   'amount' => [
     'currency' => 'USD',
     'value' => '1.00'
   ],
   'metadata' => [
-    'foo' => 'bar',
-    'baz' => 'boo',
+    'paymentId' => '12345678',
+    'note' => 'payment for completed work Dec. 1',
+  ],
+  'clearing' => [
+    'destination' => 'next-available'
   ]
 ]);
 $transfer; # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
@@ -202,11 +200,11 @@ $transfer; # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a
 ```python
 request_body = {
   '_links': {
-    'destination': {
-      'href': 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
-    },
     'source': {
       'href': 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    },
+    'destination': {
+      'href': 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
     }
   },
   'amount': {
@@ -214,8 +212,11 @@ request_body = {
     'value': '1.00'
   },
   'metadata': {
-    'foo': 'bar',
-    'baz': 'boo'
+    'paymentId': '12345678',
+    'note': 'payment for completed work Dec. 1'
+  },
+  'clearing': {
+    'destination': 'next-available'
   }
 }
 
@@ -232,11 +233,11 @@ transfer # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b
 ```javascript
 var requestBody = {
   _links: {
-    destination: {
-      href: 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
-    },
     source: {
       href: 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    },
+    destination: {
+      href: 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
     }
   },
   amount: {
@@ -244,8 +245,11 @@ var requestBody = {
     value: '1.00'
   },
   metadata: {
-    foo: 'bar',
-    baz: 'boo'
+    paymentId: '12345678',
+    note: 'payment for completed work Dec. 1'
+  },
+  clearing: {
+    destination: 'next-available'
   }
 };
 
