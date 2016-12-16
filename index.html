@@ -472,7 +472,7 @@ mvn install package
 <p>Dwolla implements the <a href="http://oauth.net/2/">OAuth 2.0 standard</a> to facilitate this authorization. Similar to Facebook and Twitter&rsquo;s authentication flow, the user is first presented with a permission dialog for your application, at which point the user can either approve the permissions requested, or reject them. Once the user approves, an <code class="prettyprint">authorization_code</code> is sent to your application, which will then <a href="#finish-user-authorization">be exchanged</a> for an <code class="prettyprint">access_token</code> and a <code class="prettyprint">refresh_token</code> pair.</p>
 
 <p>The <code class="prettyprint">access_token</code> can then be used to make API calls which require user authentication like <a href="#initiate-a-transfer">Initiate a Transfer</a> or <a href="#list-and-search-transfers-for-an-account">List Transfers</a>.</p>
-<h3 id='token-lifetimes'>Token lifetimes</h3>
+<h4 id='token-lifetimes'>Token lifetimes</h4>
 <p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour.</p>
 
 <p><strong>Refresh tokens</strong> are <em>long lived</em>: 60 days.</p>
@@ -480,15 +480,15 @@ mvn install package
 <p>A refresh token can be used within 60 days to generate a new access_token and refresh_token pair.  So long as you <a href="#refresh-authorization">refresh your authorization</a> at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.</p>
 <h2 id='request-user-authorization'>Request user authorization</h2>
 <p>To start the OAuth process, construct the initiation URL which the user will visit in order to grant permission to your application.  It describes the permissions your application requires (<code class="prettyprint">scope</code>), who the client application is (<code class="prettyprint">client_id</code>), and where the user should be redirected to after they grant or deny permissions to your application (<code class="prettyprint">redirect_uri</code>).</p>
-<h3 id='url-format'>URL Format:</h3><h4 id='production'>Production</h4>
+<h3 id='url-format'>URL Format:</h3><h5 id='production'>Production</h5>
 <p><code class="prettyprint">
 https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_type=code&amp;redirect_uri={redirect_uri}&amp;scope={scope}
 </code></p>
-<h4 id='uatsandox'>UAT(Sandox)</h4>
+<h5 id='uatsandox'>UAT(Sandox)</h5>
 <p><code class="prettyprint">
 https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_type=code&amp;redirect_uri={redirect_uri}&amp;scope={scope}
 </code></p>
-<h3 id='request-parameters'>Request parameters</h3>
+<h4 id='request-parameters'>Request parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -522,6 +522,12 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>Permissions you are requesting.  See <a href="#oauth-scopes">below</a> for list of available scopes.  Scopes are delimited by a pipe (&ldquo;&#124;&rdquo;)</td>
 </tr>
 <tr>
+<td>state</td>
+<td>no</td>
+<td>string</td>
+<td>Primary purpose is protection against cross-site request forgery (CSRF) attacks. A random value set by the client (you) in the initial OAuth authorization request, and is then made available to you in the redirect (along with the authorization <code class="prettyprint">code</code>).</td>
+</tr>
+<tr>
 <td>verified_account</td>
 <td>no</td>
 <td>string</td>
@@ -535,7 +541,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 </tbody></table>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>Remember to url-encode all querystring parameters!</p>
-</li></ol><h3 id='oauth-scopes'>OAuth scopes</h3>
+</li></ol><h4 id='oauth-scopes'>OAuth scopes</h4>
 <p>Applications may request the following permission scopes when generating an access token:</p>
 
 <table><thead>
@@ -561,7 +567,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>Includes create Customers, manage their funding sources, and allow related money movement. <br/> <strong>Note:</strong> This is a privileged scope available within our <a href="https://www.dwolla.com/white-label?b=apidocs">White Label API</a>(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. <a href="https://www.dwolla.com/contact?b=apidocs">Contact sales</a> to learn more.</td>
 </tr>
 </tbody></table>
-<div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<h4 id='example-oauth-flow'>Example OAuth flow</h4><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -659,14 +665,16 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">not applicable
-</code></pre></div></div><h3 id='example-initiation-url-where-you-send-the-user'>Example initiation URL (where you send the user):</h3><div class="code-snippet js-code-snippet language-rawnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rawnohide" data-lang="rawnohide">https://uat.dwolla.com/oauth/v2/authenticate?client_id=PO%2BSzGAsZCE4BTG7Cw4OAL40Tpf1008mDjGBSVo6QLNfM4mD%2Ba&amp;response_type=code&amp;redirect_uri=https://developers.dwolla.com/dev/token/callback?env=sandbox&amp;scope=Balance%7CAccountInfoFull
+</code></pre></div></div><h4 id='example-initiation-url-where-you-send-the-user'>Example initiation URL (where you send the user):</h4><div class="code-snippet js-code-snippet language-rawnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rawnohide" data-lang="rawnohide">https://uat.dwolla.com/oauth/v2/authenticate?client_id=PO%2BSzGAsZCE4BTG7Cw4OAL40Tpf1008mDjGBSVo6QLNfM4mD%2Ba&amp;response_type=code&amp;redirect_uri=https://developers.dwolla.com/dev/token/callback?env=sandbox&amp;scope=Balance%7CAccountInfoFull
 </code></pre></div></div><h2 id='finish-user-authorization'>Finish user authorization</h2>
 <p>Once the user returns to your application via the <code class="prettyprint">redirect_uri</code> you specified, there will be a <code class="prettyprint">code</code> querystring parameter appended to that URL.  Exchange the authorization <code class="prettyprint">code</code> for an <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
-<h3 id='http-request'>HTTP request</h3>
+<h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
 <p><strong>UAT:</strong> <code class="prettyprint">POST https://uat.dwolla.com/oauth/v2/token</code></p>
-<h3 id='request-parameters'>Request parameters</h3>
+
+<p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with the following <code class="prettyprint">form-encoded</code> parameters:</p>
+<h4 id='request-parameters'>Request parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -706,7 +714,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>The same redirect_uri specified in the intiation step.</td>
 </tr>
 </tbody></table>
-<h3 id='response-parameters'>Response parameters</h3>
+<h4 id='response-parameters'>Response parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -746,17 +754,11 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>A unique user account ID for the associated user account</td>
 </tr>
 </tbody></table>
-<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://www.dwolla.com/oauth/v2/token
-Content-Type: application/json
+<h4 id='request'>Request</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
-  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
-  "code": "h6TvQZH+5BsV//O43uOJ0uRkBLk=",
-  "grant_type": "authorization_code",
-  "redirect_uri": "https://www.myredirect.com/redirect"
-}
-</code></pre></div></div><h3 id='successful-response'>Successful response:</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&amp;code=h6TvQZHr5BsVcfO43uOJ0uRkBLki&amp;grant_type=authorization_code&amp;redirect_uri=https%3A%2F%2Fwww.myapplication.com%2Fredirect
+</code></pre></div></div><h4 id='successful-response'>Successful response</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
@@ -774,11 +776,13 @@ Content-Type: application/json
 <p>Use a valid <code class="prettyprint">refresh_token</code> to generate a new <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
 
 <p><strong>NOTE:</strong> The <code class="prettyprint">refresh_token</code> you receive will <em>change</em> every time you exchange either an <code class="prettyprint">authorization_code</code> or <code class="prettyprint">refresh_token</code> for a new token pair. However, If you exchange your last valid <code class="prettyprint">refresh_token</code> within a short timespan of being issued a new token pair, Dwolla will return most recently issued token pair for a short duration of time.</p>
-<h3 id='http-request'>HTTP request</h3>
+<h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
 <p><strong>UAT:</strong> <code class="prettyprint">POST https://uat.dwolla.com/oauth/v2/token</code></p>
-<h3 id='request-parameters'>Request parameters</h3>
+
+<p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with the following <code class="prettyprint">form-encoded</code> parameters:</p>
+<h4 id='request-parameters'>Request parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -812,7 +816,7 @@ Content-Type: application/json
 <td>This must be set to <code class="prettyprint">refresh_token</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='response-parameters'>Response parameters</h3>
+<h4 id='response-parameters'>Response parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -852,13 +856,11 @@ Content-Type: application/json
 <td>A unique user account ID for the associated user account</td>
 </tr>
 </tbody></table>
-<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"refresh_token"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='successful-response'>Successful response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+<h4 id='request'>Request</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&amp;grant_type=refresh_token&amp;refresh_token=Pgkel9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY
+</code></pre></div></div><h4 id='successful-response'>Successful response</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
@@ -872,7 +874,7 @@ Content-Type: application/json
   </span><span class="nt">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"send|transactions|funding|managecustomers"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='invalid-or-expired-refresh-token-response'>Invalid or expired refresh token response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+</span></code></pre></div></div><h4 id='invalid-or-expired-refresh-token-response'>Invalid or expired refresh token response</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"access_denied"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"error_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid refresh token."</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -884,11 +886,13 @@ Content-Type: application/json
 <p>Some endpoints require an <em>application access token</em>, which is different from a user <strong>account access token</strong>.  Application access tokens don&rsquo;t require any particular user&rsquo;s authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.</p>
 
 <p><strong>Note:</strong> If an application has the <code class="prettyprint">ManageCustomers</code> scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type</p>
-<h3 id='http-request'>HTTP request</h3>
+<h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
 <p><strong>UAT:</strong> <code class="prettyprint">POST https://uat.dwolla.com/oauth/v2/token</code></p>
-<h3 id='request-parameters'>Request parameters</h3>
+
+<p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with the following <code class="prettyprint">form-encoded</code> parameters:</p>
+<h4 id='request-parameters'>Request parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -916,7 +920,7 @@ Content-Type: application/json
 <td>This must be set to <code class="prettyprint">client_credentials</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='response-parameters'>Response parameters</h3>
+<h4 id='response-parameters'>Response parameters</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -935,24 +939,74 @@ Content-Type: application/json
 <td>token_type</td>
 <td>Always <code class="prettyprint">bearer</code>.</td>
 </tr>
-<tr>
-<td>scope</td>
-<td>Pipe <code>&#124;</code> delimited list of permission scopes granted. <strong>Deprecation note:</strong> This response parameter will be removed on <strong>December 1, 2016</strong>.</td>
-</tr>
 </tbody></table>
-<h3 id='request'>Request</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://www.dwolla.com/oauth/v2/token
-Content-Type: application/json
+<h4 id='request'>Request</h4><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
-  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
-  "grant_type": "client_credentials"
-}
-</code></pre></div></div><h3 id='successful-response'>Successful response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&amp;grant_type=client_credentials
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="c"># This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
+<span class="n">application_token</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="o">.</span><span class="n">client</span><span class="p">()</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-node</span>
+<span class="c1">// This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">client</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">appToken</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">appToken</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+  <span class="p">});</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="c1"># This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
+<span class="n">application_token</span> <span class="o">=</span> <span class="vg">$dwolla</span><span class="p">.</span><span class="nf">auths</span><span class="p">.</span><span class="nf">client</span>
+<span class="c1"># =&gt; #&lt;DwollaV2::Token client=#&lt;DwollaV2::Client id="..." secret="..." environment=:sandbox&gt; access_token="..." expires_in=3600 scope="..."&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ *  No support for this language yet. We recommend using an external REST client for making OAuth requests.
+ **/
+</code></pre></div></div><h4 id='successful-response'>Successful response</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SF8Vxx6H644lekdVKAAHFnqRCFy8WGqltzitpii6w2MVaZp1Nw"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AccountInfoFull|ManageAccount|Contacts|Transactions|Balance|Send|Request|Funding"</span><span class="w">
+  </span><span class="nt">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 <hr>
@@ -6435,7 +6489,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/fees`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
 </code></pre></div></div><h2 id='retrieve-a-transfer-failure-reason'>Retrieve a transfer failure reason</h2>
-<p>When a bank transfer fails for an Account or Customer, Dwolla returns a <code class="prettyprint">failure</code> link when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This failure link is used to retrieve the return code and description. For reference, the list of possible failure codes and descriptions are shown in the <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">Transfer failures</a> resource article.</p>
+<p>When a bank transfer fails for an Account or Customer, Dwolla returns a <code class="prettyprint">failure</code> link when <a href="#retrieve-a-transfer">retrieving the transfer by its Id</a>. This failure link is used to retrieve the ACH return code and description. For reference, the list of possible failure codes and descriptions are shown in the <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">Transfer failures</a> resource article.</p>
 
 <p><strong>Note:</strong> If a transfer fails to/from a bank account then the <code class="prettyprint">bank</code> will automatically be removed from the Dwolla system for all ACH return codes except an <code class="prettyprint">R01</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -9279,6 +9333,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
                  <a href="https://www.dwolla.com/about">Tools & API</a>
                  <a href="https://developers.dwolla.com">Developer</a>
                  <a href="https://www.dwolla.com/bank-transfers">Bank Transfers</a>
+                 <a href="https://www.dwolla.com/mass-payments-api">Mass Payments</a>
                  <a href="https://www.dwolla.com/same-day-ach">Same Day ACH</a>
                  <a href="https://www.dwolla.com/white-label">ACH Transfer API</a>
                  <a href="https://www.dwolla.com/ach-transfer-dashboard">Dashboard & Admin</a>
