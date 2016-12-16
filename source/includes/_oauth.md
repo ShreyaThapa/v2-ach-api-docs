@@ -1,4 +1,4 @@
-#OAuth
+# OAuth
 
 Dwolla's API lets you interact with a user's Dwolla account and act on its behalf to transfer money, add funding sources, and more.  To do so, your application first needs to request authorization from users.  
 
@@ -6,7 +6,7 @@ Dwolla implements the [OAuth 2.0 standard](http://oauth.net/2/) to facilitate th
 
 The `access_token` can then be used to make API calls which require user authentication like [Initiate a Transfer](#initiate-a-transfer) or [List Transfers](#list-and-search-transfers-for-an-account).
 
-### Token lifetimes
+#### Token lifetimes
 
 **Access tokens** are *short lived*: 1 hour.
 
@@ -20,23 +20,24 @@ To start the OAuth process, construct the initiation URL which the user will vis
 
 ### URL Format:
 
-#### Production
+##### Production
 `
 https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&scope={scope}
 `
 
-#### UAT(Sandox)
+##### UAT(Sandox)
 `
 https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&scope={scope}
 `
 
-### Request parameters
+#### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | client_id | yes | string | Application key. |
 | response_type | yes | string | This must always be set to `code`. |
 | redirect_uri | yes | string | URL where the user will be redirected to afterwards. The value of this parameter must match one of the values that appear in your [application details](https://www.dwolla.com/applications) page. (We compare: protocol, subdomain, domain, tld, and file path. Querystring parameters are ignored) |
 | scope | yes | string | Permissions you are requesting.  See [below](#oauth-scopes) for list of available scopes.  Scopes are delimited by a pipe ("&#124;") |
+| state | no | string | Primary purpose is protection against cross-site request forgery (CSRF) attacks. A random value set by the client (you) in the initial OAuth authorization request, and is then made available to you in the redirect (along with the authorization `code`).  |
 | verified_account | no | string | Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account. |
 | dwolla_landing | no | string | An optional override that force displays either the login or create an account screen. Possible values are: `login`, `register`, or `null`. |
 
@@ -44,7 +45,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&response_type
     <li class="information icon-alert-info">Remember to url-encode all querystring parameters!</li>
 </ol>
 
-### OAuth scopes
+#### OAuth scopes
 
 Applications may request the following permission scopes when generating an access token:
 
@@ -54,6 +55,8 @@ Applications may request the following permission scopes when generating an acce
 | Send | Transfer money on the user's behalf. |
 | Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources. |
 | ManageCustomers | Includes create Customers, manage their funding sources, and allow related money movement. <br/> **Note:** This is a privileged scope available within our [White Label API](https://www.dwolla.com/white-label?b=apidocs)(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. [Contact sales](https://www.dwolla.com/contact?b=apidocs) to learn more. |
+
+#### Example OAuth flow
 
 ```php
 /**
@@ -124,7 +127,7 @@ end
 not applicable
 ```
 
-### Example initiation URL (where you send the user):
+#### Example initiation URL (where you send the user):
 
 ```rawnoselect
 https://uat.dwolla.com/oauth/v2/authenticate?client_id=PO%2BSzGAsZCE4BTG7Cw4OAL40Tpf1008mDjGBSVo6QLNfM4mD%2Ba&response_type=code&redirect_uri=https://developers.dwolla.com/dev/token/callback?env=sandbox&scope=Balance%7CAccountInfoFull
@@ -134,12 +137,14 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id=PO%2BSzGAsZCE4BTG7Cw4OAL4
 
 Once the user returns to your application via the `redirect_uri` you specified, there will be a `code` querystring parameter appended to that URL.  Exchange the authorization `code` for an `access_token` and `refresh_token` pair.
 
-### HTTP request
+#### HTTP request
 **Production:** `POST https://www.dwolla.com/oauth/v2/token`
 
 **UAT:** `POST https://uat.dwolla.com/oauth/v2/token`
 
-### Request parameters
+Including the `Content-Type: application/x-www-form-urlencoded` header, the request is sent to the token endpoint with the following `form-encoded` parameters:
+
+#### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | client_id | yes | string | Application key. |
@@ -148,7 +153,7 @@ Once the user returns to your application via the `redirect_uri` you specified, 
 | grant_type | yes | string | This must be set to `authorization_code`. |
 | redirect_uri | yes | string | The same redirect_uri specified in the intiation step. |
 
-### Response parameters
+#### Response parameters
 
 Parameter | Description
 ----------|------------
@@ -161,20 +166,16 @@ token_type | Always `bearer`.
 scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
 account_id | A unique user account ID for the associated user account
 
-```noselect
-POST https://www.dwolla.com/oauth/v2/token
-Content-Type: application/json
+#### Request
 
-{
-  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
-  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
-  "code": "h6TvQZH+5BsV//O43uOJ0uRkBLk=",
-  "grant_type": "authorization_code",
-  "redirect_uri": "https://www.myredirect.com/redirect"
-}
+```noselect
+POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&code=h6TvQZHr5BsVcfO43uOJ0uRkBLki&grant_type=authorization_code&redirect_uri=https%3A%2F%2Fwww.myapplication.com%2Fredirect
 ```
 
-### Successful response:
+#### Successful response
 
 ```noselect
 {
@@ -199,13 +200,15 @@ Use a valid `refresh_token` to generate a new `access_token` and `refresh_token`
 
 **NOTE:** The `refresh_token` you receive will *change* every time you exchange either an `authorization_code` or `refresh_token` for a new token pair. However, If you exchange your last valid `refresh_token` within a short timespan of being issued a new token pair, Dwolla will return most recently issued token pair for a short duration of time.
 
-### HTTP request
+#### HTTP request
 
 **Production:** `POST https://www.dwolla.com/oauth/v2/token`
 
 **UAT:** `POST https://uat.dwolla.com/oauth/v2/token`
 
-### Request parameters
+Including the `Content-Type: application/x-www-form-urlencoded` header, the request is sent to the token endpoint with the following `form-encoded` parameters:
+
+#### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | client_id | yes | string | Application key. |
@@ -213,7 +216,7 @@ Use a valid `refresh_token` to generate a new `access_token` and `refresh_token`
 | refresh_token | yes | string | A valid refresh token. |
 | grant_type | yes | string | This must be set to `refresh_token`. |
 
-### Response parameters
+#### Response parameters
 
 Parameter | Description
 ----------|------------
@@ -226,16 +229,16 @@ token_type | Always `bearer`.
 scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
 account_id | A unique user account ID for the associated user account
 
+#### Request
+
 ```noselect
-{
-  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
-  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
-  "refresh_token": "Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY",
-  "grant_type": "refresh_token"
-}
+POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&grant_type=refresh_token&refresh_token=Pgkel9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY
 ```
 
-### Successful response
+#### Successful response
 
 ```noselect
 {
@@ -254,7 +257,7 @@ account_id | A unique user account ID for the associated user account
 }
 ```
 
-### Invalid or expired refresh token response
+#### Invalid or expired refresh token response
 
 ```noselect
 {
@@ -273,49 +276,72 @@ Some endpoints require an *application access token*, which is different from a 
 
 **Note:** If an application has the `ManageCustomers` scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type
 
-### HTTP request
+#### HTTP request
 
 **Production:** `POST https://www.dwolla.com/oauth/v2/token`
 
 **UAT:** `POST https://uat.dwolla.com/oauth/v2/token`
 
-### Request parameters
+Including the `Content-Type: application/x-www-form-urlencoded` header, the request is sent to the token endpoint with the following `form-encoded` parameters:
+
+#### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | client_id | yes | string | Application key. |
 | client_secret | yes | string | Application secret. |
 | grant_type | yes | string | This must be set to `client_credentials`. |
 
-### Response parameters
+#### Response parameters
 
 Parameter | Description
 ----------|------------
 access_token | A new access token that is used to authenticate against resources that belong to the app itself.
 expires_in | The lifetime of the access token, in seconds.  Default is 3600.
 token_type | Always `bearer`.
-scope | Pipe <code>&#124;</code> delimited list of permission scopes granted. **Deprecation note:** This response parameter will be removed on **December 1, 2016**.
 
-### Request
+#### Request
 
-```noselect
-POST https://www.dwolla.com/oauth/v2/token
-Content-Type: application/json
+```raw
+POST https://uat.dwolla.com/oauth/v2/token
+Content-Type: application/x-www-form-urlencoded
 
-{
-  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
-  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
-  "grant_type": "client_credentials"
-}
+client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&grant_type=client_credentials
+``` 
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+# This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
+application_token = client.Auth.client()
+```
+```javascript
+// Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-node
+// This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
+client.auth.client()
+  .then(function(appToken) {
+    return appToken.get('webhook-subscriptions');
+  })
+  .then(function(res) {
+    console.log(JSON.stringify(res.body));
+  });
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+# This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
+application_token = $dwolla.auths.client
+# => #<DwollaV2::Token client=#<DwollaV2::Client id="..." secret="..." environment=:sandbox> access_token="..." expires_in=3600 scope="...">
+```
+```php
+/**
+ *  No support for this language yet. We recommend using an external REST client for making OAuth requests.
+ **/
 ```
 
-### Successful response
+#### Successful response
 
 ```noselect
 {
   "access_token": "SF8Vxx6H644lekdVKAAHFnqRCFy8WGqltzitpii6w2MVaZp1Nw",
   "token_type": "bearer",
-  "expires_in": 3600,
-  "scope": "AccountInfoFull|ManageAccount|Contacts|Transactions|Balance|Send|Request|Funding"
+  "expires_in": 3600
 }
 ```
 * * *
