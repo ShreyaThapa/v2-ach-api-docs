@@ -111,8 +111,8 @@ For more information on verified Customers, reference our [Customer verification
 | email | yes | string | Customer's email address.
 | ipAddress | no | string | Customer's IP address.
 | type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information.
-| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less.
-| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less.
+| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed.
+| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed.
 | city | yes | string | City of Customer's permanent residence.
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`.
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
@@ -665,13 +665,13 @@ A limited set of information can be updated on an existing created Customer. **N
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | email | no | string | Customer's email address.
-| ipAddress | no | string | Customer's IP address
-| address1 | no | string | First line of the street address of the customer's permanent residence
-| address2 | no | string | Second line of the street address of the customer's permanent residence
-| city | no | string | City of customer's peramanent residence
-| state | no | string | Two letter abbreviation of the state in which the customer resides.  e.g. `NY`
-| postalCode | no | string | Postal code of customer's permanent residence
-| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators.  e.g. `3334447777`
+| ipAddress | no | string | Customer's IP address.
+| address1 | no | string | First line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed.
+| address2 | no | string | Second line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed.
+| city | no | string | City of customer's peramanent residence.
+| state | no | string | Two letter abbreviation of the state in which the customer resides.  e.g. `NY`.
+| postalCode | no | string | Postal code of customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
+| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
 
 ##### Request parameters - verified Customer with type=business
 In addition to the table above, business verified Customers can update the following fields.
@@ -737,7 +737,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "email": "jdoe@nomail.com",
   "ipAddress": "10.10.10.10",
   "type": "personal",
-  "address1": "221 Corrected Address St..",
+  "address1": "221 Corrected Address St.",
   "address2": "Apt 201",
   "city": "San Francisco",
   "state": "CA",
@@ -760,7 +760,7 @@ $customer = $customersApi->updateCustomer($customerUrl, array (
   'email' => 'jdoe@nomail.com',
   'ipAddress' => '10.10.10.10',
   'type' => 'personal',
-  'address1' => '221 Corrected Address St..',
+  'address1' => '221 Corrected Address St.',
   'address2' => 'Apt 201',
   'city' => 'San Francisco',
   'state' => 'CA',
@@ -779,7 +779,7 @@ request_body = {
           "email" => "jdoe@nomail.com",
       "ipAddress" => "10.10.10.10",
            "type" => "personal",
-       "address1" => "221 Corrected Address St..",
+       "address1" => "221 Corrected Address St.",
        "address2" => "Apt 201",
            "city" => "San Francisco",
           "state" => "CA",
@@ -804,7 +804,7 @@ request_body = {
   "email": "jdoe@nomail.com",
   "ipAddress": "10.10.10.10",
   "type": "personal",
-  "address1": "221 Corrected Address St..",
+  "address1": "221 Corrected Address St.",
   "address2": "Apt 201",
   "city": "San Francisco",
   "state": "CA",
@@ -830,7 +830,7 @@ var requestBody = {
   email: "johndoe@dwolla.com",
   ipAddress: "10.10.10.10",
   type: "personal",
-  address1: "221 Corrected Address St..",
+  address1: "221 Corrected Address St.",
   address2: "Fl 8",
   city: "Ridgewood",
   state: "NY",
@@ -859,16 +859,16 @@ appToken
 | firstName | yes | string | Customer's first name. |
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
-| ipAddress | no | string | Customer's IP address |
+| ipAddress | no | string | Customer's IP address. |
 | type | yes | string | Either `personal` or `business`. If business, [see above](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
-| address1 | yes | string | First line of the street address of the Customer's permanent residence |
-| address2 | no | string | Second line of the street address of the Customer's permanent residence |
-| city | yes | string | City of Customer's permanent residence |
-| state | yes | string | Two letter abbreviation of the state in which the customer resides, e.g. `CA` |
-| postalCode | yes | string | Postal code of Customer's permanent residence |
-| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format |
-| ssn | yes | string | Customer's **full** Social Security Number |
-| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777` |
+| address1 | yes | string | First line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
+| address2 | no | string | Second line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
+| city | yes | string | City of Customer's permanent residence. |
+| state | yes | string | Two letter abbreviation of the state in which the customer resides, e.g. `CA`. |
+| postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
+| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. |
+| ssn | yes | string | Customer's **full** Social Security Number. |
+| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
 ### Errors
 | HTTP Status | Message |
