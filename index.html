@@ -2137,13 +2137,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less.</td>
+<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less.</td>
+<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -2909,43 +2909,43 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>ipAddress</td>
 <td>no</td>
 <td>string</td>
-<td>Customer&rsquo;s IP address</td>
+<td>Customer&rsquo;s IP address.</td>
 </tr>
 <tr>
 <td>address1</td>
 <td>no</td>
 <td>string</td>
-<td>First line of the street address of the customer&rsquo;s permanent residence</td>
+<td>First line of the street address of the customer&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Second line of the street address of the customer&rsquo;s permanent residence</td>
+<td>Second line of the street address of the customer&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
 <td>no</td>
 <td>string</td>
-<td>City of customer&rsquo;s peramanent residence</td>
+<td>City of customer&rsquo;s peramanent residence.</td>
 </tr>
 <tr>
 <td>state</td>
 <td>no</td>
 <td>string</td>
-<td>Two letter abbreviation of the state in which the customer resides.  e.g. <code class="prettyprint">NY</code></td>
+<td>Two letter abbreviation of the state in which the customer resides.  e.g. <code class="prettyprint">NY</code>.</td>
 </tr>
 <tr>
 <td>postalCode</td>
 <td>no</td>
 <td>string</td>
-<td>Postal code of customer&rsquo;s permanent residence</td>
+<td>Postal code of customer&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
 </tr>
 <tr>
 <td>phone</td>
 <td>no</td>
 <td>string</td>
-<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators.  e.g. <code class="prettyprint">3334447777</code></td>
+<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
 </tbody></table>
 <h5 id='request-parameters---verified-customer-with-typebusiness'>Request parameters - verified Customer with type=business</h5>
@@ -3036,7 +3036,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "email": "jdoe@nomail.com",
   "ipAddress": "10.10.10.10",
   "type": "personal",
-  "address1": "221 Corrected Address St..",
+  "address1": "221 Corrected Address St.",
   "address2": "Apt 201",
   "city": "San Francisco",
   "state": "CA",
@@ -3065,7 +3065,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'jdoe@nomail.com'</span><span class="p">,</span>
   <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'10.10.10.10'</span><span class="p">,</span>
   <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'personal'</span><span class="p">,</span>
-  <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'221 Corrected Address St..'</span><span class="p">,</span>
+  <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'221 Corrected Address St.'</span><span class="p">,</span>
   <span class="s1">'address2'</span> <span class="o">=&gt;</span> <span class="s1">'Apt 201'</span><span class="p">,</span>
   <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'San Francisco'</span><span class="p">,</span>
   <span class="s1">'state'</span> <span class="o">=&gt;</span> <span class="s1">'CA'</span><span class="p">,</span>
@@ -3090,7 +3090,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
           <span class="s2">"email"</span> <span class="o">=&gt;</span> <span class="s2">"jdoe@nomail.com"</span><span class="p">,</span>
       <span class="s2">"ipAddress"</span> <span class="o">=&gt;</span> <span class="s2">"10.10.10.10"</span><span class="p">,</span>
            <span class="s2">"type"</span> <span class="o">=&gt;</span> <span class="s2">"personal"</span><span class="p">,</span>
-       <span class="s2">"address1"</span> <span class="o">=&gt;</span> <span class="s2">"221 Corrected Address St.."</span><span class="p">,</span>
+       <span class="s2">"address1"</span> <span class="o">=&gt;</span> <span class="s2">"221 Corrected Address St."</span><span class="p">,</span>
        <span class="s2">"address2"</span> <span class="o">=&gt;</span> <span class="s2">"Apt 201"</span><span class="p">,</span>
            <span class="s2">"city"</span> <span class="o">=&gt;</span> <span class="s2">"San Francisco"</span><span class="p">,</span>
           <span class="s2">"state"</span> <span class="o">=&gt;</span> <span class="s2">"CA"</span><span class="p">,</span>
@@ -3121,7 +3121,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s">"email"</span><span class="p">:</span> <span class="s">"jdoe@nomail.com"</span><span class="p">,</span>
   <span class="s">"ipAddress"</span><span class="p">:</span> <span class="s">"10.10.10.10"</span><span class="p">,</span>
   <span class="s">"type"</span><span class="p">:</span> <span class="s">"personal"</span><span class="p">,</span>
-  <span class="s">"address1"</span><span class="p">:</span> <span class="s">"221 Corrected Address St.."</span><span class="p">,</span>
+  <span class="s">"address1"</span><span class="p">:</span> <span class="s">"221 Corrected Address St."</span><span class="p">,</span>
   <span class="s">"address2"</span><span class="p">:</span> <span class="s">"Apt 201"</span><span class="p">,</span>
   <span class="s">"city"</span><span class="p">:</span> <span class="s">"San Francisco"</span><span class="p">,</span>
   <span class="s">"state"</span><span class="p">:</span> <span class="s">"CA"</span><span class="p">,</span>
@@ -3153,7 +3153,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="na">email</span><span class="p">:</span> <span class="s2">"johndoe@dwolla.com"</span><span class="p">,</span>
   <span class="na">ipAddress</span><span class="p">:</span> <span class="s2">"10.10.10.10"</span><span class="p">,</span>
   <span class="na">type</span><span class="p">:</span> <span class="s2">"personal"</span><span class="p">,</span>
-  <span class="na">address1</span><span class="p">:</span> <span class="s2">"221 Corrected Address St.."</span><span class="p">,</span>
+  <span class="na">address1</span><span class="p">:</span> <span class="s2">"221 Corrected Address St."</span><span class="p">,</span>
   <span class="na">address2</span><span class="p">:</span> <span class="s2">"Fl 8"</span><span class="p">,</span>
   <span class="na">city</span><span class="p">:</span> <span class="s2">"Ridgewood"</span><span class="p">,</span>
   <span class="na">state</span><span class="p">:</span> <span class="s2">"NY"</span><span class="p">,</span>
@@ -3200,7 +3200,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <td>ipAddress</td>
 <td>no</td>
 <td>string</td>
-<td>Customer&rsquo;s IP address</td>
+<td>Customer&rsquo;s IP address.</td>
 </tr>
 <tr>
 <td>type</td>
@@ -3212,49 +3212,49 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>First line of the street address of the Customer&rsquo;s permanent residence</td>
+<td>First line of the street address of the Customer&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Second line of the street address of the Customer&rsquo;s permanent residence</td>
+<td>Second line of the street address of the Customer&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
 <td>yes</td>
 <td>string</td>
-<td>City of Customer&rsquo;s permanent residence</td>
+<td>City of Customer&rsquo;s permanent residence.</td>
 </tr>
 <tr>
 <td>state</td>
 <td>yes</td>
 <td>string</td>
-<td>Two letter abbreviation of the state in which the customer resides, e.g. <code class="prettyprint">CA</code></td>
+<td>Two letter abbreviation of the state in which the customer resides, e.g. <code class="prettyprint">CA</code>.</td>
 </tr>
 <tr>
 <td>postalCode</td>
 <td>yes</td>
 <td>string</td>
-<td>Postal code of Customer&rsquo;s permanent residence</td>
+<td>Postal code of Customer&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format.</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s <strong>full</strong> Social Security Number</td>
+<td>Customer&rsquo;s <strong>full</strong> Social Security Number.</td>
 </tr>
 <tr>
 <td>phone</td>
 <td>no</td>
 <td>string</td>
-<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code></td>
+<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='errors'>Errors</h3>
