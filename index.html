@@ -326,7 +326,17 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
   </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"retry"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-29T19:47:28.920Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
+</span></code></pre></div></div><h2 id='tools'>Tools</h2>
+<p>The following section will outline development tools you can take advantage of to assist in your integration with the Dwolla API. The available tools can help to improve your testing and development workflow, as well as aide in solving a difficult problem (e.g. UI generation) when integrating Dwolla into your application.</p>
+<h3 id='dwolla-hal-forms'>Dwolla Hal-Forms</h3>
+<p><a href="https://github.com/Dwolla/hal-forms">Dwolla HAL-Forms</a> is an extension of the <a href="http://stateless.co/hal_specification.html">HAL spec</a> and was created to describe how Dwolla represents forms in the API. The extension starts with the media type. The media type should be used as a profile link as part of the <code class="prettyprint">Accept</code> header of the request in conjunction with the Dwolla HAL style media type. By including these two media-type identifiers in the Accept header, the API knows that you’re looking for a form for the given resource.
+ ##### Example Accept header value
+<code class="prettyprint">application/vnd.dwolla.v1.hal+json; profile=&quot;https://github.com/dwolla/hal-forms&quot;</code></p>
+
+<p>The primary benefit is the ability to dynamically generate your UI based on the state of a particular resource. Your application can easily transition state without knowing Dwolla&rsquo;s business rules and what information needs to included in the actual request to transition state. When an <code class="prettyprint">&quot;edit-form&quot;</code> link relation is returned on the resource, then your application can follow the link by making a GET request to that resource, including the header shown above. The response will include a simple JSON response body that contains information on the HTTP method, message content-type, and the request parameters used when sending the request to the Dwolla API. <strong>Note:</strong> Currently, forms are only returned for creating &amp; editing customers, but we’re looking forward to expanding them across our existing and future endpoints.</p>
+
+<p>Reference <a href="https://github.com/Dwolla/hal-forms">the spec</a> for more information on the properties that can be returned in the Dwolla HAL-FORMS response. Or read a <a href="https://www.dwolla.com/updates/simplified-customer-onboarding-through-a-better-formed-api/">blog post</a> from one of our developers on building out this functionality. </p>
+
 <hr>
 
             <h1 id='sdk-support'>SDK Support</h1>
@@ -5630,7 +5640,7 @@ HTTP 200 OK
 <span class="p">]);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='retrieve-micro-deposits-details'>Retrieve micro-deposits details</h2>
-<p>This section shows how to retrieve the status of micro-deposits and check if pending verification for completed micro-deposits exists.</p>
+<p>This section shows how to retrieve the status of micro-deposits and check if micro-deposits are eligible for verification. If the status of micro-deposits is <code class="prettyprint">failed</code>, a <code class="prettyprint">failure</code> object will be returned in the response body which includes the ACH return code and description.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Funding</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/funding-sources/{id}/micro-deposits</code></p>
@@ -5664,20 +5674,104 @@ HTTP 200 OK
 <td>Pending micro-deposits exist.</td>
 </tr>
 </tbody></table>
-<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">GET https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8/micro-deposits
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
 
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8/micro-deposits",
-      "type": "micro-deposits"
+      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "micro-deposits"
+    },
+    "verify-micro-deposits": {
+      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "micro-deposits"
     }
   },
-  "status": "pending"
-  "created": "2016-07-25T19:46:35.000Z"
+  "created": "2016-12-30T20:56:53.000Z",
+  "status": "failed",
+  "failure": {
+    "code": "R03",
+    "description": "No Account/Unable to Locate Account"
+  }
 }
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+
+<span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">funding_source_url</span><span class="si">}</span><span class="s2">/micro-deposits"</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "failed"</span>
+
+<span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">FundingsourcesApi</span><span class="p">.</span><span class="nf">verify_micro_deposits_exist</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">)</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "failed"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+
+<span class="nv">$fsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$fundingSource</span> <span class="o">=</span> <span class="nv">$fsApi</span><span class="o">-&gt;</span><span class="na">verifyMicroDepositsExist</span><span class="p">(</span><span class="nv">$fundingSourceUrl</span><span class="p">);</span>
+<span class="nv">$fundingSource</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "failed"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+
+<span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/micro-deposits'</span> <span class="o">%</span> <span class="n">funding_source_url</span><span class="p">)</span>
+<span class="n">funding_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'failed'</span>
+
+<span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
+<span class="n">fs_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">FundingsourcesApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">fs_api</span><span class="o">.</span><span class="n">verify_micro_deposits_exist</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">)</span>
+<span class="n">funding_source</span><span class="o">.</span><span class="n">status</span> <span class="c"># =&gt; 'failed'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+
+<span class="nx">accountToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="sr">/micro-deposits`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "failed"</span>
 </code></pre></div></div><h2 id='remove-a-funding-source'>Remove a funding source</h2>
 <p>Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Funding</code> scope.</p>
