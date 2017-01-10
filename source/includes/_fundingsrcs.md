@@ -157,6 +157,7 @@ accountToken
   .get(fundingSourceUrl)
   .then(res => res.body.name); // => "Test checking account"
 ```
+
 ## Update a funding source
 
 This section covers how to update a `bank` funding source name.
@@ -430,7 +431,7 @@ $fsApi->microDeposits([
 
 ## Retrieve micro-deposits details
 
-This section shows how to retrieve the status of micro-deposits and check if pending verification for completed micro-deposits exists.
+This section shows how to retrieve the status of micro-deposits and check if micro-deposits are eligible for verification. If the status of micro-deposits is `failed`, a `failure` object will be returned in the response body which includes the ACH return code and description.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
@@ -451,21 +452,73 @@ This section shows how to retrieve the status of micro-deposits and check if pen
 
 ### Request and response
 
-```noselect
-GET https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8/micro-deposits
+```raw
+GET https://api.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
 
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8/micro-deposits",
-      "type": "micro-deposits"
+      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "micro-deposits"
+    },
+    "verify-micro-deposits": {
+      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "micro-deposits"
     }
   },
-  "status": "pending"
-  "created": "2016-07-25T19:46:35.000Z"
+  "created": "2016-12-30T20:56:53.000Z",
+  "status": "failed",
+  "failure": {
+    "code": "R03",
+    "description": "No Account/Unable to Locate Account"
+  }
 }
+```
+```ruby
+funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+funding_source = account_token.get "#{funding_source_url}/micro-deposits"
+funding_source.status # => "failed"
+
+# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
+funding_source = DwollaSwagger::FundingsourcesApi.verify_micro_deposits_exist(funding_source_url)
+funding_source.status # => "failed"
+```
+```php
+<?php
+$fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fsApi->verifyMicroDepositsExist($fundingSourceUrl);
+$fundingSource->status; # => "failed"
+?>
+```
+```python
+funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+funding_source = account_token.get('%s/micro-deposits' % funding_source_url)
+funding_source.body['status'] # => 'failed'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+fs_api = dwollaswagger.FundingsourcesApi(client)
+funding_source = fs_api.verify_micro_deposits_exist(funding_source_url)
+funding_source.status # => 'failed'
+```
+```javascript
+var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+
+accountToken
+  .get(`${fundingSourceUrl}/micro-deposits`)
+  .then(res => res.body.status); // => "failed"
 ```
 
 ## Remove a funding source
