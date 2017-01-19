@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla API v2 documentation. The API v2 centers around our premium product, [White Label](https://www.dwolla.com/white-label). Some co-branded experiences and capabilities have been and will continue to be migrated from the legacy [API v1](https://docs.dwolla.com/) (no longer supported). For more information on transitioning v1 to v2, see our [migration guide](https://developers.dwolla.com/guides/migrate-to-v2/).
+Welcome to the Dwolla [Access API](https://dwolla.com/access-api) documentation. The Access API centers around our premium product, [White Label](https://www.dwolla.com/white-label). Some co-branded experiences and capabilities have been and will continue to be migrated from the legacy [API v1](https://docs.dwolla.com/) (no longer supported). For more information on transitioning v1 to the Access API, see our [migration guide](https://developers.dwolla.com/guides/migrate-to-v2/).
 
 Officially maintained SDKs are available for [Ruby](https://github.com/Dwolla/dwolla-v2-ruby), [Node.js](https://github.com/Dwolla/dwolla-v2-node), and [Python](https://github.com/Dwolla/dwolla-v2-python) with support for PHP coming at a later date. Reference the [SDK support](https://docsv2.dwolla.com/#sdk-support) section in our API docs for more information on getting started.
 
