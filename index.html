@@ -109,11 +109,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla API v2 documentation. The API v2 centers around our premium product, <a href="https://www.dwolla.com/white-label">White Label</a>. Some co-branded experiences and capabilities have been and will continue to be migrated from the legacy <a href="https://docs.dwolla.com/">API v1</a> (no longer supported). For more information on transitioning v1 to v2, see our <a href="https://developers.dwolla.com/guides/migrate-to-v2/">migration guide</a>.</p>
-
-<p>Officially maintained SDKs are available for <a href="https://github.com/Dwolla/dwolla-v2-ruby">Ruby</a>, <a href="https://github.com/Dwolla/dwolla-v2-node">Node.js</a>, and <a href="https://github.com/Dwolla/dwolla-v2-python">Python</a> with support for PHP coming at a later date. Reference the <a href="https://docsv2.dwolla.com/#sdk-support">SDK support</a> section in our API docs for more information on getting started.</p>
-
-<p>Please note: white label is a premium product that cannot be activated in our production environment until you’ve received our approval to use it and have entered into an agreement with us. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact a sales representative</a> to find a package that best meets your needs.</p>
+<p>Welcome to the Dwolla <a href="https://dwolla.com/access-api">Access API</a> documentation. Connect your software to the banking infrastructure. The Access API is <a href="https://www.dwolla.com/white-label">White Label</a> by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy <a href="https://docs.dwolla.com/">API v1</a> (no longer supported). For more information on transitioning v1 to the Access API, see our <a href="https://developers.dwolla.com/guides/migrate-to-v2/">migration guide</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
@@ -340,7 +336,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <hr>
 
             <h1 id='sdk-support'>SDK Support</h1>
-<p>The Dwolla API V2 has officially maintained software packages to make it easier for developers to get started with making requests against the API. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.</p>
+<p>The Dwolla Access API has officially maintained software packages to make it easier for developers to get started with making requests against the API. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.</p>
 
 <p>Officially maintained SDKs are available for Ruby, Node.js, and Python.</p>
 
@@ -574,7 +570,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>ManageCustomers</td>
-<td>Includes create Customers, manage their funding sources, and allow related money movement. <br/> <strong>Note:</strong> This is a privileged scope available within our <a href="https://www.dwolla.com/white-label?b=apidocs">White Label API</a>(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. <a href="https://www.dwolla.com/contact?b=apidocs">Contact sales</a> to learn more.</td>
+<td>Includes create Customers, manage their funding sources, and allow related money movement. <br/> <strong>Note:</strong> This is a privileged scope available within our <a href="https://www.dwolla.com/white-label?b=apidocs">Access API</a>(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. <a href="https://www.dwolla.com/contact?b=apidocs">Contact sales</a> to learn more.</td>
 </tr>
 </tbody></table>
 <h4 id='example-oauth-flow'>Example OAuth flow</h4><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
