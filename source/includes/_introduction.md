@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla [Access API](https://dwolla.com/access-api) documentation. Connect your software to the banking infrastructure. The Access API is [White Label](https://www.dwolla.com/white-label) by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy [API v1](https://docs.dwolla.com/) (no longer supported). For more information on transitioning v1 to the Access API, see our [migration guide](https://developers.dwolla.com/guides/migrate-to-v2/).
+Welcome to the Dwolla [Access API](https://dwolla.com/access-api) documentation. Connect your software to the banking infrastructure. The Access API is [white label](https://www.dwolla.com/white-label) by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy [API v1](https://docs.dwolla.com/) (no longer supported). For more information on transitioning v1 to the Access API, see our [migration guide](https://developers.dwolla.com/guides/migrate-to-v2/).
 
 ## Making requests
 
