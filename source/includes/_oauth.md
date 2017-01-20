@@ -54,7 +54,7 @@ Applications may request the following permission scopes when generating an acce
 | Transactions | Access the user's transfer data. |
 | Send | Transfer money on the user's behalf. |
 | Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources. |
-| ManageCustomers | Includes create Customers, manage their funding sources, and allow related money movement. <br/> **Note:** This is a privileged scope available within our [White Label API](https://www.dwolla.com/white-label?b=apidocs)(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. [Contact sales](https://www.dwolla.com/contact?b=apidocs) to learn more. |
+| ManageCustomers | Includes create Customers, manage their funding sources, and allow related money movement. <br/> **Note:** This is a privileged scope available within our [Access API](https://www.dwolla.com/white-label?b=apidocs)(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. [Contact sales](https://www.dwolla.com/contact?b=apidocs) to learn more. |
 
 #### Example OAuth flow
 
