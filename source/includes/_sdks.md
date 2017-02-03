@@ -32,10 +32,10 @@ Let's fetch a page of customers:
 ```rubynoselect
 require 'dwolla_v2'
 
-# see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret
-consumer_key = "..."
-consumer_secret = "..."
-$dwolla = DwollaV2::Client.new(id: consumer_key, secret: consumer_secret) do |config|
+# Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.
+app_key = "..."
+app_secret = "..."
+$dwolla = DwollaV2::Client.new(key: app_key, secret: app_secret) do |config|
   config.environment = :sandbox # optional - defaults to production
 end
 
@@ -89,11 +89,11 @@ Let's list some `Customer` objects:
 ```pythonnoselect
 import dwollav2
 
-# you can find your consumer key and secret at dwolla.com/applications
-consumer_key = '...'
-consumer_secret = '...'
-client = dwollav2.Client(id = consumer_key,
-                         secret = consumer_secret,
+# Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.
+app_key = '...'
+app_secret = '...'
+client = dwollav2.Client(key = app_key,
+                         secret = app_secret,
                          environment = 'sandbox') # optional - defaults to production
 
 app_token = client.Auth.client()
@@ -199,12 +199,12 @@ Let's fetch a page of customers:
 ```javascriptnoselect
 const dwolla = require('dwolla-v2');
 
-// see dwolla.com/applications or uat.dwolla.com/applications for your consumer key and secret
-const consumerKey = '...';
-const consumerSecret = '...';
+// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.
+const appKey = '...';
+const appSecret = '...';
 const client = new dwolla.Client({
-  id: consumerKey,
-  secret: consumerSecret,
+  key: appKey,
+  secret: appSecret,
   environment: 'sandbox' // optional - defaults to production
 });
 
