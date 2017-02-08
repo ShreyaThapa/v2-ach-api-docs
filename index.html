@@ -360,10 +360,10 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-rubynohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rubynohide" data-lang="rubynohide"><span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
 
-<span class="c1"># see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">"..."</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
-<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="n">consumer_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">consumer_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="c1"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="n">app_key</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="n">app_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">key: </span><span class="n">app_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">app_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="p">.</span><span class="nf">environment</span> <span class="o">=</span> <span class="ss">:sandbox</span> <span class="c1"># optional - defaults to production</span>
 <span class="k">end</span>
 
@@ -394,11 +394,11 @@ information is available on the project&rsquo;s README.</p>
 <p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
 <div class="code-snippet js-code-snippet language-pythonnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-pythonnohide" data-lang="pythonnohide"><span class="kn">import</span> <span class="nn">dwollav2</span>
 
-<span class="c"># you can find your consumer key and secret at dwolla.com/applications</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s">'...'</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s">'...'</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="n">consumer_key</span><span class="p">,</span>
-                         <span class="n">secret</span> <span class="o">=</span> <span class="n">consumer_secret</span><span class="p">,</span>
+<span class="c"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="n">app_key</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">app_secret</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">app_key</span><span class="p">,</span>
+                         <span class="n">secret</span> <span class="o">=</span> <span class="n">app_secret</span><span class="p">,</span>
                          <span class="n">environment</span> <span class="o">=</span> <span class="s">'sandbox'</span><span class="p">)</span> <span class="c"># optional - defaults to production</span>
 
 <span class="n">app_token</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="o">.</span><span class="n">client</span><span class="p">()</span>
@@ -456,12 +456,12 @@ mvn install package
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="kr">const</span> <span class="nx">dwolla</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dwolla-v2'</span><span class="p">);</span>
 
-<span class="c1">// see dwolla.com/applications or uat.dwolla.com/applications for your consumer key and secret</span>
-<span class="kr">const</span> <span class="nx">consumerKey</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
-<span class="kr">const</span> <span class="nx">consumerSecret</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
+<span class="c1">// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="kr">const</span> <span class="nx">appKey</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">appSecret</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">dwolla</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
-  <span class="na">id</span><span class="p">:</span> <span class="nx">consumerKey</span><span class="p">,</span>
-  <span class="na">secret</span><span class="p">:</span> <span class="nx">consumerSecret</span><span class="p">,</span>
+  <span class="na">key</span><span class="p">:</span> <span class="nx">appKey</span><span class="p">,</span>
+  <span class="na">secret</span><span class="p">:</span> <span class="nx">appSecret</span><span class="p">,</span>
   <span class="na">environment</span><span class="p">:</span> <span class="s1">'sandbox'</span> <span class="c1">// optional - defaults to production</span>
 <span class="p">});</span>
 
@@ -507,7 +507,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application key and secret.</td>
 </tr>
 <tr>
 <td>response_type</td>
@@ -570,7 +570,7 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>ManageCustomers</td>
-<td>Includes create Customers, manage their funding sources, and allow related money movement. <br/> <strong>Note:</strong> This is a privileged scope available within our <a href="https://www.dwolla.com/white-label?b=apidocs">Access API</a>(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. <a href="https://www.dwolla.com/contact?b=apidocs">Contact sales</a> to learn more.</td>
+<td>Includes create Customers, manage their funding sources, and allow related money movement. <br/> <strong>Note:</strong> This is a privileged scope available within our <a href="https://www.dwolla.com/access-api?b=apidocs">Access API</a>(v2). While fully available in our testing environment, Access API integrations will not be permitted to launch in production without first agreeing to a paid contract. <a href="https://www.dwolla.com/contact?b=apidocs">Contact sales</a> to learn more.</td>
 </tr>
 </tbody></table>
 <h4 id='example-oauth-flow'>Example OAuth flow</h4><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -594,11 +594,11 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">dwollav2</span>
 
-<span class="c"># you can find your consumer key and secret at dwolla.com/applications</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s">'...'</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s">'...'</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="n">consumer_key</span><span class="p">,</span>
-                         <span class="n">secret</span> <span class="o">=</span> <span class="n">consumer_secret</span><span class="p">,</span>
+<span class="c"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="n">app_key</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">app_secret</span> <span class="o">=</span> <span class="s">'...'</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">app_key</span><span class="p">,</span>
+                         <span class="n">secret</span> <span class="o">=</span> <span class="n">app_secret</span><span class="p">,</span>
                          <span class="n">environment</span> <span class="o">=</span> <span class="s">'sandbox'</span><span class="p">)</span> <span class="c"># optional - defaults to production</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">b2a_hex</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
@@ -635,10 +635,10 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># config/initializers/dwolla.rb</span>
 <span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
 
-<span class="c1"># see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret</span>
-<span class="n">consumer_key</span> <span class="o">=</span> <span class="s2">"..."</span>
-<span class="n">consumer_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
-<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">id: </span><span class="n">consumer_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">consumer_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="c1"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="n">app_key</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="n">app_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
+<span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">key: </span><span class="n">app_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">app_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="p">.</span><span class="nf">environment</span> <span class="o">=</span> <span class="ss">:sandbox</span> <span class="c1"># optional - defaults to production</span>
 <span class="k">end</span>
 
@@ -693,13 +693,13 @@ https://uat.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application key.</td>
 </tr>
 <tr>
 <td>client_secret</td>
 <td>yes</td>
 <td>string</td>
-<td>Application secret.</td>
+<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
 </tr>
 <tr>
 <td>code</td>
@@ -801,13 +801,13 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application key.</td>
 </tr>
 <tr>
 <td>client_secret</td>
 <td>yes</td>
 <td>string</td>
-<td>Application secret.</td>
+<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
 </tr>
 <tr>
 <td>refresh_token</td>
@@ -891,7 +891,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
 </span></code></pre></div></div><h2 id='application-access-token'>Application access token</h2>
 <p>Some endpoints require an <em>application access token</em>, which is different from a user <strong>account access token</strong>.  Application access tokens don&rsquo;t require any particular user&rsquo;s authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.</p>
 
-<p><strong>Note:</strong> If an application has the <code class="prettyprint">ManageCustomers</code> scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type</p>
+<p><strong>Note:</strong> If an application has the <code class="prettyprint">ManageCustomers</code> scope enabled, it can also be used to access the API for Access API Customer related functions. Application tokens can be created using the client_credentials OAuth grant type</p>
 <h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -911,13 +911,13 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application key.</td>
 </tr>
 <tr>
 <td>client_secret</td>
 <td>yes</td>
 <td>string</td>
-<td>Application secret.</td>
+<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
 </tr>
 <tr>
 <td>grant_type</td>
@@ -1103,8 +1103,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>With a transfer of money, at least one party must complete the identity verification process through creation of a Traditional CIP Verified Dwolla account, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Dwolla user <code class="prettyprint">Account</code> is sending funds to or receiving funds from your <code class="prettyprint">Account</code>, the <code class="prettyprint">Account</code> can remain unverified because your account is already verified. However, if you need to transfer funds between your users, at least one of them will need to have a Traditional CIP Verified Dwolla account.</p>
 
 <p>For more information on Traditional Dwolla accounts, both Tradtional CIP Verified and Dwolla Direct, reference the <a href="https://developers.dwolla.com/resources/account-types/traditional-accounts.html">account types</a> resource article.</p>
-<h3 id='migrating-dwolla-user-accounts-to-white-label-customers'>Migrating Dwolla user Accounts to White Label Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to White Label <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate White Label Customer upon completion of the migration. To learn more about upgrading to White Label, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<h3 id='migrating-dwolla-user-accounts-to-access-api-customers'>Migrating Dwolla user Accounts to Access API Customers</h3>
+<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='account-links'>Account links</h3>
 <table><thead>
 <tr>
@@ -1130,7 +1130,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customers</td>
-<td>(optional) If this link exists, this account can create and manage white label Customers.</td>
+<td>(optional) If this link exists, this account can create and manage Access API Customers.</td>
 </tr>
 <tr>
 <td>send</td>
@@ -1245,7 +1245,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">account</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">account_url</span>
 <span class="n">account</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe"</span>
 
@@ -1292,7 +1292,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">accountUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane Doe'</span>
@@ -1340,7 +1340,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/white-label">White Label</a> partners.</td>
+<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/access-api">Access API</a> partners.</td>
 </tr>
 </tbody></table>
 <h3 id='errors'>Errors</h3>
@@ -1486,7 +1486,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">funding_sources</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/funding-sources"</span>
 <span class="n">funding_sources</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe's Checking"</span>
 
@@ -1533,7 +1533,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/funding-sources`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'ABC Bank Checking'</span>
@@ -1734,7 +1734,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/transfers'</span> <span class="o">%</span> <span class="n">account_url</span><span class="p">)</span>
 <span class="n">transfers</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; "processed"</span>
 
@@ -1752,7 +1752,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/transfers`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">.[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processed'</span>
@@ -1894,7 +1894,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/mass-payments'</span> <span class="o">%</span> <span class="n">account_url</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">transfers</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; "complete"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -1907,7 +1907,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/mass-payments`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'complete'</span>
@@ -1916,15 +1916,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='customers'>Customers</h1>
 <p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla account via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an OAuth access token with the <code class="prettyprint">ManageCustomers</code> OAuth scope is required.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/white-label">Dwolla White Label</a>, a premium product that only approved partners may access in production. To learn more about entering into a White Label agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/access-api">the Access API</a>, a premium product that only approved partners may access in production. To learn more about entering into an Access API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 </li></ol><h3 id='verified-and-unverified-customers'>Verified and unverified Customers</h3>
 <p>With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.</p>
 
-<p>For more information on white label account types, reference the <a href="https://developers.dwolla.com/resources/account-types/white-label-accounts.html">account types</a> resource article.</p>
+<p>For more information on Access API account types, reference the <a href="https://developers.dwolla.com/resources/account-types/access-api-accounts.html">account types</a> resource article.</p>
 <h3 id='receive-only'>Receive-only</h3>
 <p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla <code class="prettyprint">Account</code> that created it.</p>
-<h3 id='migrating-dwolla-user-accounts-to-white-label-customers'>Migrating Dwolla user Accounts to White Label Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to White Label <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate White Label Customer upon completion of the migration. To learn more about upgrading to White Label, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<h3 id='migrating-dwolla-user-accounts-to-access-api-customers'>Migrating Dwolla user Accounts to Access API Customers</h3>
+<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='customer-links'>Customer links</h3>
 <table><thead>
 <tr>
@@ -3542,7 +3542,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='create-an-on-demand-transfer-authorization'>Create an on-demand transfer authorization</h2>
 <p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#new-funding-source-for-a-customer">new Customer funding source</a>.</p>
 
-<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our White Label product and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
+<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Access API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/on-demand-authorizations</code></p>
@@ -3628,7 +3628,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='create-a-funding-source-for-a-customer'>Create a funding source for a customer</h2>
 <p>There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer&rsquo;s bank account information and pass it to Dwolla via the <a href="#new-funding-source-for-a-customer">new Customer funding source</a> endpoint, or you can send the Customer through the the <a href="#instant-account-verification-iav">Instant Account Verification</a> (IAV) flow which will add and verify a bank account within seconds.</p>
 
-<p>Before a Dwolla account or white label Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
+<p>Before a Dwolla account or Access API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
 <h3 id='new-funding-source-for-a-customer'>New funding source for a customer</h3>
 <p>Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>ManageCustomers</code> scope.</p>
@@ -3677,7 +3677,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/white-label">White Label</a> partners.</td>
+<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/access-api">Access API</a> partners.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
@@ -5968,7 +5968,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h2 id='initiate-a-transfer'>Initiate a transfer</h2>
-<p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or White Label <a href="#customers">Customer</a> resource.</p>
+<p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Access API <a href="#customers">Customer</a> resource.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/transfers</code></p>
@@ -6009,7 +6009,7 @@ HTTP 200 OK
 <td>clearing</td>
 <td>no</td>
 <td>object</td>
-<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for Dwolla <a href="https://www.dwolla.com/white-label">White Label</a> partners. Next-day ACH functionality must be enabled.</td>
+<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/access-api">Access API</a> partners. Next-day ACH functionality must be enabled.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
@@ -6103,7 +6103,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h3 id='request-and-response-using-same-day-ach'>Request and response (using Same Day ACH)</h3>
-<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a White Label Customer&rsquo;s bank account, part of Dwolla&rsquo;s premium White Label service. </p>
+<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to an Access API Customer&rsquo;s bank account, part of Dwolla&rsquo;s Access API. </p>
 <div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6175,7 +6175,7 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 <span class="p">}</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"transfers"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">transfer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
 
@@ -6247,7 +6247,7 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 <span class="p">}</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'transfers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">transfer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
 
@@ -6285,7 +6285,7 @@ Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'transfers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
@@ -6371,7 +6371,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">transfer_url</span>
 <span class="n">transfer</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
 
@@ -6405,7 +6405,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">fees</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'stats'</span><span class="p">]</span> <span class="c"># =&gt; 'pending'</span>
 
@@ -6423,7 +6423,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">transferUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'pending'</span>
@@ -6536,7 +6536,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/fees"</span>
 <span class="n">fees</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6561,7 +6561,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/fees'</span> <span class="o">%</span> <span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">fees</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6574,7 +6574,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/fees`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
@@ -6633,7 +6633,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="c1"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">failure</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/failure"</span>
 <span class="n">failure</span><span class="p">.</span><span class="nf">code</span> <span class="c1"># =&gt; "R1"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6658,7 +6658,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="c"># For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="n">failure</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/failure'</span> <span class="o">%</span> <span class="n">transfer_url</span><span class="p">)</span>
 <span class="n">failure</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'code'</span><span class="p">]</span> <span class="c"># =&gt; 'R1'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -6671,7 +6671,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/failure`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// =&gt; 'R1'</span>
@@ -7091,7 +7091,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'mass-payments'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
@@ -7204,7 +7204,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processing'</span>
@@ -7391,7 +7391,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">massPaymentUrl</span><span class="p">}</span><span class="sr">/items`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
@@ -7521,7 +7521,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentItemUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span><span class="p">;</span>
 
-<span class="c1">// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentItemUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'success'</span>
@@ -8119,7 +8119,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are a white label partner, you will use these events to notify your customers via email as described in the white label terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are an Access API partner, you will use these events to notify your customers via email as described in the Access API terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
