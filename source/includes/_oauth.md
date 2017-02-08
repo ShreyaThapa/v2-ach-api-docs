@@ -54,7 +54,7 @@ Applications may request the following permission scopes when generating an acce
 | Transactions | Access the user's transfer data. |
 | Send | Transfer money on the user's behalf. |
 | Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources. |
-| ManageCustomers | Includes create Customers, manage their funding sources, and allow related money movement. <br/> **Note:** This is a privileged scope available within our [Access API](https://www.dwolla.com/white-label?b=apidocs)(v2). While fully available in our testing environment, White Label integrations will not be permitted to launch in production without first agreeing to a paid contract. [Contact sales](https://www.dwolla.com/contact?b=apidocs) to learn more. |
+| ManageCustomers | Includes create Customers, manage their funding sources, and allow related money movement. <br/> **Note:** This is a privileged scope available within our [Access API](https://www.dwolla.com/access-api?b=apidocs)(v2). While fully available in our testing environment, Access API integrations will not be permitted to launch in production without first agreeing to a paid contract. [Contact sales](https://www.dwolla.com/contact?b=apidocs) to learn more. |
 
 #### Example OAuth flow
 
@@ -274,7 +274,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwv
 
 Some endpoints require an *application access token*, which is different from a user **account access token**.  Application access tokens don't require any particular user's authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.
 
-**Note:** If an application has the `ManageCustomers` scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type
+**Note:** If an application has the `ManageCustomers` scope enabled, it can also be used to access the API for Access API Customer related functions. Application tokens can be created using the client_credentials OAuth grant type
 
 #### HTTP request
 
