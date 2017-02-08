@@ -36,7 +36,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 ## Initiate a transfer
 
-This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or White Label [Customer](#customers) resource.
+This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Access API [Customer](#customers) resource.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
@@ -52,7 +52,7 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for Dwolla [White Label](https://www.dwolla.com/white-label) partners. Next-day ACH functionality must be enabled.
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Access API](https://www.dwolla.com/access-api) partners. Next-day ACH functionality must be enabled.
 
 ### Source and destination types
 
@@ -101,7 +101,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 | 403 | OAuth token does not have Send scope. |
 
 ### Request and response (using Same Day ACH)
-The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a White Label Customer's bank account, part of Dwolla's premium White Label service. 
+The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to an Access API Customer's bank account, part of Dwolla's Access API. 
 
 ```raw
 POST https://api.dwolla.com/transfers
@@ -161,7 +161,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.post "transfers", request_body
 transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 
@@ -221,7 +221,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.post('transfers', request_body)
 transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 
@@ -253,7 +253,7 @@ var requestBody = {
   }
 };
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .post('transfers', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
@@ -318,7 +318,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.get transfer_url
 transfer.status # => "pending"
 
@@ -340,7 +340,7 @@ $transfer->status; # => "pending"
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get(transfer_url)
 fees.body['stats'] # => 'pending'
 
@@ -352,7 +352,7 @@ transfer.status # => 'pending'
 ```javascript
 var transferUrl = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(transferUrl)
   .then(res => res.body.status); // => 'pending'
@@ -443,7 +443,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get "#{transfer_url}/fees"
 fees.total # => 2
 ```
@@ -456,14 +456,14 @@ fees.total # => 2
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get('%s/fees' % transfer_url)
 fees.body['total'] # => 2
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${transferUrl}/fees`)
   .then(res => res.body.total); // => 2
@@ -508,7 +508,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 failure = account_token.get "#{transfer_url}/failure"
 failure.code # => "R1"
 ```
@@ -521,14 +521,14 @@ failure.code # => "R1"
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 failure = account_token.get('%s/failure' % transfer_url)
 failure.body['code'] # => 'R1'
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${transferUrl}/failure`)
   .then(res => res.body.code); // => 'R1'

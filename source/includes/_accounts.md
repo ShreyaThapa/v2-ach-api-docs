@@ -8,8 +8,8 @@ With a transfer of money, at least one party must complete the identity verifica
 
 For more information on Traditional Dwolla accounts, both Tradtional CIP Verified and Dwolla Direct, reference the [account types](https://developers.dwolla.com/resources/account-types/traditional-accounts.html) resource article.
 
-### Migrating Dwolla user Accounts to White Label Customers
-Dwolla offers a seamless process for migrating existing user [Accounts](#accounts) managed via OAuth on your platform to White Label [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate White Label Customer upon completion of the migration. To learn more about upgrading to White Label, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
+### Migrating Dwolla user Accounts to Access API Customers
+Dwolla offers a seamless process for migrating existing user [Accounts](#accounts) managed via OAuth on your platform to Access API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
 
 ### Account links
 | Link | Description|
@@ -18,7 +18,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | receive | Follow the link to create a transfer to this Account.
 | funding-sources | GET this link to list the Accounts's funding sources.
 | transfers | GET this link to list the Account's transfers
-| customers | (optional) If this link exists, this account can create and manage white label Customers.
+| customers | (optional) If this link exists, this account can create and manage Access API Customers.
 | send | Follow the link to create a transfer to this Account.
 
 ```noselect
@@ -106,7 +106,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 account = account_token.get account_url
 account.name # => "Jane Doe"
 
@@ -135,7 +135,7 @@ print(account.name) # => Jane Doe
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(accountUrl)
   .then(res => res.body.name); // => 'Jane Doe'
@@ -161,7 +161,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 | routingNumber | yes | string | The bank account's routing number. |
 | type | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. |
-| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [White Label](https://www.dwolla.com/white-label) partners. |
+| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
 
 ### Errors
 | HTTP Status | Message |
@@ -270,7 +270,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 funding_sources = account_token.get "#{account_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe's Checking"
 
@@ -299,7 +299,7 @@ funding_sources._embedded['funding-sources'][0]['name'] # => Jane Doe’s Checki
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/funding-sources`)
   .then(res => res.body._embedded['funding-sources'][0].name); // => 'ABC Bank Checking'
@@ -427,7 +427,7 @@ $transfers->_embedded->transfers[0]->status; # => "processed"
 account_url = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfers = account_token.get('%s/transfers' % account_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => "processed"
 
@@ -439,7 +439,7 @@ transfers._embedded['transfers'][0]['status'] # => "processed"
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/transfers`)
   .then(res => res.body._embedded.transfers.[0].status); // => 'processed'
@@ -532,14 +532,14 @@ mass_payments._embedded['mass-payments'][0].status # => "complete"
 account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfers = account_token.get('%s/mass-payments' % account_url, limit = 10)
 transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/mass-payments`)
   .then(res => res.body._embedded['mass-payments'][0].status); // => 'complete'
