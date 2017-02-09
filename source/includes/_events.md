@@ -37,7 +37,6 @@ When the state of a resource changes, we create a new event resource to record t
 |------------------|---------------------------------------------------------------------------------------------------------------|
 | funding_source_added | A funding source was added to a Dwolla account. |
 | funding_source_removed |  A funding source was removed from a Dwolla account. |
-| funding_source_unverified | A funding source was marked as `unverified`. |
 | funding_source_verified | A funding source was marked as `verified`. |
 | microdeposits_added | Two <=10¢ transfers to a Dwolla account’s linked bank account were initiated. |
 | microdeposits_failed | The two <=10¢ transfers to a Dwolla account’s linked bank account failed to clear successfully. |
@@ -54,6 +53,7 @@ When the state of a resource changes, we create a new event resource to record t
 | transfer_completed | A transfer has cleared successfully. |
 | mass_payment_created | A mass payment was created. |
 | mass_payment_completed | A mass payment completed. |
+| mass_payment_cancelled | A created and deferred mass payment was cancelled. |
 | account_suspended | An account was suspended. |
 | account_activated | A Dwolla account moves from deactive or suspended to active state of verification. |
 
@@ -71,7 +71,6 @@ When the state of a resource changes, we create a new event resource to record t
 | customer_activated | A Customer moves from deactive or suspended to active state of verification. |
 | customer_funding_source_added | A funding source was added to a Customer. |
 | customer_funding_source_removed | A funding source was removed from a Customer. |
-| customer_funding_source_unverified | A Customer’s funding source was marked as unverified. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
 | customer_microdeposits_added | Two <=10¢ transfers to a Customer’s linked bank account were initiated. |
 | customer_microdeposits_failed | The two <=10¢ transfers to a Customer’s linked bank account failed to clear successfully. |
@@ -85,8 +84,9 @@ When the state of a resource changes, we create a new event resource to record t
 | customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance.|
 | customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance.|
-| customer_mass_payment_created | A verified Customer's mass payment was created. |
-| customer_mass_payment_completed | A verified Customer's mass payment completed. |
+| customer_mass_payment_created | A Verified Customer's mass payment was created. |
+| customer_mass_payment_completed | A Verified Customer's mass payment completed. |
+| customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
 
 ## List events
 

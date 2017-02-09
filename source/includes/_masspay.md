@@ -2,7 +2,7 @@
 
 Dwolla MassPay allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
 
-Your mass payment will then be queued and processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.
+Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.
 
 MassPay offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. This benefit is the fact that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur a debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
 
@@ -11,7 +11,7 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 | Parameter | Description |
 |-----------|------------|
 | id | Mass payment unique identifier |
-|status | Either `pending`, `processing`, or `complete` |
+|status | Either `deferred`: A created mass payment that can be processed at a later time. `pending`: A mass payment that is pending and awaiting processing. A mass payment has a pending status for a brief period of time and cannot be cancelled. `processing`:  A mass payment that is processing. `complete`: A mass payment successfully completed processing. |
 |created | ISO-8601 timestamp |
 |metadata | A metadata JSON object |
 
@@ -28,7 +28,10 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 
 ## Initiate a mass payment
 
-This section covers how to initiate a mass payment from an [Account](#accounts) or verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.
+This section covers how to initiate a mass payment from an [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.
+
+#### Deferred mass payment
+A mass payment can be created with a status of `deferred`, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you'll [update the mass payment](https://docsv2.dwolla.com/#update-a-mass-payment) with a status of `pending`. A deferred mass payment can be cancelled by updating the mass payment with a status of `cancelled`.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
@@ -43,6 +46,7 @@ This section covers how to initiate a mass payment from an [Account](#accounts) 
 | _links | yes | object | A _links JSON object describing the desired `source` of a mass payment. [See below](#source-and-destination-values) for possible values for `source` and `destination`. |
 | items | yes | array | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item) |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
+| status | no | string | Acceptable value is: `deferred`. |
 
 ### Source and destination values
 
@@ -94,7 +98,7 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of 
 ### Request and response (transfer from Account to Customers)
 
 ```raw
-POST /mass-payments
+POST https://api-uat.dwolla.com/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -318,6 +322,79 @@ var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc
 accountToken
   .get(massPaymentUrl)
   .then(res => res.body.status); // => 'processing'
+```
+
+## Update a mass payment
+
+This section covers how to update a mass payment's status to `pending` which triggers processing on a created and deferred mass payment, or `cancelled` which cancels a created and deferred mass payment.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
+
+### HTTP request
+`POST https://api.dwolla.com/mass-payments/{id}`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | id of mass payment to update. |
+| status | yes | string | Either `pending` or `cancelled` depending on the action you want to take on a deferred mass payment. |
+
+### HTTP Status and Error Codes
+| HTTP Status | Code | Description |
+|--------------|-------------|-------------------|
+| 404 | NotFound | Mass payment not found. |
+| 400 | ValidationError | Invalid status. Allowed types are pending, cancelled. |
+
+### Request and response
+
+```raw
+POST https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c
+Accept: application/vnd.dwolla.v1.hal+json
+Content-Type: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "status": "pending"
+}
+```
+```ruby
+mass_payment_url = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+request_body = {
+      "status" => "pending",
+}
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payment = account_token.post "#{mass_payment_url}", request_body
+mass_payment.status # => "pending"
+```
+```php
+/**
+ *  No example for this language yet. Coming soon.
+ **/
+```
+```python
+mass_payment_url = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+request_body = {
+  "status": "pending"
+}
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+mass_payments = account_token.post('mass-payments', request_body)
+mass_payments.body['status'] # => 'pending'
+```
+```javascript
+var massPaymentUrl = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var requestBody = {
+  status: "pending"
+};
+
+accountToken
+  .post(massPaymentUrl, requestBody)
+  .then(res => res.body.status); // => "pending"
 ```
 
 ## List items for a mass payment
