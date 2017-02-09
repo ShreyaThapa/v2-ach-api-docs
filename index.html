@@ -6743,7 +6743,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             <h1 id='masspay'>MassPay</h1>
 <p>Dwolla MassPay allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user&rsquo;s specified funding source and processed asynchronously upon submission.</p>
 
-<p>Your mass payment will then be queued and processed.  As the service processes your mass payment, each <code class="prettyprint">item</code> is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.</p>
+<p>Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each <code class="prettyprint">item</code> is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.</p>
 
 <p>MassPay offers a significant advantage over repeatedly calling the <a href="#transfers">Transfers</a> endpoint for each individual transaction. This benefit is the fact that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur a debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
 <h3 id='mass-payment-resource'>Mass payment resource</h3>
@@ -6759,7 +6759,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>status</td>
-<td>Either <code class="prettyprint">pending</code>, <code class="prettyprint">processing</code>, or <code class="prettyprint">complete</code></td>
+<td>Either <code class="prettyprint">deferred</code>: A created mass payment that can be processed at a later time. <code class="prettyprint">pending</code>: A mass payment that is pending and awaiting processing. A mass payment has a pending status for a brief period of time and cannot be cancelled. <code class="prettyprint">processing</code>:  A mass payment that is processing. <code class="prettyprint">complete</code>: A mass payment successfully completed processing.</td>
 </tr>
 <tr>
 <td>created</td>
@@ -6779,7 +6779,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
-<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> or verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
+<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
+<h4 id='deferred-mass-payment'>Deferred mass payment</h4>
+<p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/mass-payments</code></p>
@@ -6809,6 +6811,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>object</td>
 <td>A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).</td>
+</tr>
+<tr>
+<td>status</td>
+<td>no</td>
+<td>string</td>
+<td>Acceptable value is: <code class="prettyprint">deferred</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3>
@@ -6920,7 +6928,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST /mass-payments
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-uat.dwolla.com/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -7208,6 +7216,129 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processing'</span>
+</code></pre></div></div><h2 id='update-a-mass-payment'>Update a mass payment</h2>
+<p>This section covers how to update a mass payment&rsquo;s status to <code class="prettyprint">pending</code> which triggers processing on a created and deferred mass payment, or <code class="prettyprint">cancelled</code> which cancels a created and deferred mass payment.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth access token with the <code>Send</code> scope.</p>
+</li></ol><h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/mass-payments/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>id of mass payment to update.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>yes</td>
+<td>string</td>
+<td>Either <code class="prettyprint">pending</code> or <code class="prettyprint">cancelled</code> depending on the action you want to take on a deferred mass payment.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>404</td>
+<td>NotFound</td>
+<td>Mass payment not found.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>ValidationError</td>
+<td>Invalid status. Allowed types are pending, cancelled.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c
+Accept: application/vnd.dwolla.v1.hal+json
+Content-Type: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "status": "pending"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">"status"</span> <span class="o">=&gt;</span> <span class="s2">"pending"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="n">mass_payment</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">mass_payment</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ *  No example for this language yet. Coming soon.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"status"</span><span class="p">:</span> <span class="s">"pending"</span>
+<span class="p">}</span>
+
+<span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'mass-payments'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">mass_payments</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'pending'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">status</span><span class="p">:</span> <span class="s2">"pending"</span>
+<span class="p">};</span>
+
+<span class="nx">accountToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">massPaymentUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
 <p>A mass payment contains a list of payments called <code class="prettyprint">items</code>. An <code class="prettyprint">item</code> is distinct from the transfer which it creates. An item can contain a status of either <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, or <code class="prettyprint">success</code> depending on whether the payment was created by the Dwolla service or not. A mass payment item status of <code class="prettyprint">success</code> is an indication that a transfer was successfully created. A mass payment&rsquo;s items will be returned in the <code class="prettyprint">_embedded</code> object as a list of <code class="prettyprint">items</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -7591,10 +7722,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A funding source was removed from a Dwolla account.</td>
 </tr>
 <tr>
-<td>funding_source_unverified</td>
-<td>A funding source was marked as <code class="prettyprint">unverified</code>.</td>
-</tr>
-<tr>
 <td>funding_source_verified</td>
 <td>A funding source was marked as <code class="prettyprint">verified</code>.</td>
 </tr>
@@ -7659,6 +7786,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A mass payment completed.</td>
 </tr>
 <tr>
+<td>mass_payment_cancelled</td>
+<td>A created and deferred mass payment was cancelled.</td>
+</tr>
+<tr>
 <td>account_suspended</td>
 <td>An account was suspended.</td>
 </tr>
@@ -7719,10 +7850,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A funding source was removed from a Customer.</td>
 </tr>
 <tr>
-<td>customer_funding_source_unverified</td>
-<td>A Customer’s funding source was marked as unverified.</td>
-</tr>
-<tr>
 <td>customer_funding_source_verified</td>
 <td>A Customer’s funding source was marked as verified.</td>
 </tr>
@@ -7776,11 +7903,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customer_mass_payment_created</td>
-<td>A verified Customer&rsquo;s mass payment was created.</td>
+<td>A Verified Customer&rsquo;s mass payment was created.</td>
 </tr>
 <tr>
 <td>customer_mass_payment_completed</td>
-<td>A verified Customer&rsquo;s mass payment completed.</td>
+<td>A Verified Customer&rsquo;s mass payment completed.</td>
+</tr>
+<tr>
+<td>customer_mass_payment_cancelled</td>
+<td>A Verified Customer&rsquo;s created and deferred mass payment was cancelled.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
