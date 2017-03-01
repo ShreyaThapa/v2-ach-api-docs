@@ -45,7 +45,7 @@ This section details how to create a webhook subscription to deliver [webhooks](
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | url | yes | string | Where Dwolla should deliver the webhook notification. |
-| secret | yes | string | A random, secret key, only known by your application. This secret key should be securely stored and used later when [validating the authenticity](https://developers.dwolla.com/guides/webhooks/03-validating-webhooks.html) of the webhook request from Dwolla. |
+| secret | yes | string | A random, secret key, only known by your application. This secret key should be securely stored and used later when [validating the authenticity](https://developers.dwolla.com/guides/webhooks/validating-webhooks.html) of the webhook request from Dwolla. |
 
 ### Request and response
 
