@@ -107,14 +107,10 @@ under the License.
           <div class="language-picker">
               <h6>Language</h6>
               <div class="custom-select custom-select--blue">
-                <select id="language_select" class="language_select" name="select">
-                    <% if language_tabs %>
-                    <%- language_tabs.each do |l| %>
-                      <option value="<%= l %>"><%= l %></option>
-                    <%- end %>
-                  <% end %>
-                </select>
-                <div class="arrow"></div>
+                  <select id="select" name="select">
+                      <option value="json">json</option>
+                  </select>
+                  <div class="arrow"></div>
               </div>
           </div>
           <nav class="side-nav js-side-nav">
@@ -122,12 +118,12 @@ under the License.
           <nav class="side-nav js-side-nav">
           </nav>
           <nav class="side-nav tocify-wrapper active js-side-nav">
-              <section class="side-nav__product-select">   
+            <section class="side-nav__product-select">   
               <span>Product</span>    
                 <div class="custom-select custom-select--blue">
                 <select onChange="window.location.href=this.value" name="select">
-                      <option value="/" selected>Access API</option>
-                      <option value="/transfer/">Transfer</option>
+                      <option value="/">Access API</option>
+                      <option value="/transfer/" selected>Transfer</option>
                 </select>
                 <div class="arrow"></div>
               </div>   
