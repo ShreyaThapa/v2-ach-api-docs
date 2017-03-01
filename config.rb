@@ -1,3 +1,5 @@
+page "/transfer/", :layout => "transfer"
+
 require './lib/redcarpet_mods'
 
 set :css_dir, 'stylesheets'

@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla [Access API](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. The Access API is [white label](https://www.dwolla.com/white-label) by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy [API v1](https://docs.dwolla.com/) (no longer supported). For more information on transitioning v1 to the Access API, see our [migration guide](https://developers.dwolla.com/guides/migrate-to-v2/).
+Welcome to the Dwolla [Transfer](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage [OAuth](https://developers.dwolla.com/guides/auth/authorization-code-flow.html) to facilitate user on-boarding and Dwolla account authorization. Transfer does not require a contract and offers a quick way to get started with sending or receiving funds utilizing pay as you go ACH transfers. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Access API](https://www.dwolla.com/products/access-api).
 
 ## Making requests
 
@@ -9,13 +9,13 @@ All requests should supply the `Accept: application/vnd.dwolla.v1.hal+json` head
 Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
 
 ```noselect
-POST https://api.dwolla.com/customers
+POST https://api.dwolla.com/funding-sources/a84222d5-31d2-4290-9a96-089813ef96b3
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer myOAuthAccessToken123
+Authorization: Bearer myOAuthAccessToken
 
 {
-  "foo": "bar"
+  "name": "John Doe - Checking"
 }
 
 ... or ...
@@ -25,13 +25,11 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 ### Authorization
 
-All requests require either an OAuth access token or a `client_id` and `client_secret`.  OAuth access tokens are passed via the `Authorization` HTTP header:
+All requests require either an OAuth access token or a `client_id` and `client_secret` (Application Key and Secret). OAuth access tokens are passed via the `Authorization` HTTP header:
 
 `Authorization: Bearer {access_token_here}`
 
-Requests that require an client_id and client_secret are passed in the JSON request body for `POST` requests or as querystring parameters for `GET` requests:
-
-`GET https://api.dwolla.com/example?client_id={client_id}&client_secret={client_secret}`
+Requests that require an client_id and client_secret are passed in the JSON request body for `POST` requests.
 
 ### API Host
 **Production:** https://api.dwolla.com
@@ -50,11 +48,11 @@ If you reattempt a `POST` request with the same value for the `Idempotency-Key`,
 ```noselect
 curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
     "_links": {
-        "destination": {
-            "href": "https://api-uat.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
-        },
         "source": {
-            "href": "http://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "https://api-uat.dwolla.com/funding-sources/28baca50-12ef-4a26-a14b-adf75af694d4"
+        },
+        "destination": {
+            "href": "http://api-uat.dwolla.com/accounts/dee319e6-26d0-4dc6-a5bf-f1e0f4c677ad"
         }
     },
     "amount": {
@@ -143,7 +141,7 @@ The `path` field is a JSON pointer to the specific field in the request that has
 
 Relationships and available actions for a resource are represented with links.  All resources have a `_links` attribute.  At a minimum, all resources will have a `self` link which indicates the URL of the resource itself.
 
-Some links, such as `funding-sources`, give you a URL which you can follow to access related resources.  For example, the customer resource has a `funding-sources` link which, when followed, will list the customer's available funding sources.
+Some links, such as `funding-sources`, give you a URL which you can follow to access related resources.  For example, the Account resource has a `funding-sources` link which, when followed, will list the Account's available funding sources.
 
 Responses which contain a collection of resources have pagination links, `first`, `next`, `last`, and `prev`.
 
@@ -151,39 +149,35 @@ Responses which contain a collection of resources have pagination links, `first`
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1"
+      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "account"
+    },
+    "receive": {
+      "href": "https://api-uat.dwolla.com/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
     },
     "funding-sources": {
-      "href": "https://api.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1/funding-sources"
+      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/funding-sources",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "funding-source"
     },
     "transfers": {
-      "href": "https://api.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1/transfers"
+      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
     },
-    "retry-verification": {
-      "href": "https://api.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1"
+    "send": {
+      "href": "https://api-uat.dwolla.com/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
     }
   },
-  "id": "132681FA-1B4D-4181-8FF2-619CA46235B1",
-  "firstName": "Jane",
-  "lastName": "doe",
-  "email": "jdoe@nomail.com",
-  "type": "personal",
-  "status": "retry",
-  "created": "2015-09-29T19:47:28.920Z"
+  "id": "07844b76-bfeb-4a81-87ec-adebc7fa6cfe",
+  "name": "Dwolla Sandbox",
+  "timezoneOffset": 0
 }
 ```
-
-## Tools
-
-The following section will outline development tools you can take advantage of to assist in your integration with the Dwolla API. The available tools can help to improve your testing and development workflow, as well as aide in solving a difficult problem (e.g. UI generation) when integrating Dwolla into your application.
-
-### Dwolla Hal-Forms
-[Dwolla HAL-Forms](https://github.com/Dwolla/hal-forms) is an extension of the [HAL spec](http://stateless.co/hal_specification.html) and was created to describe how Dwolla represents forms in the API. The extension starts with the media type. The media type should be used as a profile link as part of the `Accept` header of the request in conjunction with the Dwolla HAL style media type. By including these two media-type identifiers in the Accept header, the API knows that you’re looking for a form for the given resource.
- ##### Example Accept header value
-`application/vnd.dwolla.v1.hal+json; profile="https://github.com/dwolla/hal-forms"`
-
-The primary benefit is the ability to dynamically generate your UI based on the state of a particular resource. Your application can easily transition state without knowing Dwolla's business rules and what information needs to included in the actual request to transition state. When an `"edit-form"` link relation is returned on the resource, then your application can follow the link by making a GET request to that resource, including the header shown above. The response will include a simple JSON response body that contains information on the HTTP method, message content-type, and the request parameters used when sending the request to the Dwolla API. **Note:** Currently, forms are only returned for creating & editing customers, but we’re looking forward to expanding them across our existing and future endpoints.
-
-Reference [the spec](https://github.com/Dwolla/hal-forms) for more information on the properties that can be returned in the Dwolla HAL-FORMS response. Or read a [blog post](https://www.dwolla.com/updates/simplified-customer-onboarding-through-a-better-formed-api/) from one of our developers on building out this functionality. 
 
 * * *

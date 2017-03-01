@@ -1,6 +1,6 @@
 # Customers
 
-A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla account via the API. In order for a Dwolla `Account` to create and manage Customers, an OAuth access token with the `ManageCustomers` OAuth scope is required.
+A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.
 
 <ol class="alerts">
     <li class="alert icon-alert-info">This section outlines functionality for [the Access API](https://www.dwolla.com/access-api), a premium product that only approved partners may access in production. To learn more about entering into an Access API agreement, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
@@ -84,7 +84,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer.  To create an unverified Customer, you need to provide only the customer's full name and email address.  Verified Customers require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For receive-only customers, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create an unverified Customer, you need to provide only the customer's full name and email address.  Verified Customers require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For receive-only customers, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 For more information on verified Customers, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification.html) resource article.
 
@@ -444,10 +444,6 @@ appToken
 
 Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
-
 ### HTTP request
 `GET https://api.dwolla.com/business-classifications`
 
@@ -537,10 +533,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ## Retrieve a business classification
 
 This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a `business` Customer.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/business-classifications/{id}`
@@ -643,10 +635,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ## Update a customer
 
 This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, `suspend` a Customer, and update a verified Customer's information to `retry` verification.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}`
@@ -880,10 +868,6 @@ appToken
 
 This section outlines how to retrieve your list of created Customers.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
-
 ### HTTP request
 `GET https://api.dwolla.com/customers`
 
@@ -969,11 +953,7 @@ appToken
 
 ## Retrieve a customer
 
-This section shows you how to retrieve a Customer belonging to the authorized user. Each `Customer` id is a part of its location resource. The developer can pass either an `id` or the entire `location` resource to make this request.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
+This section shows you how to retrieve a Customer belonging to the authorized user Account. Each `Customer` id is a part of its location resource. The developer can pass either an `id` or the entire `location` resource to make this request.
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}`
@@ -1058,10 +1038,6 @@ This section outlines how to create an on-demand bank transfer authorization for
 
 When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Access API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
-
 ### HTTP request
 `POST https://api.dwolla.com/on-demand-authorizations`
 
@@ -1115,10 +1091,6 @@ Before a Dwolla account or Access API Customer is eligible to transfer money fro
 
 ### New funding source for a customer
 Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}/funding-sources`
@@ -1240,10 +1212,6 @@ IAV is a simple and secure process which requires both server-side and client-si
 
 Get a single-use IAV token for a Customer.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
-
 ### HTTP Request
 `POST https://api.dwolla.com/customers/{id}/iav-token`
 
@@ -1315,10 +1283,6 @@ $fsToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 
 Initiate instant account verification for a Customer.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">An [IAV token](#generate-an-iav-token) is required to render the IAV flow.</li>
-</ol>
-
 #### dwolla.js
 `dwolla.js` is a JavaScript library that gives you the ability to render the IAV flow within a specified container. Call the function `dwolla.iav.start()` and pass the following arguments: the container where you want IAV to render, the Customer's single-use [IAV token](#generate-an-iav-token), and a callback to handle the `response` or `error`. This will initiate an HTTP request asking Dwolla to load IAV in the specified container. Once the Customer successfully completes the IAV flow, Dwolla sends a response that includes either an error or a link to the newly created and verified funding source resource.
 
@@ -1359,7 +1323,15 @@ dwolla.configure('prod');
 $('#start').click(function() {
   var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
   dwolla.configure('sandbox');
-  dwolla.iav.start(iavToken, { container: 'iavContainer' }, function(err, res) {
+  dwolla.iav.start(iavToken, {
+    container: 'iavContainer',
+    stylesheets: [
+      'http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext',
+      'http://myapp.com/iav/customStylesheet.css'
+    ],
+    microDeposits: false,
+    fallbackToMicroDeposits: true
+  }, function(err, res) {
     console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
   });
 });
@@ -1390,10 +1362,6 @@ $('#start').click(function() {
 ## List funding sources for a customer
 
 Retrieve a list of funding sources that belong to a Customer. By default, all funding sources are returned unless the `removed` querystring parameter is set to `false` in the request.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/funding-sources`
@@ -1511,10 +1479,6 @@ appToken
 ## List and search transfers for a customer
 
 This section details how to retrieve a Customer's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `startAmount`, `endAmount`, `startDate`, and `endDate`.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/transfers`
@@ -1658,10 +1622,6 @@ appToken
 ## List mass payments for a customer
 
 This section covers how to retrieve a [verified Customer's](#customers) list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/mass-payments`

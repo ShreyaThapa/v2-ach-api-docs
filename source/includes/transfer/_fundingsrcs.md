@@ -1,6 +1,6 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources, which are available to the `Customers` and `Accounts` resources.  Customers can have a maximum of 6 funding sources.
+Add and retrieve ACH bank account information via funding sources, which are available to the `Accounts` resource.  Traditional CIP Dwolla accounts can have a maximum of two funding sources, whereas Dwolla Direct accounts can have a maximum of one funding source.
 
 ### Funding source resource
 
@@ -18,13 +18,19 @@ removed | A value of `true` if the funding source has been [removed](#remove-a-f
     "routingNumber": "222222226",
     "accountNumber": "123456789",
     "type": "checking",
-    "name": "My Bank"
+    "name": "Jane Doe - Checking"
 }
 ```
 
 ## Create a funding source
 
-Create a new funding source for an [Account](#accounts).
+This section details how to add a bank account to a Dwolla account. The bank account will have a status of `unverified` upon creation. Before a Dwolla account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.
+
+For more information on micro-deposit verification, reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources`
@@ -67,6 +73,10 @@ Location: https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d9
 ## Retrieve a funding source
 
 This section covers how to retrieve a funding source by id.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/funding-sources/{id}`
@@ -115,10 +125,6 @@ funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 funding_source = account_token.get funding_source_url
 funding_source.name # => "Test checking account"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-funding_source = DwollaSwagger::FundingsourcesApi.id(funding_source_url)
-funding_source.name # => "Test checking account"
 ```
 ```php
 <?php
@@ -136,11 +142,6 @@ funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 funding_source = account_token.get(funding_source_url)
 funding_source.body['name'] # => 'Test checking account'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-funding_source = fs_api.id(funding_source_url)
-funding_source.name # => 'Test checking account'
 ```
 ```javascript
 var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
@@ -152,7 +153,11 @@ accountToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source name.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a Funding Source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}`
@@ -161,7 +166,9 @@ This section covers how to update a `bank` funding source name.
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
-| name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| accountNumber | no | string | The bank account number. |
+| routingNumber | no | string | The bank account routing number. |
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description |
@@ -221,69 +228,13 @@ accountToken
   .then(res => res.body.name); // => "Test Checking - 1234"
 ```
 
-## Retrieve a funding source balance
-
-This section covers how to retrieve the `balance` of a funding source. The funding source can be either of type `balance` or `bank`.
-
-### HTTP request
-`GET https://api.dwolla.com/funding-sources/{id}/balance`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| id | yes | string | id of funding source to retreive balance for. |
-
-### HTTP Status and Error Codes
-| HTTP Status | Code | Description |
-|--------------|-------------|-------------------|
-| 404 | NotFound | Funding source not found. |
-
-### Request and response
-
-```raw
-GET https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer {accessToken}
-
-{
-  "_links": {
-      "self": {
-          "href": "https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b",
-          "type": "funding-source"
-      },
-      "customer": {
-          "href": "https://api-uat.dwolla.com/customers/dbaede31-c55c-48d9-abe4-e1d59d8f200b",
-          "type": "customer"
-      },
-      "balance": {
-          "href": "https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b/balance",
-          "type": "balance"
-      }
-  },
-  "id": "8e286b86-1e87-4974-9c7e-498ed4e8c61b",
-  "status": "verified",
-  "type": "bank",
-  "name": "Balance Check - SAVINGS",
-  "created": "2016-07-22T14:47:00.000Z",
-  "removed": false
-}
-```
-```ruby
-# No example for this language yet.
-```
-```php
-/* No example for this language yet */
-```
-```python
-# No example for this language yet.
-```
-```javascript
-// No example for this language yet.
-```
-
 ## Initiate micro-deposits
 
 This section covers how to initiate micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}/micro-deposits`
@@ -317,9 +268,6 @@ funding_source_url = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_token.post "#{funding_source_url}/micro-deposits"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url)
 ```
 ```javascript
 var fundingSourceUrl = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
@@ -331,10 +279,6 @@ funding_source_url = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 account_token.post('%s/micro-deposits' % funding_source_url)
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-fs_api.micro_deposits(funding_source_url)
 ```
 ```php
 <?php
@@ -349,6 +293,10 @@ $fsApi->microDeposits(null, $fundingSourceUrl);
 ## Verify micro-deposits
 
 This section covers how to verify micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}/micro-deposits`
@@ -410,9 +358,6 @@ request_body = {
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_token.post "#{funding_source_url}/micro-deposits", request_body
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url, body: request_body)
 ```
 ```javascript
 var fundingSourceUrl = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
@@ -444,10 +389,6 @@ request_body = {
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 account_token.post('%s/micro-deposits' % funding_source_url, request_body)
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-fs_api.micro_deposits(funding_source_url, body = request_body)
 ```
 ```php
 <?php
@@ -472,6 +413,10 @@ $fsApi->microDeposits([
 ## Retrieve micro-deposits details
 
 This section shows how to retrieve the status of micro-deposits and check if micro-deposits are eligible for verification. If the status of micro-deposits is `failed`, a `failure` object will be returned in the response body which includes the ACH return code and description.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/funding-sources/{id}/micro-deposits`
@@ -522,10 +467,6 @@ funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 funding_source = account_token.get "#{funding_source_url}/micro-deposits"
 funding_source.status # => "failed"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-funding_source = DwollaSwagger::FundingsourcesApi.verify_micro_deposits_exist(funding_source_url)
-funding_source.status # => "failed"
 ```
 ```php
 <?php
@@ -543,11 +484,6 @@ funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 funding_source = account_token.get('%s/micro-deposits' % funding_source_url)
 funding_source.body['status'] # => 'failed'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-funding_source = fs_api.verify_micro_deposits_exist(funding_source_url)
-funding_source.status # => 'failed'
 ```
 ```javascript
 var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
@@ -560,6 +496,10 @@ accountToken
 ## Remove a funding source
 
 Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.
+
+<ol class="alerts">
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+</ol>
 
 ### HTTP request
 
@@ -614,9 +554,6 @@ request_body = {
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_token.post "#{funding_source_url}", request_body
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-DwollaSwagger::FundingsourcesApi.soft_delete(funding_source_url, :body => request_body)
 ```
 ```php
 <?php
@@ -632,12 +569,6 @@ funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 account_token.delete(funding_source_url)
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-fs_api.soft_delete(funding_source_url, body = {
-  'removed': true
-})
 ```
 ```javascript
 var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';

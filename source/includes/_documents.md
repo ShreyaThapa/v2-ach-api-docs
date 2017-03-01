@@ -1,6 +1,6 @@
 # Documents
 
-Customers of type `personal` or `business` and of status `document` require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support only exists for retrieving data with regards to a `Document` resource. To create a document, you must use an external HTTP library.
+Customers of type `personal` or `business` and of status `document` require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.
 
 For more information on handling the Customer verifiation status of `document`, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html) resource article.
 
@@ -31,10 +31,6 @@ For more information on handling the Customer verifiation status of `document`, 
 ## Create a document
 
 Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, `.tif`, or `.pdf` up to 10MB in size.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 
@@ -98,10 +94,6 @@ appToken
 ## List documents
 
 This section contains information on how to retrieve a list of documents that belong to a Customer.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/documents`
@@ -199,10 +191,6 @@ token
 ## Retrieve a document
 
 This section contains information on how to retrieve a document by its id.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/documents/{id}`
