@@ -1,6 +1,6 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources, which are available to the `Customers` and `Accounts` resources.  Customers can have a maximum of 6 funding sources.
+Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Accounts](#create-a-funding-source-for-an-account) and [Customers](#create-a-funding-source-for-a-customer) resources.
 
 ### Funding source resource
 
@@ -20,48 +20,6 @@ removed | A value of `true` if the funding source has been [removed](#remove-a-f
     "type": "checking",
     "name": "My Bank"
 }
-```
-
-## Create a funding source
-
-Create a new funding source for an [Account](#accounts).
-
-### HTTP request
-`POST https://api.dwolla.com/funding-sources`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| accountNumber | yes | string | The bank account number. |
-| routingNumber | yes | string | The bank account's routing number. |
-| type | yes | string | Type of bank account: `checking` or `savings`. |
-| name | yes | string | Arbitrary nickname for the funding source. |
-
-### Errors
-| HTTP Status | Message |
-|--------------|-------------|
-| 400 | Duplicate funding source or validation error.
-| 403 | Not authorized to create funding source.
-
-
-### Request and response
-
-```noselect
-POST /funding-sources
-Content-Type: application/vnd.dwolla.v1.hal+json
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-{
-    "routingNumber": "222222226",
-    "accountNumber": "123456789",
-    "type": "checking",
-    "name": "My Bank"
-}
-
-...
-
-HTTP/1.1 201 Created
-Location: https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
 ```
 
 ## Retrieve a funding source

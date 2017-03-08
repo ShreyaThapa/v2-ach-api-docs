@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla [Transfer](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage [OAuth](https://developers.dwolla.com/guides/auth/authorization-code-flow.html) to facilitate user on-boarding and Dwolla account authorization. Transfer does not require a contract and offers a quick way to get started with sending or receiving funds utilizing pay as you go ACH transfers. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Access API](https://www.dwolla.com/products/access-api).
+Welcome to the Dwolla [Transfer](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage [OAuth](https://developers.dwolla.com/guides/auth/authorization-code-flow.html) to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Access API](https://www.dwolla.com/products/access-api).
 
 ## Making requests
 
@@ -29,7 +29,7 @@ All requests require either an OAuth access token or a `client_id` and `client_s
 
 `Authorization: Bearer {access_token_here}`
 
-Requests that require an client_id and client_secret are passed in the JSON request body for `POST` requests.
+Requests that require a client_id and client_secret can be sent using the `application/x-www-form-urlencoded` Content-Type or via a JSON body with the `application/json` Content-Type.
 
 ### API Host
 **Production:** https://api.dwolla.com
