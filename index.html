@@ -146,9 +146,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <p><code class="prettyprint">Authorization: Bearer {access_token_here}</code></p>
 
-<p>Requests that require an client_id and client_secret are passed in the JSON request body for <code class="prettyprint">POST</code> requests or as querystring parameters for <code class="prettyprint">GET</code> requests:</p>
-
-<p><code class="prettyprint">GET https://api.dwolla.com/example?client_id={client_id}&amp;client_secret={client_secret}</code></p>
+<p>Requests that require a client_id and client_secret can be sent using the <code class="prettyprint">application/x-www-form-urlencoded</code> Content-Type or via a JSON body with the <code class="prettyprint">application/json</code> Content-Type.</p>
 <h3 id='api-host'>API Host</h3>
 <p><strong>Production:</strong> https://api.dwolla.com</p>
 
@@ -494,7 +492,7 @@ mvn install package
 <h4 id='token-lifetime'>Token lifetime</h4>
 <p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour. To refresh authorization on an application access token, your application will simply exchange its client credentials for a new app access token which will invalidate the previous token.</p>
 <h2 id='application-authorization'>Application authorization</h2>
-<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is used when an application needs to obtain permission to act on its own behalf. An application will exchange it&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token can then be used to make calls to the Dwolla API on behalf of the application, for example, when you create a webhook subscription, retrieve events, and make calls to Access API Customer related endpoints. The primary reason for obtaining an application access token is for managing webhooks and events. However, Dwolla has modified this grant type by allowing applications to access Access API <a href="https://docsv2.dwolla.com/#customers">Customer</a> related endpoints using the application access token.</p>
+<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is used when an application needs to obtain permission to act on its own behalf. An application will exchange it&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token can then be used to make calls to the Dwolla API on behalf of the application, for example, create a webhook subscription, retrieve events, and make calls to Access API Customer related endpoints. The primary reason for obtaining an application access token is for managing webhooks and events. However, Dwolla has modified this grant type by allowing applications to access Access API <a href="https://docsv2.dwolla.com/#customers">Customer</a> related endpoints using the application access token.</p>
 <h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -4530,7 +4528,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='funding-sources'>Funding sources</h1>
-<p>Add and retrieve ACH bank account information via funding sources, which are available to the <code class="prettyprint">Customers</code> and <code class="prettyprint">Accounts</code> resources.  Customers can have a maximum of 6 funding sources.</p>
+<p>Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the <a href="#create-a-funding-source-for-an-account">Accounts</a> and <a href="#create-a-funding-source-for-a-customer">Customers</a> resources.</p>
 <h3 id='funding-source-resource'>Funding source resource</h3>
 <table><thead>
 <tr>
@@ -4569,76 +4567,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Bank"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h2 id='create-a-funding-source'>Create a funding source</h2>
-<p>Create a new funding source for an <a href="#accounts">Account</a>.</p>
-<h3 id='http-request'>HTTP request</h3>
-<p><code class="prettyprint">POST https://api.dwolla.com/funding-sources</code></p>
-<h3 id='request-parameters'>Request parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>accountNumber</td>
-<td>yes</td>
-<td>string</td>
-<td>The bank account number.</td>
-</tr>
-<tr>
-<td>routingNumber</td>
-<td>yes</td>
-<td>string</td>
-<td>The bank account&rsquo;s routing number.</td>
-</tr>
-<tr>
-<td>type</td>
-<td>yes</td>
-<td>string</td>
-<td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
-</tr>
-<tr>
-<td>name</td>
-<td>yes</td>
-<td>string</td>
-<td>Arbitrary nickname for the funding source.</td>
-</tr>
-</tbody></table>
-<h3 id='errors'>Errors</h3>
-<table><thead>
-<tr>
-<th>HTTP Status</th>
-<th>Message</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Duplicate funding source or validation error.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Not authorized to create funding source.</td>
-</tr>
-</tbody></table>
-<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST /funding-sources
-Content-Type: application/vnd.dwolla.v1.hal+json
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-{
-    "routingNumber": "222222226",
-    "accountNumber": "123456789",
-    "type": "checking",
-    "name": "My Bank"
-}
-
-...
-
-HTTP/1.1 201 Created
-Location: https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
-</code></pre></div></div><h2 id='retrieve-a-funding-source'>Retrieve a funding source</h2>
+</span></code></pre></div></div><h2 id='retrieve-a-funding-source'>Retrieve a funding source</h2>
 <p>This section covers how to retrieve a funding source by id.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/funding-sources/{id}</code></p>

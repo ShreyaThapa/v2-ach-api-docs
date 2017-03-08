@@ -120,7 +120,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/transfer">Transfer</a> documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Transfer does not require a contract and offers a quick way to get started with sending or receiving funds utilizing pay as you go ACH transfers. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/products/access-api">Access API</a>.</p>
+<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/transfer">Transfer</a> documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/products/access-api">Access API</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
@@ -142,7 +142,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <p><code class="prettyprint">Authorization: Bearer {access_token_here}</code></p>
 
-<p>Requests that require an client_id and client_secret are passed in the JSON request body for <code class="prettyprint">POST</code> requests.</p>
+<p>Requests that require a client_id and client_secret can be sent using the <code class="prettyprint">application/x-www-form-urlencoded</code> Content-Type or via a JSON body with the <code class="prettyprint">application/json</code> Content-Type.</p>
 <h3 id='api-host'>API Host</h3>
 <p><strong>Production:</strong> https://api.dwolla.com</p>
 
