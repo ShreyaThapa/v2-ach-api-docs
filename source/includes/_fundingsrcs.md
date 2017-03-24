@@ -110,7 +110,7 @@ accountToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source name.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}`
@@ -119,7 +119,9 @@ This section covers how to update a `bank` funding source name.
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
-| name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| routingNumber | no | string | The bank account's routing number. |
+| accountNumber | no | string | The bank account number. |
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description |

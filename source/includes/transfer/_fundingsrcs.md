@@ -153,7 +153,7 @@ accountToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a Funding Source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>

@@ -634,7 +634,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ## Update a customer
 
-This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, `suspend` a Customer, and update a verified Customer's information to `retry` verification.
+This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, suspend a Customer, deactivate a Customer, and update a verified Customer's information to `retry` verification.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}`
@@ -673,12 +673,20 @@ In addition to the table above, business verified Customers can update the follo
 An unverified Customer can be upgraded to a verified Customer by supplying the necessary information required to create a verified Customer. See [this table](#request-parameters-verified-customer) for required information.
 
 ### Suspend a Customer
-An unverified and verified Customer can be suspended by supplying the status of `suspended`. You'll need to contact Dwolla to unsuspend a Customer.
+Unverified and Verified Customers can be suspended by specifying a status of `suspended` in your request. You'll need to contact Dwolla to unsuspend a Customer.
 
 ##### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | status | yes | string | Value of `suspended`. |
+
+### Deactivate a Customer
+Unverified and Verified Customers can be deactivated by specifying a status of `deactivated` in your request. A Customer **cannot** be deactivated if the following conditions are true: Customer has a `suspended` verification status, a Customer has transfers that are `pending`, or if there are funds available in the Customer's `balance`(*Verified Customers only*).
+
+##### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-----------|
+| status | yes | string | Value of `deactivated`. |
 
 ### Retry verification
 If the verified Customer has a status of `retry`, some information may have been miskeyed. You have one more opportunity to correct any mistakes using this endpoint. This time, you’ll need to provide the Customer’s full SSN. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
