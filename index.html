@@ -2453,7 +2453,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "name": "Entertainment and media"
 }
 </code></pre></div></div><h2 id='update-a-customer'>Update a customer</h2>
-<p>This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an <code class="prettyprint">unverified</code> Customer to a <code class="prettyprint">verified</code> Customer, <code class="prettyprint">suspend</code> a Customer, and update a verified Customer&rsquo;s information to <code class="prettyprint">retry</code> verification.</p>
+<p>This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an <code class="prettyprint">unverified</code> Customer to a <code class="prettyprint">verified</code> Customer, suspend a Customer, deactivate a Customer, and update a verified Customer&rsquo;s information to <code class="prettyprint">retry</code> verification.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}</code></p>
 <h3 id='update-a-customer39s-information'>Update a Customer&rsquo;s information</h3>
@@ -2571,7 +2571,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h3 id='upgrade-an-unverified-customer-to-verified-customer'>Upgrade an unverified Customer to verified Customer</h3>
 <p>An unverified Customer can be upgraded to a verified Customer by supplying the necessary information required to create a verified Customer. See <a href="#request-parameters-verified-customer">this table</a> for required information.</p>
 <h3 id='suspend-a-customer'>Suspend a Customer</h3>
-<p>An unverified and verified Customer can be suspended by supplying the status of <code class="prettyprint">suspended</code>. You&rsquo;ll need to contact Dwolla to unsuspend a Customer.</p>
+<p>Unverified and Verified Customers can be suspended by specifying a status of <code class="prettyprint">suspended</code> in your request. You&rsquo;ll need to contact Dwolla to unsuspend a Customer.</p>
 <h5 id='request-parameters'>Request parameters</h5>
 <table><thead>
 <tr>
@@ -2586,6 +2586,24 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>yes</td>
 <td>string</td>
 <td>Value of <code class="prettyprint">suspended</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='deactivate-a-customer'>Deactivate a Customer</h3>
+<p>Unverified and Verified Customers can be deactivated by specifying a status of <code class="prettyprint">deactivated</code> in your request. A Customer <strong>cannot</strong> be deactivated if the following conditions are true: Customer has a <code class="prettyprint">suspended</code> verification status, a Customer has transfers that are <code class="prettyprint">pending</code>, or if there are funds available in the Customer&rsquo;s <code class="prettyprint">balance</code>(<em>Verified Customers only</em>).</p>
+<h5 id='request-parameters'>Request parameters</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of <code class="prettyprint">deactivated</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='retry-verification'>Retry verification</h3>
@@ -4696,7 +4714,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test checking account"</span>
 </code></pre></div></div><h2 id='update-a-funding-source'>Update a funding source</h2>
-<p>This section covers how to update a <code class="prettyprint">bank</code> funding source name.</p>
+<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -4716,9 +4734,21 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>name</td>
-<td>yes</td>
+<td>no</td>
 <td>string</td>
 <td>Arbitrary nickname for the funding source. Must be 50 characters or less.</td>
+</tr>
+<tr>
+<td>routingNumber</td>
+<td>no</td>
+<td>string</td>
+<td>The bank account&rsquo;s routing number.</td>
+</tr>
+<tr>
+<td>accountNumber</td>
+<td>no</td>
+<td>string</td>
+<td>The bank account number.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
