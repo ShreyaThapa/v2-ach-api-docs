@@ -150,7 +150,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <h3 id='api-host'>API Host</h3>
 <p><strong>Production:</strong> https://api.dwolla.com</p>
 
-<p><strong>Sandbox:</strong> https://api-uat.dwolla.com</p>
+<p><strong>Sandbox:</strong> https://api-sandbox.dwolla.com</p>
 <h2 id='idempotency-key'>Idempotency key</h2>
 <p>To prevent an operation from being performed more than once, Dwolla supports passing in an <code class="prettyprint">Idempotency-Key</code> header with a unique key as the value. Multiple <code class="prettyprint">POSTs</code> with the same idempotency key won&rsquo;t result in multiple resources being created.</p>
 
@@ -160,17 +160,17 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <h4 id='example-transfer-using-an-idempotency-key'>Example transfer using an Idempotency Key</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
     "_links": {
         "destination": {
-            "href": "https://api-uat.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
+            "href": "https://api-sandbox.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
         },
         "source": {
-            "href": "http://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "http://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         }
     },
     "amount": {
         "currency": "USD",
         "value": "1337.00"
     }
-}' "https://api-uat.dwolla.com/transfers" -v
+}' "https://api-sandbox.dwolla.com/transfers" -v
 
 </code></pre></div></div><h2 id='errors'>Errors</h2>
 <p>Error responses use HTTP status codes to indicate the type of error. The JSON response body will contain a top-level error code and a message with a detailed description of the error. Errors will contain their own media type and will closely align with <a href="https://github.com/blongden/vnd.error">this spec</a>.</p>
@@ -363,7 +363,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 </thead><tbody>
 <tr>
 <td>api.dwolla.com</td>
-<td>api-uat.dwolla.com</td>
+<td>api-sandbox.dwolla.com</td>
 </tr>
 </tbody></table>
 <h2 id='ruby'>Ruby</h2><h3 id='dwollav2-ruby-recommended'>DwollaV2 Ruby (Recommended)</h3>
@@ -373,7 +373,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-rubynohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rubynohide" data-lang="rubynohide"><span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
 
-<span class="c1"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c1"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="n">app_key</span> <span class="o">=</span> <span class="s2">"..."</span>
 <span class="n">app_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
 <span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">key: </span><span class="n">app_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">app_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
@@ -393,7 +393,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">Swagger</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
     <span class="n">config</span><span class="p">.</span><span class="nf">access_token</span> <span class="o">=</span> <span class="s1">'a token'</span>
-    <span class="n">config</span><span class="p">.</span><span class="nf">host</span> <span class="o">=</span> <span class="s1">'api-uat.dwolla.com'</span>
+    <span class="n">config</span><span class="p">.</span><span class="nf">host</span> <span class="o">=</span> <span class="s1">'api-sandbox.dwolla.com'</span>
     <span class="n">config</span><span class="p">.</span><span class="nf">base_path</span> <span class="o">=</span> <span class="s1">'/'</span>
 <span class="k">end</span>
 
@@ -407,7 +407,7 @@ information is available on the project&rsquo;s README.</p>
 <p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
 <div class="code-snippet js-code-snippet language-pythonnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-pythonnohide" data-lang="pythonnohide"><span class="kn">import</span> <span class="nn">dwollav2</span>
 
-<span class="c"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="n">app_key</span> <span class="o">=</span> <span class="s">'...'</span>
 <span class="n">app_secret</span> <span class="o">=</span> <span class="s">'...'</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">app_key</span><span class="p">,</span>
@@ -423,7 +423,7 @@ information is available on the project&rsquo;s README.</p>
 </code></pre></div></div><h3 id='quickstart'>Quickstart</h3>
 <p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
 <div class="code-snippet js-code-snippet language-pythonnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-pythonnohide" data-lang="pythonnohide"><span class="n">dwollaswagger</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="s">'token'</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span><span class="s">'https://api-uat.dwolla.com'</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span><span class="s">'https://api-sandbox.dwolla.com'</span><span class="p">)</span>
 
 <span class="n">customers_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">CustomersApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">my_custies</span> <span class="o">=</span>  <span class="n">customers_api</span><span class="o">.</span><span class="nb">list</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -437,7 +437,7 @@ composer install
 <span class="k">require</span><span class="p">(</span><span class="s1">'../path/to/vendor/autoload.php'</span><span class="p">);</span>
 
 <span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$access_token</span> <span class="o">=</span> <span class="s1">'a token'</span><span class="p">;</span>
-<span class="nv">$apiClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\ApiClient</span><span class="p">(</span><span class="s2">"https://api-uat.dwolla.com/"</span><span class="p">);</span>
+<span class="nv">$apiClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\ApiClient</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com/"</span><span class="p">);</span>
 
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 <span class="nv">$myCusties</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">_list</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
@@ -457,7 +457,7 @@ mvn install package
 <span class="kn">import</span> <span class="nn">io.swagger.client.model.*</span><span class="o">;</span>
 
 <span class="n">ApiClient</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiClient</span><span class="o">();</span>
-<span class="n">a</span><span class="o">.</span><span class="na">setBasePath</span><span class="o">(</span><span class="s">"https://api-uat.dwolla.com"</span><span class="o">);</span>
+<span class="n">a</span><span class="o">.</span><span class="na">setBasePath</span><span class="o">(</span><span class="s">"https://api-sandbox.dwolla.com"</span><span class="o">);</span>
 <span class="n">a</span><span class="o">.</span><span class="na">setAccessToken</span><span class="o">(</span><span class="s">"a token"</span><span class="o">);</span>
 
 <span class="n">CustomersApi</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomersApi</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
@@ -469,7 +469,7 @@ mvn install package
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="kr">const</span> <span class="nx">dwolla</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dwolla-v2'</span><span class="p">);</span>
 
-<span class="c1">// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-uat.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c1">// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="kr">const</span> <span class="nx">appKey</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">appSecret</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">dwolla</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
@@ -496,7 +496,7 @@ mvn install package
 <h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
-<p><strong>UAT:</strong> <code class="prettyprint">POST https://uat.dwolla.com/oauth/v2/token</code></p>
+<p><strong>Sandbox:</strong> <code class="prettyprint">POST https://sandbox.dwolla.com/oauth/v2/token</code></p>
 
 <p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with the following <code class="prettyprint">form-encoded</code> parameters:</p>
 <h4 id='request-parameters'>Request parameters</h4>
@@ -512,13 +512,13 @@ mvn install package
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications</code> (Sandbox) for your application key.</td>
 </tr>
 <tr>
 <td>client_secret</td>
 <td>yes</td>
 <td>string</td>
-<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-uat.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
+<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
 </tr>
 <tr>
 <td>grant_type</td>
@@ -555,7 +555,7 @@ mvn install package
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://uat.dwolla.com/oauth/v2/token
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://sandbox.dwolla.com/oauth/v2/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&amp;grant_type=client_credentials
@@ -640,10 +640,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "account": {
-      "href": "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
+      "href": "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
     },
     "customers": {
-      "href": "https://api-uat.dwolla.com/customers"
+      "href": "https://api-sandbox.dwolla.com/customers"
     }
   }
 }
@@ -656,7 +656,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"/"</span>
-<span class="n">root</span><span class="p">.</span><span class="nf">_links</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">href</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"</span>
+<span class="n">root</span><span class="p">.</span><span class="nf">_links</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">href</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -678,12 +678,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
-<span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_links'</span><span class="p">][</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
+<span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_links'</span><span class="p">][</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">root_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">RootApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">an_account</span> <span class="o">=</span> <span class="n">root_api</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
-<span class="n">an_account</span><span class="o">.</span><span class="n">_links</span><span class="p">[</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
+<span class="n">an_account</span><span class="o">.</span><span class="n">_links</span><span class="p">[</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -694,7 +694,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_links</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_links</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 </code></pre></div></div>
 <hr>
 
@@ -737,22 +737,22 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"receive"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/transfers"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/transfers"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"funding-sources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"transfers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/transfers"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/transfers"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"customers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/customers"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/customers"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"send"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-uat.dwolla.com/transfers"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/transfers"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca32853c-48fa-40be-ae75-77b37504581b"</span><span class="p">,</span><span class="w">
@@ -802,29 +802,29 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
     },
     "receive": {
-      "href": "https://api-uat.dwolla.com/transfers"
+      "href": "https://api-sandbox.dwolla.com/transfers"
     },
     "funding-sources": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
     },
     "transfers": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/transfers"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/transfers"
     },
     "customers": {
-      "href": "https://api-uat.dwolla.com/customers"
+      "href": "https://api-sandbox.dwolla.com/customers"
     },
     "send": {
-      "href": "https://api-uat.dwolla.com/transfers"
+      "href": "https://api-sandbox.dwolla.com/transfers"
     }
   },
   "id": "ca32853c-48fa-40be-ae75-77b37504581b",
@@ -838,7 +838,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -857,7 +857,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+<span class="nv">$accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="nv">$accountsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\AccountsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -872,7 +872,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="n">accounts_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">AccountsApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 
@@ -886,7 +886,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -968,7 +968,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ...
 
 HTTP/1.1 201 Created
-Location: https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
+Location: https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
 </code></pre></div></div><h2 id='list-funding-sources-for-an-account'>List funding sources for an account</h2>
 <p>Retrieve a list of funding sources that belong to an Account. By default, all funding sources are returned unless the <code class="prettyprint">removed</code> querystring parameter is set to <code class="prettyprint">false</code> in the request.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -1028,7 +1028,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
     }
   },
   "_embedded": {
@@ -1036,10 +1036,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
           },
           "account": {
-            "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           }
         },
         "id": "04173e17-6398-4d36-a167-9d98c4b1f1c3",
@@ -1051,13 +1051,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
           },
           "account": {
-            "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           },
           "with-available-balance": {
-            "href": "https://api-uat.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
           }
         },
         "id": "b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
@@ -1125,7 +1125,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -1229,13 +1229,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers"
+      "href": "https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers"
     },
     "first": {
-      "href": "https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers?limit=25&amp;offset=0"
     },
     "last": {
-      "href": "https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers?limit=25&amp;offset=0"
     }
   },
   "_embedded": {
@@ -1243,13 +1243,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/transfers/DC68A3DC-3C61-E511-80DA-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/DC68A3DC-3C61-E511-80DA-0AA34A9B2388"
           },
           "source": {
-            "href": "https://api-uat.dwolla.com/accounts/CA32853C-48FA-40BE-AE75-77B37504581B"
+            "href": "https://api-sandbox.dwolla.com/accounts/CA32853C-48FA-40BE-AE75-77B37504581B"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/accounts/A84222D5-31D2-4290-9A96-089813EF96B3"
+            "href": "https://api-sandbox.dwolla.com/accounts/A84222D5-31D2-4290-9A96-089813EF96B3"
           }
         },
         "id": "DC68A3DC-3C61-E511-80DA-0AA34A9B2388",
@@ -1263,13 +1263,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/transfers/D36FD9AA-6E5C-E511-80DA-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/D36FD9AA-6E5C-E511-80DA-0AA34A9B2388"
           },
           "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/2BFF2631-4006-45D6-BBBD-A7BE4853E870"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/2BFF2631-4006-45D6-BBBD-A7BE4853E870"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/accounts/A84222D5-31D2-4290-9A96-089813EF96B3"
+            "href": "https://api-sandbox.dwolla.com/accounts/A84222D5-31D2-4290-9A96-089813EF96B3"
           }
         },
         "id": "D36FD9AA-6E5C-E511-80DA-0AA34A9B2388",
@@ -1292,7 +1292,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/transfers"</span>
@@ -1310,7 +1310,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span><span class="p">;</span>
+<span class="nv">$accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span><span class="p">;</span>
 
 <span class="nv">$transfersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TransfersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -1325,7 +1325,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -1344,7 +1344,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -1409,7 +1409,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -1418,13 +1418,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments"
     },
     "first": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments?limit=25&amp;offset=0"
     },
     "last": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/mass-payments?limit=25&amp;offset=0"
     }
   },
   "_embedded": {
@@ -1432,13 +1432,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payments/b4b5a699-5278-4727-9f81-a50800ea9abc"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/b4b5a699-5278-4727-9f81-a50800ea9abc"
           },
           "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/84c77e52-d1df-4a33-a444-51911a9623e9"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/84c77e52-d1df-4a33-a444-51911a9623e9"
           },
           "items": {
-            "href": "https://api-uat.dwolla.com/mass-payments/b4b5a699-5278-4727-9f81-a50800ea9abc/items"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/b4b5a699-5278-4727-9f81-a50800ea9abc/items"
           }
         },
         "id": "b4b5a699-5278-4727-9f81-a50800ea9abc",
@@ -1460,7 +1460,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payments</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/mass-payments"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
@@ -1484,7 +1484,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">account_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -1498,7 +1498,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">accountUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -1928,11 +1928,11 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">CustomersApi</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">:body</span> <span class="o">=&gt;</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1951,7 +1951,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">]);</span>
 
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -1970,12 +1970,12 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">customers_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">CustomersApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">customers_api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+<span class="n">customer</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1993,7 +1993,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h3 id='verified-customer'>Verified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2053,7 +2053,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 </span>  <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span>
 <span class="p">]);</span>
 
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2085,11 +2085,11 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">CustomersApi</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">:body</span> <span class="o">=&gt;</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="n">customer</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2117,12 +2117,12 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">customers_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">CustomersApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">customers_api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">customer</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2150,7 +2150,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h3 id='receive-only-customer'>Receive-only customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2194,11 +2194,11 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">CustomersApi</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">:body</span> <span class="o">=&gt;</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2218,7 +2218,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
   <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">]);</span>
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2239,12 +2239,12 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">customers_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">CustomersApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">customers_api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+<span class="n">customer</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2264,12 +2264,12 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
 </code></pre></div></div><h2 id='list-business-classifications'>List business classifications</h2>
 <p>Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a <code class="prettyprint">business</code> in order to better analyze the nature of a business.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/business-classifications</code></p>
-<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">GET https://api-uat.dwolla.com/business-classifications
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">GET https://api-sandbox.dwolla.com/business-classifications
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -2280,7 +2280,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/business-classifications/9ed3f669-7d6f-11e3-b545-5404a6144203"
+            "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3f669-7d6f-11e3-b545-5404a6144203"
           }
         },
         "_embedded": {
@@ -2367,14 +2367,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Business classification unique identifier.</td>
 </tr>
 </tbody></table>
-<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">GET https://api-uat.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">GET https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203"
+      "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203"
     }
   },
   "_embedded": {
@@ -3063,7 +3063,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -3089,7 +3089,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">customer_url</span>
@@ -3107,7 +3107,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
+<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
 
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -3122,7 +3122,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">customer_url</span><span class="p">)</span>
@@ -3140,7 +3140,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">)</span>
@@ -3173,7 +3173,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-uat.dwolla.com/on-demand-authorizations
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/on-demand-authorizations
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -3181,7 +3181,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
     }
   },
   "bodyText": "I agree that future payments to Company ABC inc. will be processed by the Dwolla payment system from the selected account above. In order to cancel this authorization, I will change my payment settings within my Company ABC inc. account.",
@@ -3318,7 +3318,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "on-demand-authorization": {
-      "href": "https://api-uat.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
     }
   },
   "routingNumber": "222222226",
@@ -3345,8 +3345,8 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
   <span class="s2">"accountNumber"</span> <span class="o">=&gt;</span> <span class="s2">"123456789"</span><span class="p">,</span>
   <span class="s2">"type"</span> <span class="o">=&gt;</span> <span class="s2">"checking"</span><span class="p">,</span>
   <span class="s2">"name"</span> <span class="o">=&gt;</span> <span class="s2">"Jane Doe’s Checking"</span>
-<span class="p">],</span> <span class="s2">"https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span><span class="p">);</span>
-<span class="nv">$fundingSource</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+<span class="p">],</span> <span class="s2">"https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span><span class="p">);</span>
+<span class="nv">$fundingSource</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3356,7 +3356,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">routingNumber: </span><span class="s1">'222222226'</span><span class="p">,</span>
   <span class="ss">accountNumber: </span><span class="s1">'123456789'</span><span class="p">,</span>
@@ -3366,11 +3366,11 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">funding_source</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="n">funding_source</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">FundingsourcesApi</span><span class="p">.</span><span class="nf">create_customer_funding_source</span><span class="p">(</span><span class="n">customer_url</span><span class="p">,</span> <span class="ss">:body</span> <span class="o">=&gt;</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">funding_source</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
+<span class="n">funding_source</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3379,7 +3379,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'routingNumber'</span><span class="p">:</span> <span class="s">'222222226'</span><span class="p">,</span>
   <span class="s">'accountNumber'</span><span class="p">:</span> <span class="s">'123456789'</span><span class="p">,</span>
@@ -3389,12 +3389,12 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
 
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">funding_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">FundingsourcesApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">funding_api</span><span class="o">.</span><span class="n">create_customer_funding_source</span><span class="p">(</span><span class="n">customer_url</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">funding_source</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+<span class="n">funding_source</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3403,7 +3403,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'routingNumber'</span><span class="p">:</span> <span class="s1">'222222226'</span><span class="p">,</span>
   <span class="s1">'accountNumber'</span><span class="p">:</span> <span class="s1">'123456789'</span><span class="p">,</span>
@@ -3413,7 +3413,7 @@ Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/funding-sources`, requestBody</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
 </code></pre></div></div><h3 id='instant-account-verification-iav'>Instant account verification (IAV)</h3>
 <p>IAV is a simple and secure process which requires both server-side and client-side interaction. Your server requests a <a href="#generate-an-iav-token">single-use token</a> which is used to represent the Customer that is adding or verifying their bank. The client-side implementation includes the dwolla.js library on the page that is used to render the IAV flow.</p>
 <div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"https://cdn.dwolla.com/1/dwolla.js"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
@@ -3474,7 +3474,7 @@ HTTP/1.1 200 OK
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/iav-token"
+      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/iav-token"
     }
   },
   "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
@@ -3487,7 +3487,7 @@ HTTP/1.1 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/iav-token"</span>
@@ -3505,7 +3505,7 @@ HTTP/1.1 200 OK
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node</span>
-<span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/iav-token`</span><span class="err">)
@@ -3534,7 +3534,7 @@ HTTP/1.1 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$fsToken</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getCustomerIavToken</span><span class="p">(</span><span class="s2">"https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6"</span><span class="p">);</span>
+<span class="nv">$fsToken</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getCustomerIavToken</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6"</span><span class="p">);</span>
 <span class="nv">$fsToken</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">;</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h3 id='initiate-iav-flow'>Initiate IAV flow</h3>
@@ -3547,7 +3547,7 @@ HTTP/1.1 200 OK
 
 <p><strong>Production (minified) version:</strong>
 <code class="prettyprint">&lt;script src=&quot;https://cdn.dwolla.com/1/dwolla.min.js&quot;&gt;&lt;/script&gt;</code></p>
-<h5 id='configure-dwolla-js'>Configure dwolla.js</h5><div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="c1">// Sandbox (UAT)</span>
+<h5 id='configure-dwolla-js'>Configure dwolla.js</h5><div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="c1">// Sandbox</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'sandbox'</span><span class="p">);</span>
 
 <span class="c1">// Production</span>
@@ -4065,7 +4065,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -4074,13 +4074,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments"
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments"
     },
     "first": {
-      "href": "https://api-uat.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&amp;offset=0"
     },
     "last": {
-      "href": "https://api-uat.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&amp;offset=0"
     }
   },
   "_embedded": {
@@ -4088,13 +4088,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa"
           },
           "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/e1c972d4-d8d9-4c30-861a-9081dcbaf4ab"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/e1c972d4-d8d9-4c30-861a-9081dcbaf4ab"
           },
           "items": {
-            "href": "https://api-uat.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa/items"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa/items"
           }
         },
         "id": "89ca72d2-63bf-4a8f-92ef-a5d00140aefa",
@@ -4116,7 +4116,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/mass-payments"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
@@ -4140,7 +4140,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/mass-payments'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
@@ -4153,7 +4153,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/mass-payments`, { limit: 10 }</span><span class="err">)
@@ -4899,22 +4899,22 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer {accessToken}
 
 {
   "_links": {
       "self": {
-          "href": "https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b",
+          "href": "https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b",
           "type": "funding-source"
       },
       "customer": {
-          "href": "https://api-uat.dwolla.com/customers/dbaede31-c55c-48d9-abe4-e1d59d8f200b",
+          "href": "https://api-sandbox.dwolla.com/customers/dbaede31-c55c-48d9-abe4-e1d59d8f200b",
           "type": "customer"
       },
       "balance": {
-          "href": "https://api-uat.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b/balance",
+          "href": "https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b/balance",
           "type": "balance"
       }
   },
@@ -5024,7 +5024,7 @@ Location: https://api.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">funding_source_url</span><span class="si">}</span><span class="s2">/micro-deposits"</span>
@@ -5039,7 +5039,7 @@ Location: https://api.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
 
 <span class="nx">accountToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`#</span><span class="p">{</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="sr">/micro-deposits`</span><span class="se">)</span><span class="err">;
 </span></code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5050,7 +5050,7 @@ Location: https://api.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/micro-deposits'</span> <span class="o">%</span> <span class="n">funding_source_url</span><span class="p">)</span>
@@ -5067,7 +5067,7 @@ Location: https://api.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
 
 <span class="nv">$fsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -5192,7 +5192,7 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">:amount1</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"0.03"</span><span class="p">,</span>
@@ -5217,7 +5217,7 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">amount1</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">value</span><span class="p">:</span> <span class="s1">'0.03'</span><span class="p">,</span>
@@ -5238,7 +5238,7 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">"amount1"</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">"value"</span><span class="p">:</span> <span class="s">"0.03"</span><span class="p">,</span>
@@ -5265,7 +5265,7 @@ HTTP 200 OK
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
 
 <span class="nv">$fsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -5332,12 +5332,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "href": "https://api-sandbox.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "micro-deposits"
     },
     "verify-micro-deposits": {
-      "href": "https://api-uat.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
+      "href": "https://api-sandbox.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "micro-deposits"
     }
@@ -5722,7 +5722,7 @@ HTTP 200 OK
 <h4 id='fee-object-example'>Fee object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">  
    </span><span class="nt">"_links"</span><span class="p">:{</span><span class="w">  
       </span><span class="nt">"charge-to"</span><span class="p">:{</span><span class="w">  
-         </span><span class="nt">"href"</span><span class="p">:</span><span class="s2">"https://api-uat.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"</span><span class="w">
+         </span><span class="nt">"href"</span><span class="p">:</span><span class="s2">"https://api-sandbox.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"</span><span class="w">
       </span><span class="p">}</span><span class="w">
    </span><span class="p">},</span><span class="w">
    </span><span class="nt">"amount"</span><span class="p">:{</span><span class="w">  
@@ -6112,7 +6112,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388/fees
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388/fees
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -6123,16 +6123,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     {
       "_links": {
         "self": {
-          "href": "https://api-uat.dwolla.com/transfers/416a2857-c887-4cca-bd02-8c3f75c4bb0e"
+          "href": "https://api-sandbox.dwolla.com/transfers/416a2857-c887-4cca-bd02-8c3f75c4bb0e"
         },
         "source": {
-          "href": "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+          "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
         },
         "destination": {
-          "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+          "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
         },
         "created-from-transfer": {
-          "href": "https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
+          "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
         }
       },
       "id": "416a2857-c887-4cca-bd02-8c3f75c4bb0e",
@@ -6146,16 +6146,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     {
       "_links": {
         "self": {
-          "href": "https://api-uat.dwolla.com/transfers/e58ae1f1-7007-47d3-a308-7e9aa6266d53"
+          "href": "https://api-sandbox.dwolla.com/transfers/e58ae1f1-7007-47d3-a308-7e9aa6266d53"
         },
         "source": {
-          "href": "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+          "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
         },
         "destination": {
-          "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+          "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
         },
         "created-from-transfer": {
-          "href": "https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
+          "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
         }
       },
       "id": "e58ae1f1-7007-47d3-a308-7e9aa6266d53",
@@ -6177,7 +6177,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -6202,7 +6202,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -6216,7 +6216,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -6253,14 +6253,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/transfers/e6d9a950-ac9e-e511-80dc-0aa34a9b2388/failure
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/transfers/e6d9a950-ac9e-e511-80dc-0aa34a9b2388/failure
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
+      "href": "https://api-sandbox.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
     }
   },
   "code": "R1",
@@ -6274,7 +6274,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="c1"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -6299,7 +6299,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="c"># For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
@@ -6313,7 +6313,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -6340,7 +6340,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Possible value: <code class="prettyprint">cancelled</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='request-and-response'>Request and Response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api-uat.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388
+<h3 id='request-and-response'>Request and Response</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -6354,19 +6354,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "cancel": {
-      "href": "https://api-uat.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388"
     },
     "source": {
-      "href": "https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
     },
     "funding-transfer": {
-      "href": "https://api-uat.dwolla.com/transfers/3c48c13a-0fc6-e511-80de-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/3c48c13a-0fc6-e511-80de-0aa34a9b2388"
     },
     "self": {
-      "href": "https://api-uat.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388"
     },
     "destination": {
-      "href": "https://api-uat.dwolla.com/customers/05e267e5-c13d-491a-93a8-da52b721f123"
+      "href": "https://api-sandbox.dwolla.com/customers/05e267e5-c13d-491a-93a8-da52b721f123"
     }
   },
   "id": "3d48c13a-0fc6-e511-80de-0aa34a9b2388",
@@ -6562,7 +6562,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-uat.dwolla.com/mass-payments
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -6570,14 +6570,14 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 {
     "_links": {
         "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         }
     },
     "items": [
       {
         "_links": {
             "destination": {
-                "href": "https://api-uat.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+                "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
             }
         },
         "amount": {
@@ -6591,7 +6591,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             {
         "_links": {
             "destination": {
-                "href": "https://api-uat.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
+                "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
             }
         },
         "amount": {
@@ -6623,14 +6623,14 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">_links: </span><span class="p">{</span>
     <span class="ss">source: </span><span class="p">{</span>
-      <span class="ss">href: </span><span class="s2">"https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
+      <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="ss">items: </span><span class="p">[</span>
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-uat.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -6644,7 +6644,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-uat.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -6663,7 +6663,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payment</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"mass-payments"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">mass_payment</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"</span>
+<span class="n">mass_payment</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6695,14 +6695,14 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
-      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
     <span class="p">}</span>
   <span class="p">},</span>
   <span class="na">items</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-uat.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -6716,7 +6716,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-uat.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -6736,7 +6736,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'mass-payments'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
 </code></pre></div></div><h2 id='retrieve-a-mass-payment'>Retrieve a mass payment</h2>
 <p>This section outlines how to retrieve a mass payment by its id. All mass payments will have a status of <code class="prettyprint">pending</code> upon creation and will move to <code class="prettyprint">processing</code> and finally <code class="prettyprint">complete</code> as the service runs. It is recommended that you retrieve your <a href="#list-items-for-a-mass-payment">list of mass payment items</a> when your mass payment has a status of <code class="prettyprint">complete</code> to determine if any items failed to process successfully.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
@@ -6780,7 +6780,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -6789,13 +6789,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "source": {
-      "href": "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+      "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
     },
     "items": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
     }
   },
   "id": "eb467252-808c-4bc0-b86f-a5cd01454563",
@@ -6811,7 +6811,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s2">"https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s2">"https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payment</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">mass_payment_url</span>
@@ -6844,7 +6844,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -7039,7 +7039,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -7048,13 +7048,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
     },
     "first": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&amp;offset=0"
     },
     "last": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&amp;offset=0"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&amp;offset=0"
     }
   },
   "_embedded": {
@@ -7062,16 +7062,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
           },
           "mass-payment": {
-            "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+            "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
           },
           "transfer": {
-            "href": "https://api-uat.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
           }
         },
         "id": "2f845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -7087,16 +7087,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
           },
           "mass-payment": {
-            "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
+            "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
           },
           "transfer": {
-            "href": "https://api-uat.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
           }
         },
         "id": "30845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -7121,7 +7121,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payment_items</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">/items"</span>
@@ -7154,7 +7154,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -7208,7 +7208,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -7217,16 +7217,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
     },
     "mass-payment": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "destination": {
-      "href": "https://api-uat.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
     },
     "transfer": {
-      "href": "https://api-uat.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
     }
   },
   "id": "2f845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -7247,7 +7247,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">mass_payment_item_url</span>
@@ -7271,7 +7271,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mass_payment_item_url</span><span class="p">)</span>
@@ -7284,7 +7284,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentItemUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentItemUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span><span class="p">;</span>
 
 <span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
@@ -7973,7 +7973,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-uat.dwolla.com/webhook-subscriptions
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/webhook-subscriptions
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
@@ -7996,11 +7996,11 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"webhook-subscriptions"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">subscription</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
 
 <span class="c1"># Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="no">DwollaSwagger</span><span class="o">::</span><span class="no">WebhooksubscriptionsApi</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="ss">:body</span> <span class="o">=&gt;</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">subscription</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
+<span class="n">subscription</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8016,7 +8016,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8037,7 +8037,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="c"># Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python</span>
 <span class="n">webhook_api</span> <span class="o">=</span> <span class="n">dwollaswagger</span><span class="o">.</span><span class="n">WebhooksubscriptionsApi</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="n">webhook_api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span> <span class="o">=</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">subscription</span> <span class="c"># =&gt; 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+<span class="n">subscription</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8053,7 +8053,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="s1">'url'</span> <span class="o">=&gt;</span> <span class="s1">'http://myapplication.com/webhooks'</span><span class="p">,</span>
   <span class="s1">'secret'</span> <span class="o">=&gt;</span> <span class="s1">'sshhhhhh'</span><span class="p">,</span>
 <span class="p">));</span>
-<span class="nv">$subscription</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
+<span class="nv">$subscription</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='retrieve-a-webhook-subscription'>Retrieve a webhook subscription</h2>
 <p>This section details how to retrieve a webhook subscription by its id.</p>
@@ -8096,7 +8096,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -8105,10 +8105,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/webhook-subscriptions/077dfffb-4852-412f-96b6-0fe668066589"
+      "href": "https://api-sandbox.dwolla.com/webhook-subscriptions/077dfffb-4852-412f-96b6-0fe668066589"
     },
     "webhooks": {
-      "href": "https://api-uat.dwolla.com/webhook-subscriptions/077dfffb-4852-412f-96b6-0fe668066589/webhooks"
+      "href": "https://api-sandbox.dwolla.com/webhook-subscriptions/077dfffb-4852-412f-96b6-0fe668066589/webhooks"
     }
   },
   "id": "077dfffb-4852-412f-96b6-0fe668066589",
@@ -8123,7 +8123,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">webhook_subscription_url</span>
@@ -8140,7 +8140,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">)</span>
@@ -8153,7 +8153,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">webhook_subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
@@ -8173,7 +8173,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$webhookApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\WebhooksubscriptionsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
-<span class="nv">$retrieved</span> <span class="o">=</span> <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">(</span><span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
+<span class="nv">$retrieved</span> <span class="o">=</span> <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
 
 <span class="nv">$retrieved</span><span class="o">-&gt;</span><span class="na">created</span><span class="p">;</span> <span class="c1"># =&gt; 2015-10-28T16:20:47+00:00
 </span><span class="cp">?&gt;</span>
@@ -8427,7 +8427,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -8438,7 +8438,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">app_token</span><span class="p">.</span><span class="nf">delete</span> <span class="n">webhook_subscription_url</span>
@@ -8453,7 +8453,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
 <span class="nx">applicationToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">);</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -8464,7 +8464,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">app_token</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">webhook_subscription_url</span><span class="p">)</span>
@@ -8482,7 +8482,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$webhookApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\WebhooksubscriptionsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
-<span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">deleteById</span><span class="p">(</span><span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
+<span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">deleteById</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='list-webhooks-for-a-webhook-subscription'>List webhooks for a webhook subscription</h2>
 <p>This section covers how to view all fired <a href="#webhooks">webhooks</a> for a webhook subscription.</p>
@@ -8580,7 +8580,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
 <span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">webhook_subscription_url</span><span class="si">}</span><span class="s2">/webhooks"</span>
@@ -8597,7 +8597,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookSubscriptionUrl</span><span class="p">}</span><span class="sr">/webhooks`</span><span class="err">)
@@ -8610,7 +8610,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
 <span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/hooks'</span> <span class="o">%</span> <span class="n">webhook_subscription_url</span><span class="p">)</span>
@@ -8631,7 +8631,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$webhookApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\WebhooksApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$hooks</span> <span class="o">=</span> <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">hooksById</span><span class="p">(</span><span class="s1">'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
+<span class="nv">$hooks</span> <span class="o">=</span> <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">hooksById</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
 <span class="nv">$hooks</span><span class="o">-&gt;</span><span class="na">total</span><span class="p">;</span> <span class="c1"># =&gt; 5
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div>
