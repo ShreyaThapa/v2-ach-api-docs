@@ -21,17 +21,17 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "account": {
-      "href": "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
+      "href": "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
     },
     "customers": {
-      "href": "https://api-uat.dwolla.com/customers"
+      "href": "https://api-sandbox.dwolla.com/customers"
     }
   }
 }
 ```
 ```ruby
 root = token.get "/"
-root._links.account.href # => "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
+root._links.account.href # => "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
 ```
 ```php
 /**
@@ -41,16 +41,16 @@ root._links.account.href # => "https://api-uat.dwolla.com/accounts/ad5f2162-404a
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 root = token.get('/')
-root.body['_links']['account']['href'] # => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
+root.body['_links']['account']['href'] # => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 root_api = dwollaswagger.RootApi(client)
 an_account = root_api.root()
-an_account._links['account']['href'] # => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
+an_account._links['account']['href'] # => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```
 ```javascript
 token
   .get('/')
-  .then(res => res.body._links.account.href); // => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
+  .then(res => res.body._links.account.href); // => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```
 * * *

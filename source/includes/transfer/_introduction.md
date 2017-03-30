@@ -34,7 +34,7 @@ Requests that require a client_id and client_secret can be sent using the `appli
 ### API Host
 **Production:** https://api.dwolla.com
 
-**Sandbox:** https://api-uat.dwolla.com
+**Sandbox:** https://api-sandbox.dwolla.com
 
 ## Idempotency key
 
@@ -49,17 +49,17 @@ If you reattempt a `POST` request with the same value for the `Idempotency-Key`,
 curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
     "_links": {
         "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/28baca50-12ef-4a26-a14b-adf75af694d4"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/28baca50-12ef-4a26-a14b-adf75af694d4"
         },
         "destination": {
-            "href": "http://api-uat.dwolla.com/accounts/dee319e6-26d0-4dc6-a5bf-f1e0f4c677ad"
+            "href": "http://api-sandbox.dwolla.com/accounts/dee319e6-26d0-4dc6-a5bf-f1e0f4c677ad"
         }
     },
     "amount": {
         "currency": "USD",
         "value": "1337.00"
     }
-}' "https://api-uat.dwolla.com/transfers" -v
+}' "https://api-sandbox.dwolla.com/transfers" -v
 
 ```
 
@@ -149,27 +149,27 @@ Responses which contain a collection of resources have pagination links, `first`
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe",
+      "href": "https://api-sandbox.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "account"
     },
     "receive": {
-      "href": "https://api-uat.dwolla.com/transfers",
+      "href": "https://api-sandbox.dwolla.com/transfers",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "transfer"
     },
     "funding-sources": {
-      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/funding-sources",
+      "href": "https://api-sandbox.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/funding-sources",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "funding-source"
     },
     "transfers": {
-      "href": "https://api-uat.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/transfers",
+      "href": "https://api-sandbox.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe/transfers",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "transfer"
     },
     "send": {
-      "href": "https://api-uat.dwolla.com/transfers",
+      "href": "https://api-sandbox.dwolla.com/transfers",
       "type": "application/vnd.dwolla.v1.hal+json",
       "resource-type": "transfer"
     }
