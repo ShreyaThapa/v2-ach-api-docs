@@ -98,7 +98,7 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of 
 ### Request and response (transfer from Account to Customers)
 
 ```raw
-POST https://api-uat.dwolla.com/mass-payments
+POST https://api-sandbox.dwolla.com/mass-payments
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -106,14 +106,14 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 {
     "_links": {
         "source": {
-            "href": "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         }
     },
     "items": [
       {
         "_links": {
             "destination": {
-                "href": "https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+                "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
             }
         },
         "amount": {
@@ -127,7 +127,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             {
         "_links": {
             "destination": {
-                "href": "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+                "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
             }
         },
         "amount": {
@@ -153,14 +153,14 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
 request_body = {
   _links: {
     source: {
-      href: "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+      href: "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
     }
   },
   items: [
     {
       _links: {
         destination: {
-          href: "https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+          href: "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
         }
       },
       amount: {
@@ -174,7 +174,7 @@ request_body = {
     {
       _links: {
         destination: {
-          href: "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+          href: "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
         }
       },
       amount: {
@@ -193,7 +193,7 @@ request_body = {
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.post "mass-payments", request_body
-mass_payment.headers[:location] # => "https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
+mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
 ```php
 /**
@@ -207,14 +207,14 @@ mass_payment.headers[:location] # => "https://api-uat.dwolla.com/mass-payments/c
 var requestBody = {
   _links: {
     source: {
-      href: 'https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+      href: 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
     }
   },
   items: [
     {
       _links: {
         destination: {
-          href: 'https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'
+          href: 'https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'
         }
       },
       amount: {
@@ -228,7 +228,7 @@ var requestBody = {
     {
       _links: {
         destination: {
-          href: 'https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd'
+          href: 'https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd'
         }
       },
       amount: {
@@ -248,7 +248,7 @@ var requestBody = {
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .post('mass-payments', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
 
 ## Retrieve a mass payment
@@ -276,7 +276,7 @@ This section outlines how to retrieve a mass payment by its id. All mass payment
 ### Request and response
 
 ```raw
-GET https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563
+GET https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -285,13 +285,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "source": {
-      "href": "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+      "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
     },
     "items": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
     }
   },
   "id": "eb467252-808c-4bc0-b86f-a5cd01454563",
@@ -301,7 +301,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-mass_payment_url = "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+mass_payment_url = "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.get mass_payment_url
@@ -316,7 +316,7 @@ mass_payment.status # => "processing"
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
+var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
 
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
@@ -427,7 +427,7 @@ A mass payment contains a list of payments called `items`. An `item` is distinct
 ### Request and response
 
 ```raw
-GET https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items
+GET https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -436,13 +436,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items"
     },
     "first": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&offset=0"
     },
     "last": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563/items?limit=25&offset=0"
     }
   },
   "_embedded": {
@@ -450,16 +450,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
           },
           "mass-payment": {
-            "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+            "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
           },
           "transfer": {
-            "href": "https://api-uat.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
           }
         },
         "id": "2f845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -475,16 +475,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-uat.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
           },
           "mass-payment": {
-            "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+            "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
           },
           "transfer": {
-            "href": "https://api-uat.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
           }
         },
         "id": "30845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -503,7 +503,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-mass_payment_url = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_items = account_token.get "#{mass_payment_url}/items"
@@ -518,7 +518,7 @@ mass_payment_items.total # => 2
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
@@ -552,7 +552,7 @@ This section covers how to retrieve a mass payment item by its unique identifier
 ### Request and response
 
 ```raw
-GET https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388
+GET https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -561,16 +561,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-uat.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
     },
     "mass-payment": {
-      "href": "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+      "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "destination": {
-      "href": "https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
     },
     "transfer": {
-      "href": "https://api-uat.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
     }
   },
   "id": "2f845bc9-41ed-e511-80df-0aa34a9b2388",
@@ -585,7 +585,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-mass_payment_item_url = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
+mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_item = account_token.get mass_payment_item_url
@@ -597,14 +597,14 @@ mass_payment_item.status # => "success"
  **/
 ```
 ```python
-mass_payment_item_url = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
+mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 mass_payment_item = account_token.get(mass_payment_item_url)
 mass_payment_item.body['status'] # => 'success'
 ```
 ```javascript
-var massPaymentItemUrl = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
+var massPaymentItemUrl = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
 
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
