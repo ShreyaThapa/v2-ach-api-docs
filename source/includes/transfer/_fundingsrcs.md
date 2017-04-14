@@ -1,6 +1,6 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources, which are available to the `Accounts` resource.  Traditional CIP Dwolla accounts can have a maximum of two funding sources, whereas Dwolla Direct accounts can have a maximum of one funding source.
+Add and retrieve ACH bank account information via funding sources, which are available to the `Accounts` resource.  Transfer CIP accounts can have a maximum of two funding sources, whereas Direct accounts can have a maximum of one funding source.
 
 ### Funding source resource
 
