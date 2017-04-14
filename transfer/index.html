@@ -1100,9 +1100,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             <h1 id='accounts'>Accounts</h1>
 <p>An <code class="prettyprint">Account</code> represents a Dwolla account that was either established on dwolla.com, or created inline with the capture of the user account&rsquo;s permissions via Dwolla&rsquo;s OAuth flow. A user account grants authorization to an application via <a href="#oauth">OAuth</a>, which gives the application permission to interact with the API on their behalf.</p>
 <h3 id='verified-and-unverified-accounts'>Verified and unverified Accounts</h3>
-<p>With a transfer of money, at least one party must complete the identity verification process through creation of a Traditional CIP Verified Dwolla account, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Dwolla user <code class="prettyprint">Account</code> is sending funds to or receiving funds from your <code class="prettyprint">Account</code>, the <code class="prettyprint">Account</code> can remain unverified because your account is already verified. However, if you need to transfer funds between your users, at least one of them will need to have a Traditional CIP Verified Dwolla account.</p>
+<p>With a transfer of money, at least one party must complete the identity verification process through creation of a Transfer CIP Verified account, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Dwolla user <code class="prettyprint">Account</code> is sending funds to or receiving funds from your <code class="prettyprint">Account</code>, the <code class="prettyprint">Account</code> can remain unverified because your account is already verified. However, if you need to transfer funds between your users, at least one of them will need to have a Transfer CIP Verified Dwolla account.</p>
 
-<p>For more information on Traditional Dwolla accounts, both Tradtional CIP Verified and Dwolla Direct, reference the <a href="https://developers.dwolla.com/resources/account-types/traditional-accounts.html">account types</a> resource article.</p>
+<p>For more information on Transfer accounts, both Transfer CIP Verified and Dwolla Direct, reference the <a href="https://developers.dwolla.com/resources/account-types/transfer-accounts.html">account types</a> resource article.</p>
 <h3 id='migrating-dwolla-user-accounts-to-access-api-customers'>Migrating Dwolla user Accounts to Access API Customers</h3>
 <p>Dwolla offers a seamless process for migrating existing user <a href="/transfers/#accounts">Accounts</a> managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='account-links'>Account links</h3>
@@ -1813,7 +1813,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='funding-sources'>Funding sources</h1>
-<p>Add and retrieve ACH bank account information via funding sources, which are available to the <code class="prettyprint">Accounts</code> resource.  Traditional CIP Dwolla accounts can have a maximum of two funding sources, whereas Dwolla Direct accounts can have a maximum of one funding source.</p>
+<p>Add and retrieve ACH bank account information via funding sources, which are available to the <code class="prettyprint">Accounts</code> resource.  Transfer CIP accounts can have a maximum of two funding sources, whereas Direct accounts can have a maximum of one funding source.</p>
 <h3 id='funding-source-resource'>Funding source resource</h3>
 <table><thead>
 <tr>
