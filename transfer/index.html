@@ -3545,7 +3545,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
-<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
+<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
 <h4 id='deferred-mass-payment'>Deferred mass payment</h4>
 <p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
@@ -3596,7 +3596,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>Funding source</td>
 <td><code class="prettyprint">https://api.dwolla.com/funding-sources/{id}</code></td>
-<td>A bank or balance funding source of an <a href="#accounts">Account</a> or verified <a href="#customers">Customer</a>.</td>
+<td>A bank or balance funding source of an <a href="#accounts">Account</a>.</td>
 </tr>
 </tbody></table>
 
@@ -3613,19 +3613,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Destination <a href="#accounts">Account</a> of a transfer.</td>
 </tr>
 <tr>
-<td>Customer</td>
-<td><code class="prettyprint">https://api.dwolla.com/customers/{id}</code></td>
-<td>Destination <a href="#customers">Customer</a> of a transfer.</td>
-</tr>
-<tr>
 <td>Email</td>
 <td><code class="prettyprint">mailto:johndoe@email.com</code></td>
 <td>Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)</td>
-</tr>
-<tr>
-<td>Funding source</td>
-<td><code class="prettyprint">https://api.dwolla.com/funding-sources/{id}</code></td>
-<td>Destination of a verified Customer&rsquo;s own bank or balance funding source. <strong>OR</strong> An unverified Customer&rsquo;s bank funding source.</td>
 </tr>
 </tbody></table>
 <h3 id='mass-payment-item'>Mass payment item</h3>
@@ -3651,7 +3641,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h4 id='item-object-example'>Item object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
+          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/accounts/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3709,7 +3699,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
       {
         "_links": {
             "destination": {
-                "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+                "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
             }
         },
         "amount": {
@@ -3723,7 +3713,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             {
         "_links": {
             "destination": {
-                "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+                "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
             }
         },
         "amount": {
@@ -3762,7 +3752,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -3776,7 +3766,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -3834,7 +3824,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -3848,7 +3838,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -4200,7 +4190,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+            "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
           },
           "transfer": {
             "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
@@ -4225,7 +4215,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+            "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
           },
           "transfer": {
             "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
@@ -4355,7 +4345,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "destination": {
-      "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
     },
     "transfer": {
       "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"

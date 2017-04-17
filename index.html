@@ -6423,11 +6423,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
-<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
+<p>This section covers how to initiate a mass payment from a Partner Dwolla <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
 <h4 id='deferred-mass-payment'>Deferred mass payment</h4>
 <p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
-</li></ol><h3 id='http-request'>HTTP request</h3>
+<h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/mass-payments</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
@@ -6474,7 +6473,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>Funding source</td>
 <td><code class="prettyprint">https://api.dwolla.com/funding-sources/{id}</code></td>
-<td>A bank or balance funding source of an <a href="#accounts">Account</a>.</td>
+<td>A bank or balance funding source of an <a href="#accounts">Account</a> or verified <a href="#customers">Customer</a>.</td>
 </tr>
 </tbody></table>
 
@@ -6491,9 +6490,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Destination <a href="#accounts">Account</a> of a transfer.</td>
 </tr>
 <tr>
+<td>Customer</td>
+<td><code class="prettyprint">https://api.dwolla.com/customers/{id}</code></td>
+<td>Destination <a href="#customers">Customer</a> of a transfer.</td>
+</tr>
+<tr>
 <td>Email</td>
 <td><code class="prettyprint">mailto:johndoe@email.com</code></td>
 <td>Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)</td>
+</tr>
+<tr>
+<td>Funding source</td>
+<td><code class="prettyprint">https://api.dwolla.com/funding-sources/{id}</code></td>
+<td>Destination of a Verified Customer&rsquo;s own <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code> funding source, an Unverified Customer&rsquo;s <code class="prettyprint">bank</code> funding source, or a Receive-only Customer&rsquo;s <code class="prettyprint">bank</code> funding source.</td>
 </tr>
 </tbody></table>
 <h3 id='mass-payment-item'>Mass payment item</h3>
@@ -6519,7 +6528,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h4 id='item-object-example'>Item object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/accounts/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
+          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/funding-sources/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -6577,7 +6586,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
       {
         "_links": {
             "destination": {
-                "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+                "href": "https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
             }
         },
         "amount": {
@@ -6591,7 +6600,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             {
         "_links": {
             "destination": {
-                "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
+                "href": "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
             }
         },
         "amount": {
@@ -6630,7 +6639,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -6644,7 +6653,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="ss">_links: </span><span class="p">{</span>
         <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
+          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="ss">amount: </span><span class="p">{</span>
@@ -6702,7 +6711,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -6716,7 +6725,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
+          <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd'</span>
         <span class="p">}</span>
       <span class="p">},</span>
       <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
@@ -6739,8 +6748,7 @@ Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'</span>
 </code></pre></div></div><h2 id='retrieve-a-mass-payment'>Retrieve a mass payment</h2>
 <p>This section outlines how to retrieve a mass payment by its id. All mass payments will have a status of <code class="prettyprint">pending</code> upon creation and will move to <code class="prettyprint">processing</code> and finally <code class="prettyprint">complete</code> as the service runs. It is recommended that you retrieve your <a href="#list-items-for-a-mass-payment">list of mass payment items</a> when your mass payment has a status of <code class="prettyprint">complete</code> to determine if any items failed to process successfully.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
-</li></ol><h3 id='http-request'>HTTP request</h3>
+<h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/mass-payments/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
@@ -6852,8 +6860,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processing'</span>
 </code></pre></div></div><h2 id='update-a-mass-payment'>Update a mass payment</h2>
 <p>This section covers how to update a mass payment&rsquo;s status to <code class="prettyprint">pending</code> which triggers processing on a created and deferred mass payment, or <code class="prettyprint">cancelled</code> which cancels a created and deferred mass payment.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth access token with the <code>Send</code> scope.</p>
-</li></ol><h3 id='http-request'>HTTP request</h3>
+<h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/mass-payments/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
@@ -6975,8 +6982,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
 <p>A mass payment contains a list of payments called <code class="prettyprint">items</code>. An <code class="prettyprint">item</code> is distinct from the transfer which it creates. An item can contain a status of either <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, or <code class="prettyprint">success</code> depending on whether the payment was created by the Dwolla service or not. A mass payment item status of <code class="prettyprint">success</code> is an indication that a transfer was successfully created. A mass payment&rsquo;s items will be returned in the <code class="prettyprint">_embedded</code> object as a list of <code class="prettyprint">items</code>.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
-</li></ol><h3 id='http-request'>HTTP Request</h3>
+<h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/mass-payments/{id}/items</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
@@ -7068,7 +7074,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+            "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
           },
           "transfer": {
             "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
@@ -7093,7 +7099,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/accounts/b442c936-1f87-465d-a4e2-a982164b26bd"
+            "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
           },
           "transfer": {
             "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
@@ -7162,8 +7168,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
 </code></pre></div></div><h2 id='retrieve-a-mass-payment-item'>Retrieve a mass payment item</h2>
 <p>This section covers how to retrieve a mass payment item by its unique identifier. An item can contain <code class="prettyprint">_links</code> to: the mass payment the item belongs to, the transfer created from the item, and the destination user.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Transactions</code> scope.</p>
-</li></ol><h3 id='http-request'>HTTP request</h3>
+<h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/mass-payment-items/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
@@ -7223,7 +7228,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "destination": {
-      "href": "https://api-sandbox.dwolla.com/accounts/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
     },
     "transfer": {
       "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
