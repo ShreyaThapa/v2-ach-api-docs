@@ -6,11 +6,12 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 | Parameter | Description
 |-----------|------------|
-|id | Transfer unique identifier
-|status | Either `processed`, `pending`, `cancelled`, `failed`, or `reclaimed`
-|amount| An amount JSON object. See below
-|created | ISO-8601 timestamp
-|metadata | A metadata JSON object
+| id | Transfer unique identifier |
+| status | Either `processed`, `pending`, `cancelled`, `failed`, or `reclaimed`
+| amount | An amount JSON object. See below
+| created | ISO-8601 timestamp |
+| metadata | A metadata JSON object |
+| clearing |  |
 
 ```noselect
 {
@@ -31,8 +32,8 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 | Parameter | Description
 |-----------|------------|
-|value | Amount of money
-|currency | String, `USD`
+| value | Amount of money |
+| currency | String, `USD` |
 
 ## Initiate a transfer
 
@@ -62,10 +63,11 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | A bank or balan
 
 | Destination Type | URI | Description
 -------|---------|---------------
-Account | `https://api.dwolla.com/accounts/{id}` | Destination Account of a transfer.
-Customer | `https://api.dwolla.com/customers/{id}` | Destination Customer of a transfer.
-Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)
 Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of an Account or verified Customer's own bank or balance funding source. **OR** A Customer's bank funding source.
+Customer | `https://api.dwolla.com/customers/{id}` | Destination Customer of a transfer.
+Account | `https://api.dwolla.com/accounts/{id}` | Destination Account of a transfer.
+Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)
+
 
 ### Facilitator fee
 The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate [Transfer resource](#transfer-resource) with a unique transfer ID. Within a transfer request you can specify an optional `fees` request parameter, which is an array of [fee objects](#a-fee-json-object) that can represent many unique fee transfers.
@@ -104,7 +106,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to an Access API Customer's bank account, part of Dwolla's Access API. 
 
 ```raw
-POST https://api.dwolla.com/transfers
+POST https://api-sandbox.dwolla.com/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -113,10 +115,10 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 {
     "_links": {
         "source": {
-            "href": "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         },
         "destination": {
-            "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+            "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
         }
     },
     "amount": {
@@ -135,16 +137,16 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 ...
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
+Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```
 ```ruby
 request_body = {
   :_links => {
     :source => {
-      :href => "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+      :href => "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
     },
     :destination => {
-      :href => "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+      :href => "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
     }
   },
   :amount => {
@@ -176,10 +178,10 @@ $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
 $transfer = $transfersApi->create([
   '_links' => [
     'source' => [
-      'href' => 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4',
+      'href' => 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4',
     ],
     'destination' => [
-      'href' => 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+      'href' => 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
     ]
   ],
   'amount' => [
@@ -194,17 +196,17 @@ $transfer = $transfersApi->create([
     'destination' => 'next-available'
   ]
 ]);
-$transfer; # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
+$transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ?>
 ```
 ```python
 request_body = {
   '_links': {
     'source': {
-      'href': 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+      'href': 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
     },
     'destination': {
-      'href': 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+      'href': 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
     }
   },
   'amount': {
@@ -228,16 +230,16 @@ transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 transfers_api = dwollaswagger.TransfersApi(client)
 transfer = transfers_api.create(body = request_body)
-transfer # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+transfer # => 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 ```javascript
 var requestBody = {
   _links: {
     source: {
-      href: 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+      href: 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
     },
     destination: {
-      href: 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+      href: 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
     }
   },
   amount: {
@@ -256,7 +258,7 @@ var requestBody = {
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .post('transfers', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 
 ## Retrieve a transfer
@@ -283,7 +285,7 @@ This section covers how to retrieve a transfer belonging to an Account or Custom
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388
+GET https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -292,13 +294,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388"
     },
     "source": {
-      "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
     },
     "destination": {
-      "href": "https://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
+      "href": "https://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
     }
   },
   "id": "4C8AD8B8-3D69-E511-80DB-0AA34A9B2388",
@@ -328,7 +330,7 @@ transfer.status # => "pending"
 ```
 ```php
 <?php
-$transferUrl = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
+$transferUrl = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
 
 $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
@@ -337,7 +339,7 @@ $transfer->status; # => "pending"
 ?>
 ```
 ```python
-transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
+transfer_url = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 # For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
@@ -350,7 +352,7 @@ transfer = transfers_api.by_id(transfer_url)
 transfer.status # => 'pending'
 ```
 ```javascript
-var transferUrl = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
+var transferUrl = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
 
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken

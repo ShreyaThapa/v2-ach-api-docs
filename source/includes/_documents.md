@@ -1,6 +1,6 @@
 # Documents
 
-Customers of type `personal` or `business` and of status `document` require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.
+Verified Customers of type `personal` or `business` and of status `document` require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.
 
 For more information on handling the Customer verifiation status of `document`, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html) resource article.
 
@@ -49,26 +49,26 @@ curl -X POST
 \ -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
 \ -F "documentType=passport"
 \ -F "file=@foo.png"
-\ 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE/documents'
+\ 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE/documents'
 
 ...
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
+Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
 ```
 ```ruby
-customer_url = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+customer_url = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
 
 file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = app_token.post "#{customer_url}/documents", file: file, documentType: 'license'
 document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 ```python
-customer_url = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+customer_url = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 document = app_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
-document.headers['location'] # => 'https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
+document.headers['location'] # => 'https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
 ```
 ```php
 /**
@@ -76,7 +76,7 @@ document.headers['location'] # => 'https://api.dwolla.com/documents/fb919e0b-ffb
  **/
 ```
 ```javascript
-var customerUrl = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
 
 var requestBody = new FormData();
 body.append('file', fs.createReadStream('mclovin.jpg'), {
@@ -88,7 +88,7 @@ body.append('documentType', 'license');
 
 appToken
   .post(`${customerUrl}/documents`, requestBody)
-  .then(res => res.headers.get('location')); // => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+  .then(res => res.headers.get('location')); // => "https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 
 ## List documents
@@ -106,7 +106,7 @@ This section contains information on how to retrieve a list of documents that be
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents
+GET https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -115,7 +115,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents"
+      "href": "https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents"
     }
   },
   "_embedded": {
@@ -123,7 +123,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+            "href": "https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
           }
         },
         "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
@@ -134,7 +134,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0"
+            "href": "https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0"
           }
         },
         "id": "11fe0bab-39bd-42ee-bb39-275afcc050d0",
@@ -148,7 +148,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
+customer_url = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 documents = token.get "#{customer_url}/documents"
@@ -160,7 +160,7 @@ documents._embedded[:documents][0][:id] # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9
 ```
 ```php
 <?php
-$customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
+$customerUrl = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
 
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
@@ -169,7 +169,7 @@ $customer->total; # => 2
 ?>
 ```
 ```python
-customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
+customer_url = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 documents = app_token.get('%s/documents' % customer_url)
@@ -181,7 +181,7 @@ documents = customers_api.get_customer_documents(customer_url)
 documents.total # => 2
 ```
 ```javascript
-var customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
 
 token
   .get(`${customerUrl}/documents`)
@@ -203,7 +203,7 @@ This section contains information on how to retrieve a document by its id.
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc
+GET https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -212,7 +212,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+      "href": "https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
     }
   },
   "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
@@ -222,7 +222,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-document_url = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+document_url = 'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 document = app_token.get document_url
@@ -234,7 +234,7 @@ document.type # => "passport"
 ```
 ```php
 <?php
-$documentUrl = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
+$documentUrl = 'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
 
 $documentsApi = new DwollaSwagger\DocumentsApi($apiClient);
 
@@ -243,7 +243,7 @@ $document->type; # => "passport"
 ?>
 ```
 ```python
-document_url = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+document_url = 'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 documents = app_token.get(document_url)
@@ -255,7 +255,7 @@ document = documents_api.get_customer(document_url)
 document.type # => "passport"
 ```
 ```javascript
-var documentUrl = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
+var documentUrl = 'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
 
 appToken
   .get(document_url)

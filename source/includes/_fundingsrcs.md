@@ -6,12 +6,14 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 
 Parameter | Description
 ----------|------------
-id | The funding source unique identifier
-status | Is the funding source verified?
+id | The funding source unique identifier.
+status | A status of either `unverified` or `verified` specifying if the funding source has completed verification.
 type | Type of funding source. Either `bank` or `balance`.
-name | Customer’s arbitrary nickname for the funding source
-created | ISO-8601 timestamp
+name | Customer’s arbitrary nickname for the funding source.
+created | ISO-8601 timestamp.
 removed | A value of `true` if the funding source has been [removed](#remove-a-funding-source) or `false` if the funding source is not removed.
+channels | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Can be either `ach` or `wire`.
+bankName | The financial institution name.
 
 ```noselect
 {
@@ -42,7 +44,7 @@ This section covers how to retrieve a funding source by id.
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
+GET https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -51,13 +53,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
+      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
     },
     "customer": {
-      "href": "https://api.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
+      "href": "https://api-sandbox.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
     },
     "initiate-micro-deposits": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
+      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
     }
   },
   "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
@@ -68,10 +70,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_source = account_token.get funding_source_url
+funding_source = app_token.get funding_source_url
 funding_source.name # => "Test checking account"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -80,7 +82,7 @@ funding_source.name # => "Test checking account"
 ```
 ```php
 <?php
-$fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
@@ -89,10 +91,10 @@ $fundingSource->name; # => "Test checking account"
 ?>
 ```
 ```python
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-funding_source = account_token.get(funding_source_url)
+funding_source = app_token.get(funding_source_url)
 funding_source.body['name'] # => 'Test checking account'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -101,9 +103,9 @@ funding_source = fs_api.id(funding_source_url)
 funding_source.name # => 'Test checking account'
 ```
 ```javascript
-var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
-accountToken
+appToken
   .get(fundingSourceUrl)
   .then(res => res.body.name); // => "Test checking account"
 ```
@@ -134,7 +136,7 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
+POST https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -146,13 +148,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
       "name" => "Test Checking - 1234",
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_source = account_token.post "#{funding_source_url}", request_body
+funding_source = app_token.post "#{funding_source_url}", request_body
 funding_source.name # => "Test Checking - 1234"
 ```
 ```php
@@ -161,22 +163,22 @@ funding_source.name # => "Test Checking - 1234"
  **/
 ```
 ```python
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "name": "Test Checking - 1234"
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-funding_source = account_token.post('funding-sources', request_body)
+funding_source = app_token.post('funding-sources', request_body)
 funding_source.body['name'] # => 'Test Checking - 1234'
 ```
 ```javascript
-var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 var requestBody = {
   name: "Test Checking - 1234"
 };
 
-accountToken
+appToken
   .post(fundingSourceUrl, requestBody)
   .then(res => res.body.name); // => "Test Checking - 1234"
 ```
@@ -201,44 +203,57 @@ This section covers how to retrieve the `balance` of a funding source. The fundi
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b
+GET https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance
 Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer {accessToken}
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
-      "self": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b",
-          "type": "funding-source"
-      },
-      "customer": {
-          "href": "https://api-sandbox.dwolla.com/customers/dbaede31-c55c-48d9-abe4-e1d59d8f200b",
-          "type": "customer"
-      },
-      "balance": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/8e286b86-1e87-4974-9c7e-498ed4e8c61b/balance",
-          "type": "balance"
-      }
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "balance"
+    },
+    "funding-source": {
+      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "funding-source"
+    }
   },
-  "id": "8e286b86-1e87-4974-9c7e-498ed4e8c61b",
-  "status": "verified",
-  "type": "bank",
-  "name": "Balance Check - SAVINGS",
-  "created": "2016-07-22T14:47:00.000Z",
-  "removed": false
+  "balance": {
+    "value": "4616.87",
+    "currency": "USD"
+  },
+  "lastUpdated": "2017-04-18T15:20:25.880Z"
 }
 ```
 ```ruby
-# No example for this language yet.
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+funding_source = app_token.get "#{funding_source_url}/balance"
 ```
 ```php
-/* No example for this language yet */
+<?php
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
+
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fsApi->getBalance($fundingSourceUrl);
+?>
 ```
 ```python
-# No example for this language yet.
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+funding_source = app_token.get('%s/balance' % funding_source_url)
 ```
 ```javascript
-// No example for this language yet.
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
+
+appToken
+  .get(`${fundingSourceUrl}/balance`)
+  .then(res => res.body.balance.amount);
 ```
 
 ## Initiate micro-deposits
@@ -263,20 +278,19 @@ This section covers how to initiate micro-deposits for bank verification. Refere
 #### Request and response
 
 ```raw
-POST /funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
+POST https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
 Authorization: Bearer 8tJjM7iTjujLthkbVPMUcHLqMNw4uv5kG712g9j1RRBHplGpwo
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
-Cache-Control: no-cache
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
+Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
 ```
 ```ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-account_token.post "#{funding_source_url}/micro-deposits"
+app_token.post "#{funding_source_url}/micro-deposits"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
 DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url)
@@ -284,13 +298,13 @@ DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url)
 ```javascript
 var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
 
-accountToken.post(`#{fundingSourceUrl}/micro-deposits`);
+appToken.post(`#{fundingSourceUrl}/micro-deposits`);
 ```
 ```python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-account_token.post('%s/micro-deposits' % funding_source_url)
+app_token.post('%s/micro-deposits' % funding_source_url)
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 fs_api = dwollaswagger.FundingsourcesApi(client)
@@ -337,7 +351,7 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 #### Request and response
 
 ```raw
-POST /funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
+POST https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
 Authorization: Bearer 8tJjM7iTjujLthkbVPMUcHLqMNw4uv5kG712g9j1RRBHplGpwo
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -369,7 +383,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-account_token.post "#{funding_source_url}/micro-deposits", request_body
+app_token.post "#{funding_source_url}/micro-deposits", request_body
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
 DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url, body: request_body)
@@ -387,7 +401,7 @@ var requestBody = {
   }
 };
 
-accountToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
+appToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
 ```
 ```python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
@@ -403,7 +417,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-account_token.post('%s/micro-deposits' % funding_source_url, request_body)
+app_token.post('%s/micro-deposits' % funding_source_url, request_body)
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 fs_api = dwollaswagger.FundingsourcesApi(client)
@@ -449,7 +463,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits
+GET https://api-sandbox.dwolla.com/funding-sources/dfe59fdd-7467-44cf-a339-2020dab5e98a/micro-deposits
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -477,10 +491,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_source = account_token.get "#{funding_source_url}/micro-deposits"
+funding_source = app_token.get "#{funding_source_url}/micro-deposits"
 funding_source.status # => "failed"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -489,7 +503,7 @@ funding_source.status # => "failed"
 ```
 ```php
 <?php
-$fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
@@ -498,10 +512,10 @@ $fundingSource->status; # => "failed"
 ?>
 ```
 ```python
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-funding_source = account_token.get('%s/micro-deposits' % funding_source_url)
+funding_source = app_token.get('%s/micro-deposits' % funding_source_url)
 funding_source.body['status'] # => 'failed'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -510,9 +524,9 @@ funding_source = fs_api.verify_micro_deposits_exist(funding_source_url)
 funding_source.status # => 'failed'
 ```
 ```javascript
-var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
-accountToken
+appToken
   .get(`${fundingSourceUrl}/micro-deposits`)
   .then(res => res.body.status); // => "failed"
 ```
@@ -539,7 +553,7 @@ Remove a funding source by id. A removed funding source is soft deleted and can 
 ### Request and response
 
 ```raw
-POST /funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
+POST https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -553,7 +567,7 @@ HTTP 200 OK
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c",
+      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c",
       "type": "funding-source"
     }
   },
@@ -566,21 +580,21 @@ HTTP 200 OK
 }
 ```
 ```ruby
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 request_body = {
   :removed => true
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-account_token.post "#{funding_source_url}", request_body
+app_token.post "#{funding_source_url}", request_body
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
 DwollaSwagger::FundingsourcesApi.soft_delete(funding_source_url, :body => request_body)
 ```
 ```php
 <?php
-$fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
@@ -588,23 +602,19 @@ $fsApi->softDelete(['removed' => true ], $fundingSourceUrl);
 ?>
 ```
 ```python
-funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
-
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+request_body = {
+  "removed": true
+}
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-account_token.delete(funding_source_url)
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-fs_api.soft_delete(funding_source_url, body = {
-  'removed': true
-})
+funding_source = app_token.post('funding-sources', request_body)
 ```
 ```javascript
-var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 var requestBody = {
   removed: true
 };
 
-accountToken.post(fundingSourceUrl, requestBody);
+appToken.post(fundingSourceUrl, requestBody);
 ```
 * * *

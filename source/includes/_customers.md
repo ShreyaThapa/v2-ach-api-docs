@@ -40,7 +40,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 |lastName | Customer's last name.
 |email | Customer's email address.
 |type | Either `unverified`, `personal`, `business`, or `receive-only`.
-|status | If type is **unverified** or **receive-only**: status is `unverified` or `suspended`. <br> If type is **personal** or **business**: status is `retry`, `document`, `verified`, or `suspended`.
+|status | If type is **unverified** or **receive-only**: status can be `unverified` or `suspended`. <br> If type is **personal** or **business**: status can be `retry`, `document`, `verified`, or `suspended`.
 |created | ISO-8601 timestamp.
 
 ### Customer statuses
@@ -48,43 +48,69 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | Status | Description
 |--------|------------|
 | unverified | Customers of type `unverified` or `receive-only` always have this status.
-| retry | Customers of type `personal` or `business` can have this status. The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
-| document | Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
-| verified | Customers of type `personal` or `business` can have this status. The Customer is currently verified.
+| retry | Verified Customers of type `personal` or `business` can have this status. The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
+| document | Verified Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
+| verified | Verified Customers of type `personal` or `business` can have this status. The Customer is currently verified.
 | suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.
 
 ```noselect
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F"
+      "href": "https://api-sandbox.dwolla.com/customers/9da3aa7c-2524-430b-a751-6dc722735fce",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "customer"
     },
     "receive": {
-      "href": "https://api.dwolla.com/transfers"
+      "href": "https://api-sandbox.dwolla.com/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
+    },
+    "edit-form": {
+      "href": "https://api-sandbox.dwolla.com/customers/9da3aa7c-2524-430b-a751-6dc722735fce",
+      "type": "application/vnd.dwolla.v1.hal+json; profile=\"https://github.com/dwolla/hal-forms\"",
+      "resource-type": "customer"
+    },
+    "edit": {
+      "href": "https://api-sandbox.dwolla.com/customers/9da3aa7c-2524-430b-a751-6dc722735fce",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "customer"
     },
     "funding-sources": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F/funding-sources"
+      "href": "https://api-sandbox.dwolla.com/customers/9da3aa7c-2524-430b-a751-6dc722735fce/funding-sources",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "funding-source"
     },
     "transfers": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F/transfers"
+      "href": "https://api-sandbox.dwolla.com/customers/9da3aa7c-2524-430b-a751-6dc722735fce/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
     },
     "send": {
-      "href": "https://api.dwolla.com/transfers"
+      "href": "https://api-sandbox.dwolla.com/transfers",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "transfer"
     }
   },
-  "id": "730CA23F-06C5-45CC-AA6B-8EC2D6EE109F",
+  "id": "9da3aa7c-2524-430b-a751-6dc722735fce",
   "firstName": "Jane",
   "lastName": "Doe",
-  "email": "janedoe@nomail.com",
+  "email": "janedoe@email.com",
   "type": "personal",
   "status": "verified",
-  "created": "2015-10-06T01:18:26.923Z"
+  "created": "2016-08-17T18:58:47.630Z",
+  "address1": "99-99 33rd St",
+  "address2": "Apt 8",
+  "city": "Some City",
+  "state": "NY",
+  "postalCode": "11101",
+  "phone": "5554321234"
 }
 ```
 
 ## Create a customer
 
-This section details how to create a new Customer. To create an unverified Customer, you need to provide only the customer's full name and email address.  Verified Customers require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For receive-only customers, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address.  `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 For more information on verified Customers, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification.html) resource article.
 
@@ -126,7 +152,7 @@ For more information on verified Customers, reference our [Customer verification
 | businessClassification | yes | string | The [industry classification](#list-business-classifications) id that corresponds to Customer’s business  |
 | businessType | yes | string | Business structure. Possible values are `corporation`, `llc`, `partnership`, and `soleproprietorship` |
 | businessName | yes | string | Customer’s registered business name. |
-| ein | yes | string | Employer Identification Number. |
+| ein | yes | string | Employer Identification Number. **Note:** If the `businessType` is a sole proprietorship then ein can be omitted from the request. |
 | doingBusinessAs | no | string | Name that is different from the officially registered name of Customer’s business. |
 | website | no | string | www.domain.com |
 
@@ -149,7 +175,7 @@ For more information on verified Customers, reference our [Customer verification
 ### Unverified Customer
 
 ```raw
-POST /customers
+POST https://api-sandbox.dwolla.com/customers
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -162,7 +188,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 ```
 ```ruby
 request_body = {
@@ -227,7 +253,7 @@ appToken
 ### Verified Customer
 
 ```raw
-POST /customers
+POST https://api-sandbox.dwolla.com/customers
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -356,7 +382,7 @@ appToken
 ### Receive-only customer
 
 ```raw
-POST /customers
+POST https://api-sandbox.dwolla.com/customers
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -670,7 +696,7 @@ In addition to the table above, business verified Customers can update the follo
 | website | no | string | www.domain.com |
 
 ### Upgrade an unverified Customer to verified Customer
-An unverified Customer can be upgraded to a verified Customer by supplying the necessary information required to create a verified Customer. See [this table](#request-parameters-verified-customer) for required information.
+An unverified Customer can be upgraded to a verified Customer by supplying the necessary information required to create a verified Customer. Reference [this table](#request-parameters---verified-customer) for required information.
 
 ### Suspend a Customer
 Unverified and Verified Customers can be suspended by specifying a status of `suspended` in your request. You'll need to contact Dwolla to unsuspend a Customer.
@@ -722,7 +748,7 @@ If the verified Customer has a status of `retry`, some information may have been
 ### Request and response
 
 ```raw
-POST /customers/132681FA-1B4D-4181-8FF2-619CA46235B1
+POST https://api-sandbox.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -743,7 +769,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 200 OK
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 ```
 ```php
 <?php
@@ -768,7 +794,7 @@ $customer->id; # => "FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ?>
 ```
 ```ruby
-customer_url = 'https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+customer_url = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 request_body = {
       "firstName" => "John",
        "lastName" => "Doe",
@@ -793,7 +819,7 @@ customer = DwollaSwagger::CustomersApi.update_customer(customer_url, :body => re
 customer.id # => "FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ```
 ```python
-customer_url = 'https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+customer_url = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 request_body = {
   "firstName": "John",
   "lastName": "Doe",
@@ -819,7 +845,7 @@ customer = customers_api.update_customer(customer_url, body = request_body)
 customer.id # => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 ```javascript
-var customerUrl = 'https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F';
 var requestBody = {
   firstName: "John",
   lastName: "Doe",
@@ -889,20 +915,20 @@ This section outlines how to retrieve your list of created Customers.
 ### Request and response
 
 ```raw
-GET /customers
+GET https://api-sandbox.dwolla.com/customers
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "first": {
-      "href": "https://api.dwolla.com/customers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
     },
     "last": {
-      "href": "https://api.dwolla.com/customers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
     },
     "self": {
-      "href": "https://api.dwolla.com/customers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
     }
   },
   "_embedded": {
@@ -910,7 +936,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+            "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
           }
         },
         "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
@@ -987,7 +1013,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+      "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
     }
   },
   "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
@@ -1122,16 +1148,11 @@ Create a new Funding Source for a Customer.  Customers can have a maximum of 6 f
 ### Request and response
 
 ```raw
-POST /customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
-  "_links": {
-    "on-demand-authorization": {
-      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
-    }
-  },
   "routingNumber": "222222226",
   "accountNumber": "123456789",
   "type": "checking",
@@ -1139,7 +1160,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
+Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
 ```
 ```php
 <?php
@@ -1236,7 +1257,7 @@ Get a single-use IAV token for a Customer.
 ### Request and response
 
 ```raw
-POST /customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -1389,7 +1410,7 @@ Retrieve a list of funding sources that belong to a Customer. By default, all fu
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources
+GET https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -1398,10 +1419,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources"
+      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources"
     },
     "customer": {
-      "href": "https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
     }
   },
   "_embedded": {
@@ -1409,13 +1430,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
           },
           "customer": {
-            "href": "https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
           },
           "with-available-balance": {
-            "href": "https://api.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
           }
         },
         "id": "ab9cd5de-9435-47af-96fb-8d2fa5db51e8",
@@ -1427,10 +1448,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/funding-sources/98c209d3-02d6-4bee-bc0f-61e18acf0e33"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/98c209d3-02d6-4bee-bc0f-61e18acf0e33"
           },
           "customer": {
-            "href": "https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
           }
         },
         "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
@@ -1444,7 +1465,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-customer_url = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
+customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 funding_sources = app_token.get "#{customer}/funding-sources"
@@ -1456,7 +1477,7 @@ funding_sources._embedded[:'funding-sources'][0][:name] # => "Jane Doe’s Check
 ```
 ```php
 <?php
-$customerUrl = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
+$customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
 
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
@@ -1465,7 +1486,7 @@ $fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Che
 ?>
 ```
 ```python
-customer_url = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
+customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 funding_sources = app_token.get('%s/funding-sources' % customer_url)
@@ -1477,7 +1498,7 @@ funding_sources = fs_api.get_customer_funding_sources(customer_url)
 funding_sources._embedded['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
 ```
 ```javascript
-var customerUrl = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
 
 appToken
   .get(`${customerUrl}/funding-sources`)
@@ -1513,7 +1534,7 @@ This section details how to retrieve a Customer's list of transfers. Transaction
 ### Request and response
 
 ```raw
-GET http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers
+GET http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -1522,13 +1543,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "first": {
-      "href": "https://api.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
     },
     "last": {
-      "href": "https://api.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
     },
     "self": {
-      "href": "http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers"
+      "href": "http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers"
     }
   },
   "_embedded": {
@@ -1536,13 +1557,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388"
           },
           "source": {
-            "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           },
           "destination": {
-            "href": "https://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
+            "href": "https://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
           }
         },
         "id": "4C8AD8B8-3D69-E511-80DB-0AA34A9B2388",
@@ -1560,13 +1581,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/transfers/9DC99076-3D69-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/9DC99076-3D69-E511-80DB-0AA34A9B2388"
           },
           "source": {
-            "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           },
           "destination": {
-            "href": "https://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
+            "href": "https://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
           }
         },
         "id": "9DC99076-3D69-E511-80DB-0AA34A9B2388",
@@ -1587,7 +1608,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-customer_url = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
+customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfers = app_token.get "#{customer_url}/transfers"
@@ -1599,7 +1620,7 @@ transfers._embedded[:transfers][0][:status] # => "pending"
 ```
 ```php
 <?php
-$customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+$customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
 
 $TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
@@ -1608,7 +1629,7 @@ $transfers->_embedded->transfers[0]->status; # => "pending"
 ?>
 ```
 ```python
-customer_url = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
+customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfers = app_token.get('%s/transfers' % customer_url)
@@ -1620,7 +1641,7 @@ transfers = transfers_api.get_customer_transfers(customer_url)
 transfers._embedded['transfers'][0]['status'] # => 'pending'
 ```
 ```javascript
-var customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+var customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
 
 appToken
   .get(`${customerUrl}/transfers`)

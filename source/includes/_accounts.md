@@ -2,7 +2,7 @@
 
 An `Account` represents an Access API partner Dwolla account that was established on dwolla.com.
 
-### Migrating Dwolla user Accounts to Access API Customers
+### Migrating Transfer user Accounts to Access API Customers
 Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Access API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
 
 ### Account links
@@ -44,7 +44,7 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 
 ## Retrieve account details
 
-This section shows you how to retrieve account information belonging to the authorized user Account. The developer can pass either an `id` or the entire `location` resource to make this request.
+This section shows you how to retrieve basic account information belonging to the authorized user Account. 
 
 ### HTTP request
 `GET https://api.dwolla.com/accounts/{id}`
@@ -159,7 +159,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 ### Request and response
 
 ```noselect
-POST /funding-sources
+POST https://api-sandbox.dwolla.com/funding-sources
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY

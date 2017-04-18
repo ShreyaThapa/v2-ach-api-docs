@@ -177,7 +177,8 @@ The following section will outline development tools you can take advantage of t
 
 ### Dwolla Hal-Forms
 [Dwolla HAL-Forms](https://github.com/Dwolla/hal-forms) is an extension of the [HAL spec](http://stateless.co/hal_specification.html) and was created to describe how Dwolla represents forms in the API. The extension starts with the media type. The media type should be used as a profile link as part of the `Accept` header of the request in conjunction with the Dwolla HAL style media type. By including these two media-type identifiers in the Accept header, the API knows that you’re looking for a form for the given resource.
- ##### Example Accept header value
+
+##### Example Accept header value
 `application/vnd.dwolla.v1.hal+json; profile="https://github.com/dwolla/hal-forms"`
 
 The primary benefit is the ability to dynamically generate your UI based on the state of a particular resource. Your application can easily transition state without knowing Dwolla's business rules and what information needs to included in the actual request to transition state. When an `"edit-form"` link relation is returned on the resource, then your application can follow the link by making a GET request to that resource, including the header shown above. The response will include a simple JSON response body that contains information on the HTTP method, message content-type, and the request parameters used when sending the request to the Dwolla API. **Note:** Currently, forms are only returned for creating & editing customers, but we’re looking forward to expanding them across our existing and future endpoints.

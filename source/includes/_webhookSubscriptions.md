@@ -213,7 +213,7 @@ This section details how to pause a webhook subscription. When a webhook subscri
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
+POST https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
@@ -222,7 +222,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 }
 ```
 ```ruby
-webhook_subscription_url = 'https://api.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
+webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 request_body = {
   :paused => true
@@ -232,7 +232,7 @@ request_body = {
 subscription = app_token.post "#{webhook_subscription_url}", request_body
 ```
 ```javascript
-var webhookSubscriptionUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
 var requestBody = {
   paused: true
@@ -243,7 +243,7 @@ applicationToken
   .then(res => res.body.paused); // => 'true'
 ```
 ```python
-webhook_subscription_url = 'https://api.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
+webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 request_body = {
   'paused': true
@@ -255,7 +255,7 @@ subscription.body['paused'] # => true
 ```
 ```php
 <?php
-$webhookSubscriptionUrl = 'https://api.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
+$webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 $webhookApi = new DwollaSwagger\WebhooksubscriptionsApi($apiClient);
 
@@ -279,7 +279,7 @@ This section covers how to retrieve a list of webhook subscriptions that belong 
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/webhook-subscriptions
+GET https://api-sandbox.dwolla.com/webhook-subscriptions
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -288,7 +288,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/webhook-subscriptions"
+      "href": "https://api-sandbox.dwolla.com/webhook-subscriptions"
     }
   },
   "_embedded": {
@@ -296,10 +296,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/webhook-subscriptions/f4d21628-fde2-4d3a-b69a-0a7cb42adc4c"
+            "href": "https://api-sandbox.dwolla.com/webhook-subscriptions/f4d21628-fde2-4d3a-b69a-0a7cb42adc4c"
           },
           "webhooks": {
-            "href": "https://api.dwolla.com/webhook-subscriptions/f4d21628-fde2-4d3a-b69a-0a7cb42adc4c/webhooks"
+            "href": "https://api-sandbox.dwolla.com/webhook-subscriptions/f4d21628-fde2-4d3a-b69a-0a7cb42adc4c/webhooks"
           }
         },
         "id": "f4d21628-fde2-4d3a-b69a-0a7cb42adc4c",
@@ -424,7 +424,7 @@ This section covers how to view all fired [webhooks](#webhooks) for a webhook su
 ### Request and response
 
 ```raw
-GET /webhook-subscriptions/10d4133e-b308-4646-b276-40d9d36def1c/webhooks
+GET https://api-sandbox.dwolla.com/webhook-subscriptions/10d4133e-b308-4646-b276-40d9d36def1c/webhooks
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 

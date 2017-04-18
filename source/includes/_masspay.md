@@ -10,10 +10,12 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 
 | Parameter | Description |
 |-----------|------------|
-| id | Mass payment unique identifier |
-|status | Either `deferred`: A created mass payment that can be processed at a later time. `pending`: A mass payment that is pending and awaiting processing. A mass payment has a pending status for a brief period of time and cannot be cancelled. `processing`:  A mass payment that is processing. `complete`: A mass payment successfully completed processing. |
-|created | ISO-8601 timestamp |
-|metadata | A metadata JSON object |
+| id | Mass payment unique identifier. |
+| status | Either `deferred`: A created mass payment that can be processed at a later time. `pending`: A mass payment that is pending and awaiting processing. A mass payment has a pending status for a brief period of time and cannot be cancelled. `processing`:  A mass payment that is processing. `complete`: A mass payment successfully completed processing. |
+| created | ISO-8601 timestamp. |
+| metadata | A metadata JSON object. |
+| total | The sum amount of all items in the mass payment. |
+| totalFees | The sum amount of all fees charged for the mass payment. |
 
 ```noselect
 {
@@ -22,13 +24,15 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
   "id": "string",
   "status": "string",
   "created": "2016-03-11T15:52:58.289Z",
-  "metadata": {}
+  "metadata": {},
+  "total": {},
+  "totalFees": {}
 }
 ```
 
 ## Initiate a mass payment
 
-This section covers how to initiate a mass payment from a Partner Dwolla [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.
+This section covers how to initiate a mass payment from a Partner Dwolla [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively.
 
 #### Deferred mass payment
 A mass payment can be created with a status of `deferred`, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you'll [update the mass payment](https://docsv2.dwolla.com/#update-a-mass-payment) with a status of `pending`. A deferred mass payment can be cancelled by updating the mass payment with a status of `cancelled`.
@@ -52,16 +56,17 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | A bank or balan
 
 | Destination Type | URI | Description
 -------|---------|---------------
-Account | `https://api.dwolla.com/accounts/{id}` | Destination [Account](#accounts) of a transfer.
-Customer | `https://api.dwolla.com/customers/{id}` | Destination [Customer](#customers) of a transfer.
-Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)
 Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of a Verified Customer's own `bank` or `balance` funding source, an Unverified Customer's `bank` funding source, or a Receive-only Customer's `bank` funding source.
+Customer | `https://api.dwolla.com/customers/{id}` | Destination Access API [Customer](#customers) of a transfer.
+Account | `https://api.dwolla.com/accounts/{id}` | Destination Transfer [Account](#accounts) of a transfer.
+Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account or recipient (recipient will create a Transfer Account to claim funds)
+
 
 ### Mass payment item
 
 | Parameter | Description
 |-----------|------------|
-| _links | Can return `mass-payment`, `destination` and `transfer` JSON objects that contain relational links to associated resources.
+| _links | A _links JSON object describing the desired `destination` of a mass payment. [See above](#source-and-destination-values) for possible values for `destination`. |
 | amount | An amount JSON object containing `currency` and `value` keys.
 | metadata | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).
 
@@ -91,7 +96,7 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of 
 | 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, or Invalid funding source. |
 | 401 | NotAuthorized | OAuth token does not have Send scope. |
 
-### Request and response (transfer from Account to Customers)
+### Request and response (masspayment from Account to Customers)
 
 ```raw
 POST https://api-sandbox.dwolla.com/mass-payments
@@ -143,7 +148,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 ...
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
+Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
 ```ruby
 request_body = {
@@ -338,7 +343,7 @@ This section covers how to update a mass payment's status to `pending` which tri
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c
+POST https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -350,7 +355,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-mass_payment_url = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
       "status" => "pending",
 }
@@ -365,7 +370,7 @@ mass_payment.status # => "pending"
  **/
 ```
 ```python
-mass_payment_url = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "status": "pending"
 }
@@ -375,7 +380,7 @@ mass_payments = account_token.post('mass-payments', request_body)
 mass_payments.body['status'] # => 'pending'
 ```
 ```javascript
-var massPaymentUrl = 'https://api.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 var requestBody = {
   status: "pending"
 };

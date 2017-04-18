@@ -110,7 +110,7 @@ Retrieve a list of events for the application.
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/events
+GET https://api-sandbox.dwolla.com/events
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -119,16 +119,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/events"
+      "href": "https://api-sandbox.dwolla.com/events"
     },
     "first": {
-      "href": "https://api.dwolla.com/events?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/events?limit=25&offset=0"
     },
     "last": {
-      "href": "https://api.dwolla.com/events?limit=25&offset=150"
+      "href": "https://api-sandbox.dwolla.com/events?limit=25&offset=150"
     },
     "next": {
-      "href": "https://api.dwolla.com/events?limit=25&offset=25"
+      "href": "https://api-sandbox.dwolla.com/events?limit=25&offset=25"
     }
   },
   "_embedded": {
@@ -136,13 +136,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/events/78e57644-56e4-4da2-b743-059479f2e80f"
+            "href": "https://api-sandbox.dwolla.com/events/78e57644-56e4-4da2-b743-059479f2e80f"
           },
           "resource": {
-            "href": "https://api.dwolla.com/transfers/47CFDDB4-1E74-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/47CFDDB4-1E74-E511-80DB-0AA34A9B2388"
           },
           "account": {
-            "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           }
         },
         "id": "78e57644-56e4-4da2-b743-059479f2e80f",
@@ -153,13 +153,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/events/f8e70f48-b7ff-47d0-9d3d-62a099363a76"
+            "href": "https://api-sandbox.dwolla.com/events/f8e70f48-b7ff-47d0-9d3d-62a099363a76"
           },
           "resource": {
-            "href": "https://api.dwolla.com/transfers/48CFDDB4-1E74-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/48CFDDB4-1E74-E511-80DB-0AA34A9B2388"
           },
           "account": {
-            "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           }
         },
         "id": "f8e70f48-b7ff-47d0-9d3d-62a099363a76",
@@ -170,13 +170,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api.dwolla.com/events/9f0167e0-dce6-4a1a-ad26-30015d6f1cc1"
+            "href": "https://api-sandbox.dwolla.com/events/9f0167e0-dce6-4a1a-ad26-30015d6f1cc1"
           },
           "resource": {
-            "href": "https://api.dwolla.com/transfers/08A166BC-1B74-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/08A166BC-1B74-E511-80DB-0AA34A9B2388"
           },
           "account": {
-            "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
           }
         },
         "id": "9f0167e0-dce6-4a1a-ad26-30015d6f1cc1",
@@ -238,7 +238,7 @@ This section covers how to retrieve an event by id.
 ### Request and response
 
 ```raw
-GET /events/81f6e13c-557c-4449-9331-da5c65e61095
+GET htttps://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -247,16 +247,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095"
+      "href": "https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095"
     },
     "resource": {
-      "href": "https://api.dwolla.com/transfers/09A166BC-1B74-E511-80DB-0AA34A9B2388"
+      "href": "https://api-sandbox.dwolla.com/transfers/09A166BC-1B74-E511-80DB-0AA34A9B2388"
     },
     "account": {
-      "href": "https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
     },
     "customer": {
-      "href": "https://api.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
+      "href": "https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
     }
   },
   "id": "81f6e13c-557c-4449-9331-da5c65e61095",
@@ -266,7 +266,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
+event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 event = app_token.get event_url
@@ -278,7 +278,7 @@ event.topic # => "customer_transfer_created"
 ```
 ```php
 <?php
-$eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
+$eventUrl = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
 
 $eventsApi = new DwollaSwagger\EventsApi($apiClient);
 
@@ -287,7 +287,7 @@ $event->topic; # => "customer_transfer_created"
 ?>
 ```
 ```python
-event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
+event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 event = app_token.get(event_url)
@@ -299,7 +299,7 @@ event = events_api.id(event_url)
 event.topic # => 'customer_transfer_created'
 ```
 ```javascript
-var eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
+var eventUrl = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
 
 applicationToken
   .get(eventUrl)

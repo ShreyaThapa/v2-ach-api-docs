@@ -70,7 +70,9 @@ end
 my_custies = DwollaSwagger::CustomersApi.list(:limit => 10)
 ```
 
-## DwollaV2 Python (Recommended)
+## Python
+
+### DwollaV2 Python (Recommended)
 
 `dwollav2` is available on [PyPi](https://pypi.python.org/pypi/dwollav2/1.1.7) with
 [source code](https://github.com/Dwolla/dwolla-v2-python) available on our GitHub page. More
@@ -101,7 +103,7 @@ app_token = client.Auth.client()
 customers = app_token.get('customers', {'limit': 10})
 ```
 
-## DwollaSwagger Python
+### DwollaSwagger Python
 
 `dwolla-swagger-python` is available on [PyPi](https://pypi.python.org/pypi/dwollaswagger) with [source code](https://github.com/Dwolla/dwolla-swagger-python) available on our GitHub page. More information is available on the project's README.
 
