@@ -32,6 +32,14 @@
         ga('send', 'pageview');
 
       </script>
+
+      <script>
+        (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/dfdjs7vb';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+
+        window.Intercom('boot', {
+          app_id: 'dfdjs7vb'
+        });
+      </script>
   </head>
   <body class="index">
     <header>
@@ -100,15 +108,15 @@
           <nav class="side-nav js-side-nav">
           </nav>
           <nav class="side-nav tocify-wrapper active js-side-nav">
-              <section class="side-nav__product-select">   
-              <span>Product</span>    
+              <section class="side-nav__product-select">
+              <span>Product</span>
                 <div class="custom-select custom-select--blue">
                 <select onChange="window.location.href=this.value" name="select">
                       <option value="/" selected>Access API</option>
                       <option value="/transfer/">Transfer</option>
                 </select>
                 <div class="arrow"></div>
-              </div>   
+              </div>
             </section>
               <section id="toc">
               </section>
@@ -7917,7 +7925,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
-<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than a HTTP 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
+<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
 
 <p>Dwolla will re-attempt delivery 8 times over the course of 72 hours according the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call <a href="#retrieve-a-webhook">retrieve a webhook by its Id</a>.</p>
 
@@ -8298,7 +8306,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">paused</span><span class="p">:</span> <span class="kc">true</span>

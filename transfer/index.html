@@ -4894,7 +4894,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
-<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than a HTTP 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
+<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
 
 <p>Dwolla will re-attempt delivery 8 times over the course of 72 hours according the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call <a href="#retrieve-a-webhook">retrieve a webhook by its Id</a>.</p>
 
