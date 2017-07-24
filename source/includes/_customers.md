@@ -110,7 +110,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address.  `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable.  `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers`
@@ -121,6 +121,7 @@ This section details how to create a new Customer. To create `Unverified Custome
 | firstName | yes | string | Customer's first name. |
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
+| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 
 ### Request parameters - verified Customer
@@ -178,7 +179,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "firstName": "Jane",
   "lastName": "Merchant",
   "email": "jmerchant@nomail.net",
-  "ipAddress": "99.99.99.99"
+  "ipAddress": "99.99.99.99",
+  "businessName": "Jane Merchant's Business"
 }
 
 HTTP/1.1 201 Created
