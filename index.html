@@ -1655,7 +1655,7 @@ $masspayments-&gt;_embedded-&gt;{"mass-payments"}[0]-&gt;status; # =&gt; "comple
   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5554321234"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer. To create <code class="prettyprint">Unverified Customers</code>, you need to provide only the customer&rsquo;s full name and email address.  <code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p>This section details how to create a new Customer. To create <code class="prettyprint">Unverified Customers</code>, you need to provide only the customer&rsquo;s full name and email address, as well as a business name if applicable.  <code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers</code></p>
 <h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
@@ -1684,6 +1684,12 @@ $masspayments-&gt;_embedded-&gt;{"mass-payments"}[0]-&gt;status; # =&gt; "comple
 <td>yes</td>
 <td>string</td>
 <td>Customer&rsquo;s email address.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
 </tr>
 <tr>
 <td>ipAddress</td>
@@ -1905,7 +1911,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "firstName": "Jane",
   "lastName": "Merchant",
   "email": "jmerchant@nomail.net",
-  "ipAddress": "99.99.99.99"
+  "ipAddress": "99.99.99.99",
+  "businessName": "Jane Merchant's Business"
 }
 
 HTTP/1.1 201 Created
