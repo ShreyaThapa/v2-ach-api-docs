@@ -52,7 +52,7 @@ Applications may request the following permission scopes when requesting authori
 |-----------|--------------|
 | Transactions | Access the user's transfer data. |
 | Send | Transfer money on the user's behalf. |
-| Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources. |
+| Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance, add new funding sources, verify funding sources, initiate transfers to and from funding sources. |
 | AccountInfoFull | Includes name and Dwolla account ID |
 
 #### Example complete OAuth flow
