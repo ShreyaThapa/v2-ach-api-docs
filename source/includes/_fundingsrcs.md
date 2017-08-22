@@ -4,8 +4,8 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 
 ### Funding source resource
 
-Parameter | Description
-----------|------------
+| Parameter | Description |
+|-----------|-------------|
 | id | The funding source unique identifier. |
 | status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
 | type | Type of funding source. Possible values are `bank` or `balance`. |
@@ -42,7 +42,11 @@ Parameter | Description
     ],
     "bankName": "SANDBOX TEST BANK",
     "iavAccountHolders": {
-        "selected": "account holder"
+        "selected": "account holder",
+        "other": [
+          "Jane Doe",
+          "GeneriCompany LLC"
+        ]
     }
 }
 ```
