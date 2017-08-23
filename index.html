@@ -4457,38 +4457,71 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>status</td>
-<td>A status of either <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> specifying if the funding source has completed verification.</td>
+<td>Possible values are <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code>. Determines if the funding source has completed verification.</td>
 </tr>
 <tr>
 <td>type</td>
-<td>Type of funding source. Either <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
+<td>Type of funding source. Possible values are <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
 </tr>
 <tr>
 <td>name</td>
-<td>Customer’s arbitrary nickname for the funding source.</td>
+<td>Arbitrary nickname for the funding source.</td>
 </tr>
 <tr>
 <td>created</td>
-<td>ISO-8601 timestamp.</td>
+<td>ISO-8601 timestamp for when the funding source was created.</td>
+</tr>
+<tr>
+<td>balance</td>
+<td>An optional object that includes <code class="prettyprint">value</code> and <code class="prettyprint">currency</code> parameters. <code class="prettyprint">value</code> is a string value for the amount available and <code class="prettyprint">currency</code> is a string value currency code. Only returned for an Access API Customer account balance.</td>
 </tr>
 <tr>
 <td>removed</td>
-<td>A value of <code class="prettyprint">true</code> if the funding source has been <a href="#remove-a-funding-source">removed</a> or <code class="prettyprint">false</code> if the funding source is not removed.</td>
+<td>Determines if the funding source has been <a href="#remove-a-funding-source">removed</a>. A boolean <code class="prettyprint">true</code> if the funding source was removed or <code class="prettyprint">false</code> if the funding source is not removed.</td>
 </tr>
 <tr>
 <td>channels</td>
-<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Can be either <code class="prettyprint">ach</code> or <code class="prettyprint">wire</code>.</td>
+<td>List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are <code class="prettyprint">ach</code> or <code class="prettyprint">wire</code>.</td>
 </tr>
 <tr>
 <td>bankName</td>
 <td>The financial institution name.</td>
 </tr>
+<tr>
+<td>iavAccountHolders</td>
+<td>An optional object that includes optional <code class="prettyprint">selected</code> and <code class="prettyprint">other</code> parameters. <code class="prettyprint">selected</code>, a string with the account holder name(s) on file with the financial institution for the IAV selected account. <code class="prettyprint">other</code>, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account.</td>
+</tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-    </span><span class="nt">"routingNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"222222226"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"accountNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Bank"</span><span class="w">
+    </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/fc84223a-609f-42c9-866e-2c98f17ab4fb"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"funding-source"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"customer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/customers/241ec287-8d7a-4b69-911e-ffbea98d75ce"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customer"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc84223a-609f-42c9-866e-2c98f17ab4fb"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bank"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Account #1 - CHECKING"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-08-16T20:06:34.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"ach"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"bankName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SANDBOX TEST BANK"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"iavAccountHolders"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"selected"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account holder"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"other"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"GeneriCompany LLC"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='retrieve-a-funding-source'>Retrieve a funding source</h2>
 <p>This section covers how to retrieve a funding source by id.</p>
@@ -8984,6 +9017,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
                  <a href="https://www.dwolla.com/white-label">White Label</a>
                  <a href="https://www.dwolla.com/ach-transfer-dashboard">Dashboard & Admin</a>
                  <a href="https://www.dwolla.com/dwollajs-bank-verification">Instant Bank Account Verification</a>
+                 <a href="https://www.dwolla.com/integrations">Integrations</a>
               </nav>
               <nav>
                 <h6>Account</h6>
