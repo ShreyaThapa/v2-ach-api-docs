@@ -4,23 +4,50 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 
 ### Funding source resource
 
-Parameter | Description
-----------|------------
-id | The funding source unique identifier.
-status | A status of either `unverified` or `verified` specifying if the funding source has completed verification.
-type | Type of funding source. Either `bank` or `balance`.
-name | Customer’s arbitrary nickname for the funding source.
-created | ISO-8601 timestamp.
-removed | A value of `true` if the funding source has been [removed](#remove-a-funding-source) or `false` if the funding source is not removed.
-channels | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Can be either `ach` or `wire`.
-bankName | The financial institution name.
+| Parameter | Description |
+|-----------|-------------|
+| id | The funding source unique identifier. |
+| status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
+| type | Type of funding source. Possible values are `bank` or `balance`. |
+| name | Arbitrary nickname for the funding source. |
+| created | ISO-8601 timestamp for when the funding source was created. |
+| balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for an Access API Customer account balance.   |
+| removed | Determines if the funding source has been [removed](#remove-a-funding-source). A boolean `true` if the funding source was removed or `false` if the funding source is not removed. |
+| channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach` or `wire`. |
+| bankName | The financial institution name. |
+| iavAccountHolders | An optional object that includes optional `selected` and `other` parameters. `selected`, a string with the account holder name(s) on file with the financial institution for the IAV selected account. `other`, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account. |
 
 ```noselect
 {
-    "routingNumber": "222222226",
-    "accountNumber": "123456789",
-    "type": "checking",
-    "name": "My Bank"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/fc84223a-609f-42c9-866e-2c98f17ab4fb",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/241ec287-8d7a-4b69-911e-ffbea98d75ce",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        }
+    },
+    "id": "fc84223a-609f-42c9-866e-2c98f17ab4fb",
+    "status": "verified",
+    "type": "bank",
+    "name": "Your Account #1 - CHECKING",
+    "created": "2017-08-16T20:06:34.000Z",
+    "removed": false,
+    "channels": [
+        "ach"
+    ],
+    "bankName": "SANDBOX TEST BANK",
+    "iavAccountHolders": {
+        "selected": "account holder",
+        "other": [
+          "Jane Doe",
+          "GeneriCompany LLC"
+        ]
+    }
 }
 ```
 
