@@ -275,7 +275,7 @@ appToken
 
 ## List and search transfers for an account
 
-This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `startAmount`, `endAmount`, `startDate`, and `endDate`.
+This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
@@ -294,6 +294,7 @@ This section covers how to retrieve an Account's list of transfers. Transaction 
 | startDate | no | string | Only include transactions created after this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `endDate` to specify a date range. |
 | endDate | no | string | Only include transactions created before than this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `startDate` to specify a date range. |
 | status | no | string | Filter results on transaction status. Possible values: `pending`, `processed`, `failed`, `reclaimed`, or `cancelled`. |
+| correlationId | no | string | A string value to search on if a `correlationId` was specified on a transfer or mass payment item. |
 | limit | no | integer | Number of search results to return. Defaults to 25. |
 | offset | no | integer | Number of search results to skip. Used for pagination. |
 
