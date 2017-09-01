@@ -4,7 +4,7 @@ Dwolla MassPay allows you to easily send up to 5,000 payments one API request. T
 
 Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.
 
-MassPay offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. This benefit is the fact that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur a debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
+MassPay offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. A key benefit is that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur an ACH debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
 
 ### Mass payment resource
 
@@ -16,23 +16,48 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 | metadata | A metadata JSON object. |
 | total | The sum amount of all items in the mass payment. |
 | totalFees | The sum amount of all fees charged for the mass payment. |
+| correlationId | A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and a partner application. |
 
 ```noselect
 {
-  "_links": {},
-  "_embedded": {},
-  "id": "string",
-  "status": "string",
-  "created": "2016-03-11T15:52:58.289Z",
-  "metadata": {},
-  "total": {},
-  "totalFees": {}
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/mass-payments/da835c07-1e12-4212-8b93-a7e0013dfd98",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "mass-payment"
+        },
+        "source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "items": {
+            "href": "https://api-sandbox.dwolla.com/mass-payments/da835c07-1e12-4212-8b93-a7e0013dfd98/items",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "mass-payment-item"
+        }
+    },
+    "id": "da835c07-1e12-4212-8b93-a7e0013dfd98",
+    "status": "complete",
+    "created": "2017-08-31T19:18:02.000Z",
+    "metadata": {
+        "batch": "batch1"
+    },
+    "total": {
+        "value": "$0.02",
+        "currency": "USD"
+    },
+    "totalFees": {
+        "value": "$0.00",
+        "currency": "USD"
+    },
+    "correlationId": "d028beed-8152-481d-9427-21b6c4d99644"
 }
 ```
 
 ## Initiate a mass payment
 
-This section covers how to initiate a mass payment from a Partner Dwolla [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively.
+This section covers how to initiate a mass payment from a Partner Dwolla [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` and a `correlationId` on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a `correlationId` is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.
 
 #### Deferred mass payment
 A mass payment can be created with a status of `deferred`, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you'll [update the mass payment](https://docsv2.dwolla.com/#update-a-mass-payment) with a status of `pending`. A deferred mass payment can be cancelled by updating the mass payment with a status of `cancelled`.
@@ -47,6 +72,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items | yes | array | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item) |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | status | no | string | Acceptable value is: `deferred`. |
+| correlationId | no | string | A unique string value attached to a mass payment which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination values
 
@@ -69,6 +95,8 @@ Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account 
 | _links | A _links JSON object describing the desired `destination` of a mass payment. [See above](#source-and-destination-values) for possible values for `destination`. |
 | amount | An amount JSON object containing `currency` and `value` keys.
 | metadata | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).
+| correlationId | A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+
 
 #### Item object example:
 ```noselect
@@ -84,7 +112,8 @@ Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account 
   },
   "metadata": {
       "key1": "value1"
-  }
+  },
+  "correlationId": "d028beed-8152-481d-9427-21b6c4d99644"
 }
 ```
 
@@ -93,7 +122,7 @@ Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account 
 | HTTP Status | Code | Description |
 |--------------|-------------|-----------------|
 | 201 | Created | A mass payment resource was created |
-| 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, or Invalid funding source. |
+| 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, Invalid job item correlation ID, or Invalid funding source. |
 | 401 | NotAuthorized | OAuth token does not have Send scope. |
 
 ### Request and response (masspayment from Account to Customers)
@@ -123,7 +152,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         },
         "metadata": {
             "payment1": "payment1"
-        }
+        },
+        "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
       },
             {
         "_links": {
@@ -142,7 +172,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
     ],
     "metadata": {
         "batch1": "batch1"
-    }
+    },
+    "correlationId": "6d127333-69e9-4c2b-8cae-df850228e130"
 }
 
 ...
@@ -171,7 +202,8 @@ request_body = {
       },
       metadata: {
         payment1: "payment1"
-      }
+      },
+      correlationId: "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
     },
     {
       _links: {
@@ -190,7 +222,8 @@ request_body = {
   ],
   metadata: {
     batch1: "batch1"
-  }
+  },
+  correlationId: "6d127333-69e9-4c2b-8cae-df850228e130"
 }
 
 mass_payment = account_token.post "mass-payments", request_body
@@ -224,7 +257,8 @@ var requestBody = {
       },
       metadata: {
         payment1: 'payment1'
-      }
+      },
+      correlationId: 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'
     },
     {
       _links: {
@@ -243,7 +277,8 @@ var requestBody = {
   ],
   metadata: {
     batch1: 'batch1'
-  }
+  },
+  correlationId: '6d127333-69e9-4c2b-8cae-df850228e130'
 }
 
 appToken

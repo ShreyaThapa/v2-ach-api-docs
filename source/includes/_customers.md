@@ -1426,7 +1426,7 @@ appToken
 
 ## List and search transfers for a customer
 
-This section details how to retrieve a Customer's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `startAmount`, `endAmount`, `startDate`, and `endDate`.
+This section details how to retrieve a Customer's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/transfers`
@@ -1441,6 +1441,7 @@ This section details how to retrieve a Customer's list of transfers. Transaction
 | startDate | no | string | Only include transactions created after this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `endDate` to specify a date range. |
 | endDate | no | string | Only include transactions created before than this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `startDate` to specify a date range. |
 | status | no | string | Filter results on transaction status. Possible values: `pending`, `processed`, `failed`, or `cancelled`. |
+| correlationId | no | string | A string value to search on if a `correlationId` was specified on a transfer or mass payment item. |
 | limit | no | integer | Number of search results to return. Defaults to 25. |
 | offset | no | integer | Number of search results to skip. Used for pagination. |
 
