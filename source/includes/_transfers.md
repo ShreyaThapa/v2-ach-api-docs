@@ -12,6 +12,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | created | ISO-8601 timestamp |
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
+| correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application. |
 
 ```noselect
 {
@@ -24,11 +25,14 @@ A transfer represents money being transferred from a `source` to a `destination`
     "currency": "string"
   },
   "created": "string",
-  "metadata": {},
+  "metadata": {
+    "key": "value"
+    },
   "clearing": {
     "source": "standard",
     "destination": "next-available"
-  }
+  },
+  "correlationId": "string"
 }
 ```
 
@@ -50,10 +54,6 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Access API [Customer](#customers) resource.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
-
 ### HTTP request
 `POST https://api.dwolla.com/transfers`
 
@@ -64,7 +64,8 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Access API](https://www.dwolla.com/access-api) partners. Next-day ACH functionality must be enabled.
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Access API](https://www.dwolla.com/access-api) partners. Next-day ACH functionality must be enabled. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination types
 
@@ -92,19 +93,21 @@ For more information on collecting fees on payments, reference the [facilitator 
 |_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Customer` or `Account` resource.
 |amount | Amount of fee to charge. An amount JSON object. [See above](#amount-json-object)
 
-#### Fee object example:
+#### Fee example:
 ```noselect
-{  
-   "_links":{  
-      "charge-to":{  
-         "href":"https://api-sandbox.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
+"fees": [
+  {
+    "_links": {
+      "charge-to": {
+        "href": "https://api-sandbox.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
       }
-   },
-   "amount":{  
-      "value":"4.00",
-      "currency":"USD"
-   }
-}
+    },
+    "amount": {
+      "value": "4.00",
+      "currency": "USD"
+    }
+  }
+]
 ```
 
 ### HTTP Status and Error Codes
@@ -142,7 +145,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
     },
     "clearing": {
         "destination": "next-available"
-  }
+  },
+  "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 ...
@@ -171,7 +175,8 @@ request_body = {
   },
   :clearing => {
     :destination => "next-available"
-  }
+  },
+  :correlationId => "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 transfer = app_token.post "transfers", request_body
@@ -200,7 +205,8 @@ $transfer = $transfersApi->create([
   ],
   'clearing' => [
     'destination' => 'next-available'
-  ]
+  ],
+  'correlationId' => '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 ]);
 $transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ?>
@@ -226,7 +232,8 @@ request_body = {
   },
   'clearing': {
     'destination': 'next-available'
-  }
+  },
+  'correlationId': '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 }
 
 transfer = app_token.post('transfers', request_body)
@@ -252,7 +259,8 @@ var requestBody = {
   },
   clearing: {
     destination: 'next-available'
-  }
+  },
+  correlationId: '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 };
 
 // For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)

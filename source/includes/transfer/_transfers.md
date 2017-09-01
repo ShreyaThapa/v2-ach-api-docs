@@ -6,11 +6,13 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 | Parameter | Description
 |-----------|------------|
-|id | Transfer unique identifier
-|status | Either `processed`, `pending`, `cancelled`, `failed`, or `reclaimed`
-|amount| An amount JSON object. See below
-|created | ISO-8601 timestamp
-|metadata | A metadata JSON object
+| id | Transfer unique identifier |
+| status | Either `processed`, `pending`, `cancelled`, `failed`, or `reclaimed`
+| amount | An amount JSON object. See below
+| created | ISO-8601 timestamp |
+| metadata | A metadata JSON object |
+| clearing | A clearing JSON object. |
+| correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application. |
 
 ```noselect
 {
@@ -23,7 +25,8 @@ A transfer represents money being transferred from a `source` to a `destination`
     "currency": "string"
   },
   "created": "2015-10-02T19:48:40.485Z",
-  "metadata": {}
+  "metadata": {},
+  "correlationId": "string"
 }
 ```
 
@@ -52,6 +55,7 @@ This section covers how to initiate a transfer from a Dwolla [Account](#accounts
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination types
 
@@ -77,19 +81,21 @@ For more information on collecting fees on payments, reference the [facilitator 
 |_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Account` resource.
 |amount | Amount of fee to charge. An amount JSON object. [See above](#amount-json-object)
 
-#### Fee object example:
+#### Fee example:
 ```noselect
-{  
-   "_links":{  
-      "charge-to":{  
-         "href":"https://api-sandbox.dwolla.com/accounts/d795f696-2cac-4662-8f16-95f1db9bddd8"
-      }
-   },
-   "amount":{  
-      "value":"4.00",
-      "currency":"USD"
-   }
-}
+"fees": [
+  {  
+     "_links":{  
+        "charge-to":{  
+           "href":"https://api-sandbox.dwolla.com/accounts/d795f696-2cac-4662-8f16-95f1db9bddd8"
+        }
+     },
+     "amount":{  
+        "value":"4.00",
+        "currency":"USD"
+     }
+  }
+]
 ```
 
 ### HTTP Status and Error Codes
@@ -118,7 +124,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
     "amount": {
         "currency": "USD",
         "value": "10.00"
-    }
+    },
+    "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 ...
