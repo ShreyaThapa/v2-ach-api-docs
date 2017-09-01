@@ -2798,6 +2798,14 @@ HTTP 200 OK
 <td>metadata</td>
 <td>A metadata JSON object</td>
 </tr>
+<tr>
+<td>clearing</td>
+<td>A clearing JSON object.</td>
+</tr>
+<tr>
+<td>correlationId</td>
+<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application.</td>
+</tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
@@ -2809,7 +2817,8 @@ HTTP 200 OK
     </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-10-02T19:48:40.485Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h3 id='amount-json-object'>Amount JSON object</h3>
 <table><thead>
@@ -2864,6 +2873,12 @@ HTTP 200 OK
 <td>no</td>
 <td>array</td>
 <td>an array of fee JSON objects that contain unique fee transfers. <a href="#a-fee-json-object">See below</a>.</td>
+</tr>
+<tr>
+<td>correlationId</td>
+<td>no</td>
+<td>string</td>
+<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
@@ -2924,18 +2939,20 @@ HTTP 200 OK
 <td>Amount of fee to charge. An amount JSON object. <a href="#amount-json-object">See above</a></td>
 </tr>
 </tbody></table>
-<h4 id='fee-object-example'>Fee object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">  
-   </span><span class="nt">"_links"</span><span class="p">:{</span><span class="w">  
-      </span><span class="nt">"charge-to"</span><span class="p">:{</span><span class="w">  
-         </span><span class="nt">"href"</span><span class="p">:</span><span class="s2">"https://api-sandbox.dwolla.com/accounts/d795f696-2cac-4662-8f16-95f1db9bddd8"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-   </span><span class="p">},</span><span class="w">
-   </span><span class="nt">"amount"</span><span class="p">:{</span><span class="w">  
-      </span><span class="nt">"value"</span><span class="p">:</span><span class="s2">"4.00"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"currency"</span><span class="p">:</span><span class="s2">"USD"</span><span class="w">
-   </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
+<h4 id='fee-example'>Fee example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"fees": [
+  {  
+     "_links":{  
+        "charge-to":{  
+           "href":"https://api-sandbox.dwolla.com/accounts/d795f696-2cac-4662-8f16-95f1db9bddd8"
+        }
+     },
+     "amount":{  
+        "value":"4.00",
+        "currency":"USD"
+     }
+  }
+]
+</code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
 <table><thead>
 <tr>
 <th>HTTP Status</th>
@@ -2977,7 +2994,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
     "amount": {
         "currency": "USD",
         "value": "10.00"
-    }
+    },
+    "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 ...
@@ -3527,7 +3545,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <p>Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each <code class="prettyprint">item</code> is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.</p>
 
-<p>MassPay offers a significant advantage over repeatedly calling the <a href="#transfers">Transfers</a> endpoint for each individual transaction. This benefit is the fact that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur a debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
+<p>MassPay offers a significant advantage over repeatedly calling the <a href="#transfers">Transfers</a> endpoint for each individual transaction. A key benefit is that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur an ACH debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
 <h3 id='mass-payment-resource'>Mass payment resource</h3>
 <table><thead>
 <tr>
@@ -3537,7 +3555,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>Mass payment unique identifier</td>
+<td>Mass payment unique identifier.</td>
 </tr>
 <tr>
 <td>status</td>
@@ -3545,23 +3563,61 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>created</td>
-<td>ISO-8601 timestamp</td>
+<td>ISO-8601 timestamp.</td>
 </tr>
 <tr>
 <td>metadata</td>
-<td>A metadata JSON object</td>
+<td>A metadata JSON object.</td>
+</tr>
+<tr>
+<td>total</td>
+<td>The sum amount of all items in the mass payment.</td>
+</tr>
+<tr>
+<td>totalFees</td>
+<td>The sum amount of all fees charged for the mass payment.</td>
+</tr>
+<tr>
+<td>correlationId</td>
+<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and a partner application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-03-11T15:52:58.289Z"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/mass-payments/da835c07-1e12-4212-8b93-a7e0013dfd98"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mass-payment"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"funding-source"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/mass-payments/da835c07-1e12-4212-8b93-a7e0013dfd98/items"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mass-payment-item"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"da835c07-1e12-4212-8b93-a7e0013dfd98"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"complete"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-08-31T19:18:02.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"batch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batch1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"total"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$0.02"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"totalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$0.00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d028beed-8152-481d-9427-21b6c4d99644"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
-<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.</p>
+<p>This section covers how to initiate a mass payment from an <a href="#accounts">Account</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> and a <code class="prettyprint">correlationId</code> on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a <code class="prettyprint">correlationId</code> is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.</p>
 <h4 id='deferred-mass-payment'>Deferred mass payment</h4>
 <p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Send</code> scope.</p>
@@ -3599,6 +3655,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>string</td>
 <td>Acceptable value is: <code class="prettyprint">deferred</code>.</td>
+</tr>
+<tr>
+<td>correlationId</td>
+<td>no</td>
+<td>string</td>
+<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3>
@@ -3643,7 +3705,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>_links</td>
-<td>Can return <code class="prettyprint">mass-payment</code>, <code class="prettyprint">destination</code> and <code class="prettyprint">transfer</code> JSON objects that contain relational links to associated resources.</td>
+<td>A _links JSON object describing the desired <code class="prettyprint">destination</code> of a mass payment. <a href="#source-and-destination-values">See above</a> for possible values for <code class="prettyprint">destination</code>.</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -3653,11 +3715,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>metadata</td>
 <td>A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).</td>
 </tr>
+<tr>
+<td>correlationId</td>
+<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+</tr>
 </tbody></table>
 <h4 id='item-object-example'>Item object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/accounts/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
+          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/funding-sources/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
       </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3666,7 +3732,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="err">}</span><span class="p">,</span><span class="w">
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value1"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d028beed-8152-481d-9427-21b6c4d99644"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
 <table><thead>
@@ -3684,7 +3751,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>400</td>
 <td>ValidationError</td>
-<td>Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, or Invalid funding source.</td>
+<td>Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, Invalid job item correlation ID, or Invalid funding source.</td>
 </tr>
 <tr>
 <td>401</td>
@@ -3743,7 +3810,8 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
     ],
     "metadata": {
         "batch1": "batch1"
-    }
+    },
+    "correlationId": "6d127333-69e9-4c2b-8cae-df850228e130"
 }
 
 ...
