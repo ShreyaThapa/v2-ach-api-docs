@@ -351,12 +351,9 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 |--------------|-------------|-------------------|
 | 200 | OK | Micro deposits verified  |
 | 202 | TryAgainLater | "Invalid wait time." |
-| 400 | ValidationError | InvalidAmount |
-| 400 | ValidationError | "Wrong amount(s)." |
-| 403 | InvalidResourceState | "Too many attempts." |
-| 403 | InvalidResourceState | "Bank already verified." |
-| 404 | NotFound | Micro deposits not initiated |
-| 404 | NotFound | Funding source not found |
+| 400 | ValidationError | InvalidAmount, "Wrong amount(s)." |
+| 403 | InvalidResourceState | "Too many attempts.", "Bank already verified." |
+| 404 | NotFound | Micro deposits not initiated,Funding source not found |
 | 500 | Unknown | "Verify microdeposits returned an unknown error." |
 
 #### Request and response
@@ -458,6 +455,14 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | no | string | id of funding source to check status of validation deposits. |
+
+###Micro-deposits object
+| Attribute | Description |
+|--------------|-------------| 
+| _links | A _links [JSON object](#links) |
+| created | ISO-8601 timestamp |
+| status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `procesed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
+| failure | Determines if micro-deposits fail to complete to a bank. Failure is an object that contains a `code` and `description`, which represents the ACH return code and description of the return. |
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description
