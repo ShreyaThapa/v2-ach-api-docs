@@ -5,7 +5,12 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Dwolla API docs</title>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/manifest.json">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ff7404">
+    <meta name="theme-color" content="#ffffff">
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
 
@@ -4131,7 +4136,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>failureReason</td>
-<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">ScanNameMismatch</code>, <code class="prettyprint">ScanFailedOther</code>, or <code class="prettyprint">FailedOther</code>.</td>
+<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, or <code class="prettyprint">ScanNameMismatch</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -5086,32 +5091,17 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
 <tr>
 <td>400</td>
 <td>ValidationError</td>
-<td>InvalidAmount</td>
-</tr>
-<tr>
-<td>400</td>
-<td>ValidationError</td>
-<td>&ldquo;Wrong amount(s).&rdquo;</td>
+<td>InvalidAmount, &ldquo;Wrong amount(s).&rdquo;</td>
 </tr>
 <tr>
 <td>403</td>
 <td>InvalidResourceState</td>
-<td>&ldquo;Too many attempts.&rdquo;</td>
-</tr>
-<tr>
-<td>403</td>
-<td>InvalidResourceState</td>
-<td>&ldquo;Bank already verified.&rdquo;</td>
+<td>&ldquo;Too many attempts.&rdquo;, &ldquo;Bank already verified.&rdquo;</td>
 </tr>
 <tr>
 <td>404</td>
 <td>NotFound</td>
-<td>Micro deposits not initiated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>NotFound</td>
-<td>Funding source not found</td>
+<td>Micro deposits not initiated,Funding source not found</td>
 </tr>
 <tr>
 <td>500</td>
@@ -5252,6 +5242,30 @@ HTTP 200 OK
 <td>no</td>
 <td>string</td>
 <td>id of funding source to check status of validation deposits.</td>
+</tr>
+</tbody></table>
+<h3 id='micro-deposits-object'>Micro-deposits object</h3>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_links</td>
+<td>A _links <a href="#links">JSON object</a></td>
+</tr>
+<tr>
+<td>created</td>
+<td>ISO-8601 timestamp</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Possible values: <code class="prettyprint">pending</code>, <code class="prettyprint">processed</code>, or <code class="prettyprint">failed</code>. <code class="prettyprint">pending</code> represents micro-deposits initiated and are en route to their destination. <code class="prettyprint">procesed</code> represents micro-deposits have reached the destination account and are awaiting verification. <code class="prettyprint">failed</code> represents micro-deposits failed to clear successfully to the destination.</td>
+</tr>
+<tr>
+<td>failure</td>
+<td>Determines if micro-deposits fail to complete to a bank. Failure is an object that contains a <code class="prettyprint">code</code> and <code class="prettyprint">description</code>, which represents the ACH return code and description of the return.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
