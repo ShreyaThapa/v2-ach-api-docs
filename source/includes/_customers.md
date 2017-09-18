@@ -1387,6 +1387,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "type": "bank",
         "name": "Jane Doe’s Checking",
         "created": "2015-10-02T22:03:45.537Z"
+        "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
       }
     ]
   }

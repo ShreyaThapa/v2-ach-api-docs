@@ -63,6 +63,9 @@ This section covers how to retrieve a funding source by id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to retrieve. |
 
+###Fingerprint ID
+A unique string value returned in response body when two or more Dwolla users share a bank account with the same Account Number and Routing Number. This can be used for traceability between Dwolla and a partner application. Removing a funding-source does not remove the fingerprint.
+
 ### Errors
 | HTTP Status | Message |
 |--------------|-------------|
@@ -94,7 +97,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "type": "bank",
   "name": "Test checking account",
   "created": "2015-10-23T20:37:57.137Z"
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
+  
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
@@ -577,6 +582,7 @@ HTTP 200 OK
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
   "removed": true
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
 ```
 ```ruby
