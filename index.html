@@ -1796,7 +1796,7 @@ $masspayments-&gt;_embedded-&gt;{"mass-payments"}[0]-&gt;status; # =&gt; "comple
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer or if business, authorized representative’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format.</td>
+<td>Customer or if business, authorized representative’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
 </tr>
 <tr>
 <td>ssn</td>
@@ -2851,7 +2851,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format.</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
 </tr>
 <tr>
 <td>ssn</td>
@@ -3667,7 +3667,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "status": "verified",
         "type": "bank",
         "name": "Jane Doe’s Checking",
-        "created": "2015-10-02T22:03:45.537Z"
+        "created": "2015-10-02T22:03:45.537Z",
+        "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
       }
     ]
   }
@@ -4522,6 +4523,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>iavAccountHolders</td>
 <td>An optional object that includes optional <code class="prettyprint">selected</code> and <code class="prettyprint">other</code> parameters. <code class="prettyprint">selected</code>, a string with the account holder name(s) on file with the financial institution for the IAV selected account. <code class="prettyprint">other</code>, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account.</td>
 </tr>
+<tr>
+<td>fingerprint</td>
+<td>Fingerprint is an optional unique identifying string value returned for funding sources of type <code class="prettyprint">bank</code>. This attribute can be used to check across all Access API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the <code class="prettyprint">fingerprint</code>.</td>
+</tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
     </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4552,7 +4557,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
           </span><span class="s2">"GeneriCompany LLC"</span><span class="w">
         </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='retrieve-a-funding-source'>Retrieve a funding source</h2>
 <p>This section covers how to retrieve a funding source by id.</p>
@@ -4616,8 +4622,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "unverified",
   "type": "bank",
   "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z"
+  "created": "2015-10-23T20:37:57.137Z",
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
+
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5440,7 +5448,8 @@ HTTP 200 OK
   "type": "bank",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
-  "removed": true
+  "removed": true,
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
