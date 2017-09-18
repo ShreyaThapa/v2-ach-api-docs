@@ -16,6 +16,7 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 | channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach` or `wire`. |
 | bankName | The financial institution name. |
 | iavAccountHolders | An optional object that includes optional `selected` and `other` parameters. `selected`, a string with the account holder name(s) on file with the financial institution for the IAV selected account. `other`, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account. |
+| fingerprint | Fingerprint is an optional unique identifying string value returned for funding sources of type `bank`. This attribute can be used to check across all Access API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the `fingerprint`. |
 
 ```noselect
 {
@@ -47,7 +48,8 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
           "Jane Doe",
           "GeneriCompany LLC"
         ]
-    }
+    },
+    "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
 ```
 
@@ -93,8 +95,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "unverified",
   "type": "bank",
   "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z"
+  "created": "2015-10-23T20:37:57.137Z",
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
+
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
@@ -458,7 +462,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 
 ###Micro-deposits object
 | Attribute | Description |
-|--------------|-------------| 
+|--------------|-------------|
 | _links | A _links [JSON object](#links) |
 | created | ISO-8601 timestamp |
 | status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `procesed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
@@ -576,7 +580,8 @@ HTTP 200 OK
   "type": "bank",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
-  "removed": true
+  "removed": true,
+  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
 }
 ```
 ```ruby
