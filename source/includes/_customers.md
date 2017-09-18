@@ -137,7 +137,7 @@ This section details how to create a new Customer. To create `Unverified Custome
 | city | yes | string | City of Customer's permanent residence.
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`.
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
-| dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format.
+| dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older.
 | ssn | yes | string | Last four digits of the Customer's Social Security Number.
 | phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
 
@@ -848,7 +848,7 @@ appToken
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
-| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. |
+| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older.|
 | ssn | yes | string | Customer's **full** Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
