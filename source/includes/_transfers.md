@@ -585,7 +585,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "cancelled",
   "amount": {
     "value": "22.00",
-    "currency": "usd"
+    "currency": "USD"
   },
   "created": "2016-01-28T22:34:02.663Z",
   "metadata": {
