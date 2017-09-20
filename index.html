@@ -1380,6 +1380,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>integer</td>
 <td>How many results to skip.</td>
 </tr>
+<tr>
+<td>correlationId</td>
+<td>no</td>
+<td>string</td>
+<td>A string value to search on if a correlationId was specified on a mass payment.</td>
+</tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
 <table><thead>
@@ -1445,7 +1451,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "created": "2015-09-03T14:14:10.000Z",
         "metadata": {
           "UserJobId": "some ID"
-        }
+        },
+        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
       }
     ]
   },
@@ -3984,6 +3991,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>integer</td>
 <td>How many results to skip.</td>
 </tr>
+<tr>
+<td>correlationId</td>
+<td>no</td>
+<td>string</td>
+<td>A string value to search on if a correlationId was specified on a mass payment.</td>
+</tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP Status and Error Codes</h3>
 <table><thead>
@@ -4049,7 +4062,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "created": "2016-03-21T19:27:34.000Z",
         "metadata": {
           "masspay1": "masspay1"
-        }
+        },
+        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
       }
     ]
   },
@@ -6355,7 +6369,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "cancelled",
   "amount": {
     "value": "22.00",
-    "currency": "usd"
+    "currency": "USD"
   },
   "created": "2016-01-28T22:34:02.663Z",
   "metadata": {
