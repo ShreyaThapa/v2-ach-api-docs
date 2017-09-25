@@ -47,7 +47,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 | Parameter | Description
 |-----------|------------|
-| source | String, 'standard' |
+| source | String, `standard` |
 | destination | String, `next-available` |
 
 ## Initiate a transfer

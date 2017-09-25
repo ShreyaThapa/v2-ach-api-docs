@@ -17,7 +17,7 @@ removed | A value of `true` if the funding source has been [removed](#remove-a-f
 {
     "routingNumber": "222222226",
     "accountNumber": "123456789",
-    "type": "checking",
+    "bankAccountType": "checking",
     "name": "Jane Doe - Checking"
 }
 ```
@@ -40,7 +40,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 |-----------|----------|----------------|-------------|
 | accountNumber | yes | string | The bank account number. |
 | routingNumber | yes | string | The bank account's routing number. |
-| type | yes | string | Type of bank account: `checking` or `savings`. |
+| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. |
 
 ### Errors
@@ -60,7 +60,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
     "routingNumber": "222222226",
     "accountNumber": "123456789",
-    "type": "checking",
+    "bankAccountType": "checking",
     "name": "My Bank"
 }
 
@@ -166,7 +166,8 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
-| name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less.|
+| bankAccountType | no | string | Type of bank account: `checking` or `savings`. |
 | accountNumber | no | string | The bank account number. |
 | routingNumber | no | string | The bank account routing number. |
 

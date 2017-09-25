@@ -144,6 +144,7 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
 | name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| bankAccountType | no | string | Type of bank account: `checking` or `savings`. |
 | routingNumber | no | string | The bank account's routing number. |
 | accountNumber | no | string | The bank account number. |
 
@@ -546,8 +547,8 @@ Remove a funding source by id. A removed funding source is soft deleted and can 
 ### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| id | yes | id of funding source to delete. |
-| removed | yes | Specify a value of `true` to remove the associated funding source. |
+| id | yes | string | id of funding source to delete. |
+| removed | yes | string |Specify a value of `true` to remove the associated funding source. |
 
 ### Errors
 | HTTP Status | Message |
