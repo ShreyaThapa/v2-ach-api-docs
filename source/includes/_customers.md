@@ -1371,7 +1371,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "status": "verified",
         "type": "balance",
         "name": "Balance",
-        "created": "2015-10-02T21:00:28.153Z"
+        "created": "2015-10-02T21:00:28.153Z",
+        "removed": false,
+        "channels": []
       },
       {
         "_links": {
@@ -1385,8 +1387,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
         "status": "verified",
         "type": "bank",
+        "bankAccountType": "checking",
         "name": "Jane Doe’s Checking",
         "created": "2015-10-02T22:03:45.537Z",
+        "removed": false,
+        "channels": [
+            "ach"
+        ],
         "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
       }
     ]

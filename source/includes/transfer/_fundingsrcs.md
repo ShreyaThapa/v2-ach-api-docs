@@ -6,12 +6,15 @@ Add and retrieve ACH bank account information via funding sources, which are ava
 
 Parameter | Description
 ----------|------------
-id | The funding source unique identifier
-status | Is the funding source verified?
-type | Type of funding source. Either `bank` or `balance`.
-name | Customer’s arbitrary nickname for the funding source
-created | ISO-8601 timestamp
-removed | A value of `true` if the funding source has been [removed](#remove-a-funding-source) or `false` if the funding source is not removed.
+| id | The funding source unique identifier. |
+| status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
+| type | Type of funding source. Possible values are `bank` or `balance`. |
+| bankAccountType | An optional attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
+| name | Arbitrary nickname for the funding source. |
+| created | ISO-8601 timestamp for when the funding source was created. |
+| removed | Determines if the funding source has been [removed](#remove-a-funding-source). A boolean `true` if the funding source was removed or `false` if the funding source is not removed. |
+| channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach` or `wire`. |
+| bankName | The financial institution name. |
 
 ```noselect
 {
@@ -101,22 +104,28 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ...
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "account": {
+            "href": "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "account"
+        }
     },
-    "customer": {
-      "href": "https://api.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
-    },
-    "initiate-micro-deposits": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
-    }
-  },
-  "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
-  "status": "unverified",
-  "type": "bank",
-  "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z"
+    "id": "a46441a8-2243-4a8b-b8e4-429f633b02ca",
+    "status": "verified",
+    "type": "bank",
+    "bankAccountType": "checking",
+    "name": "Test checking account",
+    "created": "2016-08-15T17:05:49.000Z",
+    "removed": false,
+    "channels": [
+        "ach"
+    ]
 }
 ```
 ```ruby
@@ -153,7 +162,7 @@ accountToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, `type`, and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type, or all four attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
@@ -541,9 +550,13 @@ HTTP 200 OK
   "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
   "status": "verified",
   "type": "bank",
+  "bankAccountType": "checking",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
-  "removed": true
+  "removed": true,
+  "channels": [
+      "ach"
+  ]
 }
 ```
 ```ruby
