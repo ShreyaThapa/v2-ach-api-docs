@@ -9,6 +9,7 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 | id | The funding source unique identifier. |
 | status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
 | type | Type of funding source. Possible values are `bank` or `balance`. |
+| bankAccountType | An optional attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
 | name | Arbitrary nickname for the funding source. |
 | created | ISO-8601 timestamp for when the funding source was created. |
 | balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for an Access API Customer account balance.   |
@@ -35,6 +36,7 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
     "id": "fc84223a-609f-42c9-866e-2c98f17ab4fb",
     "status": "verified",
     "type": "bank",
+    "bankAccountType": "checking",
     "name": "Your Account #1 - CHECKING",
     "created": "2017-08-16T20:06:34.000Z",
     "removed": false,
@@ -73,43 +75,55 @@ This section covers how to retrieve a funding source by id.
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
+GET https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/4594a375-ca4c-4220-a36a-fa7ce556449d",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "initiate-micro-deposits": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31/micro-deposits",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "micro-deposits"
+        }
     },
-    "customer": {
-      "href": "https://api-sandbox.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
-    },
-    "initiate-micro-deposits": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
-    }
-  },
-  "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
-  "status": "unverified",
-  "type": "bank",
-  "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z",
-  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
+    "id": "49dbaa24-1580-4b1c-8b58-24e26656fa31",
+    "status": "unverified",
+    "type": "bank",
+    "bankAccountType": "checking",
+    "name": "Test checking account",
+    "created": "2017-09-26T14:14:08.000Z",
+    "removed": false,
+    "channels": [
+        "ach"
+    ],
+    "bankName": "SANDBOX TEST BANK",
+    "fingerprint": "5012989b55af15400e8102f95d2ec5e7ce3aef45c01613280d80a236dd8d6c3a"
 }
 
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'
 
 funding_source = app_token.get funding_source_url
 funding_source.name # => "Test checking account"
 ```
 ```php
 <?php
-$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31';
 
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
@@ -119,13 +133,13 @@ $fundingSource->name; # => "Test checking account"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'
 
 funding_source = app_token.get(funding_source_url)
 funding_source.body['name'] # => 'Test checking account'
 ```
 ```javascript
-var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31';
 
 appToken
   .get(fundingSourceUrl)
@@ -134,7 +148,7 @@ appToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, `type` and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}`
@@ -144,6 +158,7 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
 | name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| bankAccountType | no | string | Type of bank account: `checking` or `savings`. |
 | routingNumber | no | string | The bank account's routing number. |
 | accountNumber | no | string | The bank account number. |
 
@@ -546,8 +561,8 @@ Remove a funding source by id. A removed funding source is soft deleted and can 
 ### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| id | yes | id of funding source to delete. |
-| removed | yes | Specify a value of `true` to remove the associated funding source. |
+| id | yes | string | id of funding source to delete. |
+| removed | yes | string |Specify a value of `true` to remove the associated funding source. |
 
 ### Errors
 | HTTP Status | Message |
@@ -578,6 +593,7 @@ HTTP 200 OK
   "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
   "status": "verified",
   "type": "bank",
+  "bankAccountType": "checking",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
   "removed": true,

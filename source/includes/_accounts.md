@@ -138,7 +138,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 |-----------|----------|----------------|-------------|
 | accountNumber | yes | string | The bank account number. |
 | routingNumber | yes | string | The bank account's routing number. |
-| type | yes | string | Type of bank account: `checking` or `savings`. |
+| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. |
 | channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
 
@@ -159,7 +159,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
     "routingNumber": "222222226",
     "accountNumber": "123456789",
-    "type": "checking",
+    "bankAccountType": "checking",
     "name": "My Bank"
 }
 
@@ -195,51 +195,67 @@ Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
-
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources",
+            "resource-type": "funding-source"
+        }
+    },
+    "_embedded": {
+        "funding-sources": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "funding-source"
+                    },
+                    "account": {
+                        "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "account"
+                    }
+                },
+                "id": "04173e17-6398-4d36-a167-9d98c4b1f1c3",
+                "status": "verified",
+                "type": "bank",
+                "bankAccountType": "checking",
+                "name": "My Account - Checking",
+                "created": "2017-09-25T20:03:41.000Z",
+                "removed": false,
+                "channels": [
+                    "ach"
+                ],
+                "bankName": "First Midwestern Bank"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                    },
+                    "account": {
+                        "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b",
+                    },
+                    "with-available-balance": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                    },
+                    "balance": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7/balance",
+                    }
+                },
+                "id": "b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                "status": "verified",
+                "type": "balance",
+                "name": "Balance",
+                "created": "2017-08-22T18:21:51.000Z",
+                "removed": false,
+                "channels": []
+            }
+        ]
     }
-  },
-  "_embedded": {
-    "funding-sources": [
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
-          },
-          "account": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
-          }
-        },
-        "id": "04173e17-6398-4d36-a167-9d98c4b1f1c3",
-        "status": "verified",
-        "type": "bank",
-        "name": "First Midwestern Bank",
-        "created": "2014-07-09T20:39:37.000Z"
-      },
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
-          },
-          "account": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
-          },
-          "with-available-balance": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
-          }
-        },
-        "id": "b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
-        "status": "verified",
-        "type": "balance",
-        "name": "Balance",
-        "created": "2014-07-09T20:39:33.000Z"
-      }
-    ]
-  }
 }
+
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby

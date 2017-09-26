@@ -1077,7 +1077,7 @@ Create a new Funding Source for a Customer.  Customers can have a maximum of 6 f
 | _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
 | routingNumber | yes | string | The bank account's routing number. |
 | accountNumber | yes | string | The bank account number. |
-| type | yes | string | Type of bank account: `checking` or `savings`. |
+| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
 | channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
 
@@ -1097,7 +1097,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "routingNumber": "222222226",
   "accountNumber": "123456789",
-  "type": "checking",
+  "bankAccountType": "checking",
   "name": "Jane Doe’s Checking"
 }
 
@@ -1111,7 +1111,7 @@ $fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 $fundingSource = $fundingApi->createCustomerFundingSource([
   "routingNumber" => "222222226",
   "accountNumber" => "123456789",
-  "type" => "checking",
+  "bankAccountType" => "checking",
   "name" => "Jane Doe’s Checking"
 ], "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C");
 $fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
@@ -1123,7 +1123,7 @@ customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4
 request_body = {
   routingNumber: '222222226',
   accountNumber: '123456789',
-  type: 'checking',
+  bankAccountType: 'checking',
   name: 'Jane Doe’s Checking'
 }
 
@@ -1136,7 +1136,7 @@ customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4
 request_body = {
   'routingNumber': '222222226',
   'accountNumber': '123456789',
-  'type': 'checking',
+  'bankAccountType': 'checking',
   'name': 'Jane Doe’s Checking'
 }
 
@@ -1148,7 +1148,7 @@ var customerUrl = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A
 var requestBody = {
   'routingNumber': '222222226',
   'accountNumber': '123456789',
-  'type': 'checking',
+  'bankAccountType': 'checking',
   'name': 'Jane Doe’s Checking'
 };
 
@@ -1371,7 +1371,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "status": "verified",
         "type": "balance",
         "name": "Balance",
-        "created": "2015-10-02T21:00:28.153Z"
+        "created": "2015-10-02T21:00:28.153Z",
+        "removed": false,
+        "channels": []
       },
       {
         "_links": {
@@ -1385,8 +1387,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
         "status": "verified",
         "type": "bank",
+        "bankAccountType": "checking",
         "name": "Jane Doe’s Checking",
         "created": "2015-10-02T22:03:45.537Z",
+        "removed": false,
+        "channels": [
+            "ach"
+        ],
         "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
       }
     ]
