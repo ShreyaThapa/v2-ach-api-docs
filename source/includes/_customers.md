@@ -52,6 +52,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | document | Verified Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
 | verified | Verified Customers of type `personal` or `business` can have this status. The Customer is currently verified.
 | suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.
+| deactivated | All Customer types can have a status of `deactivated`. A deactivated Customer may neither send nor receive funds. A Customer can be [reactivated](#reactivate-a-customer) which moves the Customer to the status they were in prior to being deactivated.
 
 ```noselect
 {
@@ -676,12 +677,20 @@ Unverified and Verified Customers can be suspended by specifying a status of `su
 | status | yes | string | Value of `suspended`. |
 
 ### Deactivate a Customer
-Unverified and Verified Customers can be deactivated by specifying a status of `deactivated` in your request. A Customer **cannot** be deactivated if the following conditions are true: Customer has a `suspended` verification status, a Customer has transfers that are `pending`, or if there are funds available in the Customer's `balance`(*Verified Customers only*).
+Customers can be deactivated by specifying a status of `deactivated` in your request. A Customer **cannot** be deactivated if the Customer has a `suspended` verification status. Customers can be systematically deactivated by Dwolla if certain ACH return codes are triggered on bank transfer failures.
 
 ##### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | status | yes | string | Value of `deactivated`. |
+
+### Reactivate a Customer
+Customers can be reactivated by specifying a status of `reactivated` in your request. Reactivated Customers will be moved to the status they were in prior to being deactivated.
+
+##### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-----------|
+| status | yes | string | Value of `reactivated`. |
 
 ### Retry verification
 If the verified Customer has a status of `retry`, some information may have been miskeyed. You have one more opportunity to correct any mistakes using this endpoint. This time, you’ll need to provide the Customer’s full SSN. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
