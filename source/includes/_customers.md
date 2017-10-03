@@ -52,7 +52,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | document | Verified Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
 | verified | Verified Customers of type `personal` or `business` can have this status. The Customer is currently verified.
 | suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.
-| deactivated | All Customer types can have a status of `deactivated`. A deactivated Customer may neither send nor receive funds. A Customer can be [reactivated](#reactivate-a-customer) which moves the Customer to the status they were in prior to being deactivated.
+| deactivated | All Customer types can have a status of `deactivated`. A deactivated Customer may neither send nor receive funds. A deactivated Customer can be [reactivated](#reactivate-a-customer) which moves the Customer to the status they were in prior to being deactivated.
 
 ```noselect
 {
@@ -630,7 +630,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ## Update a customer
 
-This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, suspend a Customer, deactivate a Customer, and update a verified Customer's information to `retry` verification.
+This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, suspend a Customer, deactivate a Customer, reactivate a Customer, and update a verified Customer's information to `retry` verification.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}`
