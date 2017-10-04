@@ -69,8 +69,8 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_reverification_needed | Incomplete information was received for a Customer; updated information is needed to verify the Customer. |
 | customer_verified | A Customer was verified. |
 | customer_suspended | A Customer was suspended. |
-| customer_activated | A Customer moves from deactive or suspended to active state of verification. |
-| customer_deactivated | A Customer was deactivated. 
+| customer_activated | A Customer moves from deactivated or suspended to an active status. |
+| customer_deactivated | A Customer was deactivated.
 | customer_funding_source_added | A funding source was added to a Customer. |
 | customer_funding_source_removed | A funding source was removed from a Customer. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
