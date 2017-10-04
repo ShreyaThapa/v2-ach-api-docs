@@ -931,7 +931,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>The bank account&rsquo;s routing number.</td>
 </tr>
 <tr>
-<td>type</td>
+<td>bankAccountType</td>
 <td>yes</td>
 <td>string</td>
 <td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
@@ -972,7 +972,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
     "routingNumber": "222222226",
     "accountNumber": "123456789",
-    "type": "checking",
+    "bankAccountType": "checking",
     "name": "My Bank"
 }
 
@@ -1035,51 +1035,67 @@ Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
-
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b/funding-sources",
+            "resource-type": "funding-source"
+        }
+    },
+    "_embedded": {
+        "funding-sources": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "funding-source"
+                    },
+                    "account": {
+                        "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "account"
+                    }
+                },
+                "id": "04173e17-6398-4d36-a167-9d98c4b1f1c3",
+                "status": "verified",
+                "type": "bank",
+                "bankAccountType": "checking",
+                "name": "My Account - Checking",
+                "created": "2017-09-25T20:03:41.000Z",
+                "removed": false,
+                "channels": [
+                    "ach"
+                ],
+                "bankName": "First Midwestern Bank"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                    },
+                    "account": {
+                        "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b",
+                    },
+                    "with-available-balance": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                    },
+                    "balance": {
+                        "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7/balance",
+                    }
+                },
+                "id": "b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
+                "status": "verified",
+                "type": "balance",
+                "name": "Balance",
+                "created": "2017-08-22T18:21:51.000Z",
+                "removed": false,
+                "channels": []
+            }
+        ]
     }
-  },
-  "_embedded": {
-    "funding-sources": [
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
-          },
-          "account": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
-          }
-        },
-        "id": "04173e17-6398-4d36-a167-9d98c4b1f1c3",
-        "status": "verified",
-        "type": "bank",
-        "name": "First Midwestern Bank",
-        "created": "2014-07-09T20:39:37.000Z"
-      },
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
-          },
-          "account": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
-          },
-          "with-available-balance": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/b268f6b9-db3b-4ecc-83a2-8823a53ec8b7"
-          }
-        },
-        "id": "b268f6b9-db3b-4ecc-83a2-8823a53ec8b7",
-        "status": "verified",
-        "type": "balance",
-        "name": "Balance",
-        "created": "2014-07-09T20:39:33.000Z"
-      }
-    ]
-  }
 }
+
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1632,6 +1648,10 @@ $masspayments-&gt;_embedded-&gt;{"mass-payments"}[0]-&gt;status; # =&gt; "comple
 <tr>
 <td>suspended</td>
 <td>All Customer types can have a status of <code class="prettyprint">suspended</code>. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.</td>
+</tr>
+<tr>
+<td>deactivated</td>
+<td>All Customer types can have a status of <code class="prettyprint">deactivated</code>. A deactivated Customer may neither send nor receive funds. A deactivated Customer can be <a href="#reactivate-a-customer">reactivated</a> which moves the Customer to the status they were in prior to being deactivated.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -2464,7 +2484,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "name": "Entertainment and media"
 }
 </code></pre></div></div><h2 id='update-a-customer'>Update a customer</h2>
-<p>This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an <code class="prettyprint">unverified</code> Customer to a <code class="prettyprint">verified</code> Customer, suspend a Customer, deactivate a Customer, and update a verified Customer&rsquo;s information to <code class="prettyprint">retry</code> verification.</p>
+<p>This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an <code class="prettyprint">unverified</code> Customer to a <code class="prettyprint">verified</code> Customer, suspend a Customer, deactivate a Customer, reactivate a Customer, and update a verified Customer&rsquo;s information to <code class="prettyprint">retry</code> verification.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}</code></p>
 <h3 id='update-a-customer39s-information'>Update a Customer&rsquo;s information</h3>
@@ -2600,7 +2620,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h3 id='deactivate-a-customer'>Deactivate a Customer</h3>
-<p>Unverified and Verified Customers can be deactivated by specifying a status of <code class="prettyprint">deactivated</code> in your request. A Customer <strong>cannot</strong> be deactivated if the following conditions are true: Customer has a <code class="prettyprint">suspended</code> verification status, a Customer has transfers that are <code class="prettyprint">pending</code>, or if there are funds available in the Customer&rsquo;s <code class="prettyprint">balance</code>(<em>Verified Customers only</em>).</p>
+<p>Customers can be deactivated by specifying a status of <code class="prettyprint">deactivated</code> in your request. A Customer <strong>cannot</strong> be deactivated if the Customer has a <code class="prettyprint">suspended</code> verification status. Customers can be systematically deactivated by Dwolla if certain ACH return codes are triggered on bank transfer failures.</p>
 <h5 id='request-parameters'>Request parameters</h5>
 <table><thead>
 <tr>
@@ -2615,6 +2635,24 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>yes</td>
 <td>string</td>
 <td>Value of <code class="prettyprint">deactivated</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='reactivate-a-customer'>Reactivate a Customer</h3>
+<p>Customers can be reactivated by specifying a status of <code class="prettyprint">reactivated</code> in your request. Reactivated Customers will be moved to the status they were in prior to being deactivated.</p>
+<h5 id='request-parameters'>Request parameters</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of <code class="prettyprint">reactivated</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='retry-verification'>Retry verification</h3>
@@ -3250,7 +3288,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>The bank account number.</td>
 </tr>
 <tr>
-<td>type</td>
+<td>bankAccountType</td>
 <td>yes</td>
 <td>string</td>
 <td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
@@ -3302,7 +3340,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "routingNumber": "222222226",
   "accountNumber": "123456789",
-  "type": "checking",
+  "bankAccountType": "checking",
   "name": "Jane Doe’s Checking"
 }
 
@@ -3322,7 +3360,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
 <span class="nv">$fundingSource</span> <span class="o">=</span> <span class="nv">$fundingApi</span><span class="o">-&gt;</span><span class="na">createCustomerFundingSource</span><span class="p">([</span>
   <span class="s2">"routingNumber"</span> <span class="o">=&gt;</span> <span class="s2">"222222226"</span><span class="p">,</span>
   <span class="s2">"accountNumber"</span> <span class="o">=&gt;</span> <span class="s2">"123456789"</span><span class="p">,</span>
-  <span class="s2">"type"</span> <span class="o">=&gt;</span> <span class="s2">"checking"</span><span class="p">,</span>
+  <span class="s2">"bankAccountType"</span> <span class="o">=&gt;</span> <span class="s2">"checking"</span><span class="p">,</span>
   <span class="s2">"name"</span> <span class="o">=&gt;</span> <span class="s2">"Jane Doe’s Checking"</span>
 <span class="p">],</span> <span class="s2">"https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span><span class="p">);</span>
 <span class="nv">$fundingSource</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
@@ -3340,7 +3378,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">routingNumber: </span><span class="s1">'222222226'</span><span class="p">,</span>
   <span class="ss">accountNumber: </span><span class="s1">'123456789'</span><span class="p">,</span>
-  <span class="ss">type: </span><span class="s1">'checking'</span><span class="p">,</span>
+  <span class="ss">bankAccountType: </span><span class="s1">'checking'</span><span class="p">,</span>
   <span class="ss">name: </span><span class="s1">'Jane Doe’s Checking'</span>
 <span class="p">}</span>
 
@@ -3359,7 +3397,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'routingNumber'</span><span class="p">:</span> <span class="s">'222222226'</span><span class="p">,</span>
   <span class="s">'accountNumber'</span><span class="p">:</span> <span class="s">'123456789'</span><span class="p">,</span>
-  <span class="s">'type'</span><span class="p">:</span> <span class="s">'checking'</span><span class="p">,</span>
+  <span class="s">'bankAccountType'</span><span class="p">:</span> <span class="s">'checking'</span><span class="p">,</span>
   <span class="s">'name'</span><span class="p">:</span> <span class="s">'Jane Doe’s Checking'</span>
 <span class="p">}</span>
 
@@ -3377,7 +3415,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">'routingNumber'</span><span class="p">:</span> <span class="s1">'222222226'</span><span class="p">,</span>
   <span class="s1">'accountNumber'</span><span class="p">:</span> <span class="s1">'123456789'</span><span class="p">,</span>
-  <span class="s1">'type'</span><span class="p">:</span> <span class="s1">'checking'</span><span class="p">,</span>
+  <span class="s1">'bankAccountType'</span><span class="p">:</span> <span class="s1">'checking'</span><span class="p">,</span>
   <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Jane Doe’s Checking'</span>
 <span class="p">};</span>
 
@@ -3659,7 +3697,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "status": "verified",
         "type": "balance",
         "name": "Balance",
-        "created": "2015-10-02T21:00:28.153Z"
+        "created": "2015-10-02T21:00:28.153Z",
+        "removed": false,
+        "channels": []
       },
       {
         "_links": {
@@ -3673,8 +3713,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
         "status": "verified",
         "type": "bank",
+        "bankAccountType": "checking",
         "name": "Jane Doe’s Checking",
         "created": "2015-10-02T22:03:45.537Z",
+        "removed": false,
+        "channels": [
+            "ach"
+        ],
         "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
       }
     ]
@@ -4510,6 +4555,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Type of funding source. Possible values are <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
 </tr>
 <tr>
+<td>bankAccountType</td>
+<td>An optional attribute for <code class="prettyprint">bank</code> funding sources that determines the type of account. Possible values are <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
+</tr>
+<tr>
 <td>name</td>
 <td>Arbitrary nickname for the funding source.</td>
 </tr>
@@ -4558,6 +4607,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fc84223a-609f-42c9-866e-2c98f17ab4fb"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bank"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bankAccountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Account #1 - CHECKING"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-08-16T20:06:34.000Z"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -4614,30 +4664,42 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/4594a375-ca4c-4220-a36a-fa7ce556449d",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "initiate-micro-deposits": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31/micro-deposits",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "micro-deposits"
+        }
     },
-    "customer": {
-      "href": "https://api-sandbox.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
-    },
-    "initiate-micro-deposits": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
-    }
-  },
-  "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
-  "status": "unverified",
-  "type": "bank",
-  "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z",
-  "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
+    "id": "49dbaa24-1580-4b1c-8b58-24e26656fa31",
+    "status": "unverified",
+    "type": "bank",
+    "bankAccountType": "checking",
+    "name": "Test checking account",
+    "created": "2017-09-26T14:14:08.000Z",
+    "removed": false,
+    "channels": [
+        "ach"
+    ],
+    "bankName": "SANDBOX TEST BANK",
+    "fingerprint": "5012989b55af15400e8102f95d2ec5e7ce3aef45c01613280d80a236dd8d6c3a"
 }
 
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -4649,7 +4711,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
-<span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">funding_source_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">funding_source_url</span>
 <span class="n">funding_source</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Test checking account"</span>
@@ -4662,7 +4724,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+<span class="nv">$fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'</span><span class="p">;</span>
 
 <span class="nv">$fsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -4678,7 +4740,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
-<span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">)</span>
 <span class="n">funding_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="c"># =&gt; 'Test checking account'</span>
@@ -4690,13 +4752,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test checking account"</span>
 </code></pre></div></div><h2 id='update-a-funding-source'>Update a funding source</h2>
-<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
+<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, <code class="prettyprint">type</code> and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -4719,6 +4781,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>string</td>
 <td>Arbitrary nickname for the funding source. Must be 50 characters or less.</td>
+</tr>
+<tr>
+<td>bankAccountType</td>
+<td>no</td>
+<td>string</td>
+<td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
 </tr>
 <tr>
 <td>routingNumber</td>
@@ -5409,14 +5477,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>id</td>
 <td>yes</td>
+<td>string</td>
 <td>id of funding source to delete.</td>
-<td></td>
 </tr>
 <tr>
 <td>removed</td>
 <td>yes</td>
+<td>string</td>
 <td>Specify a value of <code class="prettyprint">true</code> to remove the associated funding source.</td>
-<td></td>
 </tr>
 </tbody></table>
 <h3 id='errors'>Errors</h3>
@@ -5460,6 +5528,7 @@ HTTP 200 OK
   "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
   "status": "verified",
   "type": "bank",
+  "bankAccountType": "checking",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
   "removed": true,
@@ -5610,7 +5679,7 @@ HTTP 200 OK
 </thead><tbody>
 <tr>
 <td>source</td>
-<td>String, &lsquo;standard&rsquo;</td>
+<td>String, <code class="prettyprint">standard</code></td>
 </tr>
 <tr>
 <td>destination</td>
@@ -7525,7 +7594,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customer_activated</td>
-<td>A Customer moves from deactive or suspended to active state of verification.</td>
+<td>A Customer moves from deactivated or suspended to an active status.</td>
 </tr>
 <tr>
 <td>customer_deactivated</td>

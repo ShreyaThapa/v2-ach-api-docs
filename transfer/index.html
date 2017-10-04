@@ -1844,33 +1844,45 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>The funding source unique identifier</td>
+<td>The funding source unique identifier.</td>
 </tr>
 <tr>
 <td>status</td>
-<td>Is the funding source verified?</td>
+<td>Possible values are <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code>. Determines if the funding source has completed verification.</td>
 </tr>
 <tr>
 <td>type</td>
-<td>Type of funding source. Either <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
+<td>Type of funding source. Possible values are <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
+</tr>
+<tr>
+<td>bankAccountType</td>
+<td>An optional attribute for <code class="prettyprint">bank</code> funding sources that determines the type of account. Possible values are <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
 </tr>
 <tr>
 <td>name</td>
-<td>Customer’s arbitrary nickname for the funding source</td>
+<td>Arbitrary nickname for the funding source.</td>
 </tr>
 <tr>
 <td>created</td>
-<td>ISO-8601 timestamp</td>
+<td>ISO-8601 timestamp for when the funding source was created.</td>
 </tr>
 <tr>
 <td>removed</td>
-<td>A value of <code class="prettyprint">true</code> if the funding source has been <a href="#remove-a-funding-source">removed</a> or <code class="prettyprint">false</code> if the funding source is not removed.</td>
+<td>Determines if the funding source has been <a href="#remove-a-funding-source">removed</a>. A boolean <code class="prettyprint">true</code> if the funding source was removed or <code class="prettyprint">false</code> if the funding source is not removed.</td>
+</tr>
+<tr>
+<td>channels</td>
+<td>List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are <code class="prettyprint">ach</code> or <code class="prettyprint">wire</code>.</td>
+</tr>
+<tr>
+<td>bankName</td>
+<td>The financial institution name.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
     </span><span class="nt">"routingNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"222222226"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"accountNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bankAccountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe - Checking"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-funding-source'>Create a funding source</h2>
@@ -1902,7 +1914,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>The bank account&rsquo;s routing number.</td>
 </tr>
 <tr>
-<td>type</td>
+<td>bankAccountType</td>
 <td>yes</td>
 <td>string</td>
 <td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
@@ -1937,7 +1949,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
     "routingNumber": "222222226",
     "accountNumber": "123456789",
-    "type": "checking",
+    "bankAccountType": "checking",
     "name": "My Bank"
 }
 
@@ -1993,22 +2005,28 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ...
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c"
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "account": {
+            "href": "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "account"
+        }
     },
-    "customer": {
-      "href": "https://api.dwolla.com/customers/36e9dcb2-889b-4873-8e52-0c9404ea002a"
-    },
-    "initiate-micro-deposits": {
-      "href": "https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c/micro-deposits"
-    }
-  },
-  "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
-  "status": "unverified",
-  "type": "bank",
-  "name": "Test checking account",
-  "created": "2015-10-23T20:37:57.137Z"
+    "id": "a46441a8-2243-4a8b-b8e4-429f633b02ca",
+    "status": "verified",
+    "type": "bank",
+    "bankAccountType": "checking",
+    "name": "Test checking account",
+    "created": "2016-08-15T17:05:49.000Z",
+    "removed": false,
+    "channels": [
+        "ach"
+    ]
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2066,7 +2084,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test checking account"</span>
 </code></pre></div></div><h2 id='update-a-funding-source'>Update a funding source</h2>
-<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, or all three attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
+<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, <code class="prettyprint">type</code>, and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type, or all four attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth account access token with the <code>Funding</code> scope.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
@@ -2090,6 +2108,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>string</td>
 <td>Arbitrary nickname for the funding source. Must be 50 characters or less.</td>
+</tr>
+<tr>
+<td>bankAccountType</td>
+<td>no</td>
+<td>string</td>
+<td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
 </tr>
 <tr>
 <td>accountNumber</td>
@@ -2710,9 +2734,13 @@ HTTP 200 OK
   "id": "692486f8-29f6-4516-a6a5-c69fd2ce854c",
   "status": "verified",
   "type": "bank",
+  "bankAccountType": "checking",
   "name": "Test bank account",
   "created": "2016-06-08T21:37:30.000Z",
-  "removed": true
+  "removed": true,
+  "channels": [
+      "ach"
+  ]
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
