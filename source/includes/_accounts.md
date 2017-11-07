@@ -542,6 +542,7 @@ mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
+<?php
 $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
 
 $masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);

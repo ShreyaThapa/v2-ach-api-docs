@@ -499,6 +499,7 @@ failure = app_token.get "#{transfer_url}/failure"
 failure.code # => "R1"
 ```
 ```php
+<?php
 $transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
 $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
