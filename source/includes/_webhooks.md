@@ -36,10 +36,6 @@ When a new [event](#events) is created and there is an active [webhook subscript
 
 This section covers how to retrieve a single webhook.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
 ### HTTP request
 `GET https://api.dwolla.com/webhooks/{id}`
 
@@ -48,7 +44,7 @@ This section covers how to retrieve a single webhook.
 |-----------|----------|----------------|-------------|
 | id | yes | string | Id of webhook to retrieve. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Webhook not found. |
@@ -148,7 +144,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 webhook = app_token.get webhook_url
@@ -165,7 +161,7 @@ $webhook->topic; # => "transfer_created"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 webhook = app_token.get(transfer_url)
@@ -183,10 +179,6 @@ applicationToken
 
 This section details how to retry a webhook by id.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
 ### HTTP Request
 `POST https://api.dwolla.com/webhooks/{id}/retries`
 
@@ -195,7 +187,7 @@ This section details how to retry a webhook by id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | Id of webhook to retry. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Webhook not found. |
@@ -214,7 +206,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8/retries/5aa27a0f-cf99-418d-a3ee-67c0ff99a494
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 app_token.post "#{webhook_url}/retries"
@@ -229,7 +221,7 @@ $webhooksApi->retryWebhook($webhookUrl);
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 app_token.post('%s/retries' % webhook_url)
@@ -256,7 +248,7 @@ This section covers how to retrieve webhook retries by id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | Id of webhook to get retries for. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Webhook not found. |
@@ -296,7 +288,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 retries = app_token.get "#{webhook_url}/retries"
@@ -313,7 +305,7 @@ $retries->total; # => 1
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
 retries = app_token.get('%s/retries' % webhook_url)

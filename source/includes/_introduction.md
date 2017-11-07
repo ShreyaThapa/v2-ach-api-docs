@@ -32,9 +32,9 @@ All requests require either an OAuth access token or a `client_id` and `client_s
 Requests that require a client_id and client_secret can be sent using the `application/x-www-form-urlencoded` Content-Type or via a JSON body with the `application/json` Content-Type.
 
 ### API Host
-**Production:** https://api.dwolla.com
+**Production:** `https://api.dwolla.com`
 
-**Sandbox:** https://api-sandbox.dwolla.com
+**Sandbox:** `https://api-sandbox.dwolla.com`
 
 ## Idempotency key
 

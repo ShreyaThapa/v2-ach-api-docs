@@ -4,7 +4,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 ### Transfer resource
 
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
 | id | Transfer unique identifier |
 | status | Either `processed`, `pending`, `cancelled`, `failed`, or `reclaimed`
@@ -38,14 +38,14 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 ### Amount JSON object
 
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
 | value | Amount of money |
 | currency | String, `USD` |
 
 ### clearing JSON object
 
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
 | source | String, `standard` |
 | destination | String, `next-available` |
@@ -69,16 +69,16 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 
 ### Source and destination types
 
-| Source Type | URI | Description
--------|---------|---------------
-Funding source | `https://api.dwolla.com/funding-sources/{id}` | A bank or balance funding source.
+| Source Type | URI | Description |
+|-------|---------|---------------|
+| Funding source | `https://api.dwolla.com/funding-sources/{id}` | A bank or balance funding source. |
 
-| Destination Type | URI | Description
--------|---------|---------------
-Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of an Account or verified Customer's own bank or balance funding source. **OR** A Customer's bank funding source.
-Customer | `https://api.dwolla.com/customers/{id}` | Destination Customer of a transfer.
-Account | `https://api.dwolla.com/accounts/{id}` | Destination Account of a transfer.
-Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)
+| Destination Type | URI | Description |
+|-------|---------|---------------|
+| Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of an Account or verified Customer's own bank or balance funding source. **OR** A Customer's bank funding source. |
+| Customer | `https://api.dwolla.com/customers/{id}` | Destination Customer of a transfer. |
+| Account | `https://api.dwolla.com/accounts/{id}` | Destination Account of a transfer. |
+| Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds) |
 
 
 ### Facilitator fee
@@ -110,7 +110,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 ]
 ```
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 400 | Transfer failed. |
@@ -155,7 +155,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   :_links => {
     :source => {
@@ -212,7 +212,7 @@ $transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80d
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
   '_links': {
     'source': {
@@ -263,8 +263,7 @@ var requestBody = {
   correlationId: '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 };
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .post('transfers', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
@@ -272,10 +271,6 @@ accountToken
 ## Retrieve a transfer
 
 This section covers how to retrieve a transfer belonging to an Account or Customer by its id.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/transfers/{id}`
@@ -285,7 +280,7 @@ This section covers how to retrieve a transfer belonging to an Account or Custom
 |-----------|----------|----------------|-------------|
 | id | yes | string | The id of the transfer to be retrieved. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Transfer not found. |
@@ -325,10 +320,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-transfer = account_token.get transfer_url
+transfer = app_token.get transfer_url
 transfer.status # => "pending"
 ```
 ```php
@@ -342,27 +337,22 @@ $transfer->status; # => "pending"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-fees = account_token.get(transfer_url)
-fees.body['stats'] # => 'pending'
+transfer = account_token.get(transfer_url)
+transfer.body['status'] # => 'pending'
 ```
 ```javascript
 var transferUrl = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(transferUrl)
   .then(res => res.body.status); // => 'pending'
 ```
 ## List fees for a transfer
 
 This section outlines how to retrieve fees charged on a created transfer. Fees are visible to the `Customer` or `Account` that is charged the fee, as well as the Dwolla `Account` that is involved in receiving the fee.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/transfers/{id}/fees`
@@ -372,7 +362,7 @@ This section outlines how to retrieve fees charged on a created transfer. Fees a
 |-----------|----------|----------------|-------------|
 | id | yes | string | The id of the transfer to retrieve fees for. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Transfer not found. |
@@ -439,31 +429,33 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get "#{transfer_url}/fees"
 fees.total # => 2
 ```
 ```php
-/**
- *  No example for this language yet.
- **/
+<?php
+$transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
+
+$transfersApi = new DwollaSwagger\TransfersApi($apiClient);
+
+$transferFees = $transfersApi->getFeesBySource($transferUrl);
+$transferFees->total; # => "2"
+?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-fees = account_token.get('%s/fees' % transfer_url)
+fees = app_token.get('%s/fees' % transfer_url)
 fees.body['total'] # => 2
 ```
 ```javascript
 var transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${transferUrl}/fees`)
   .then(res => res.body.total); // => 2
 ```
@@ -473,10 +465,6 @@ accountToken
 When a bank transfer fails for an Account or Customer, Dwolla returns a `failure` link when [retrieving the transfer by its Id](#retrieve-a-transfer). This failure link is used to retrieve the ACH return code and description. For reference, the list of possible failure codes and descriptions are shown in the [Transfer failures](https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html) resource article.
 
 **Note:** If a transfer fails to/from a bank account then the `bank` will automatically be removed from the Dwolla system for all ACH return codes except an `R01`.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP Request
 `GET https://api.dwolla.com/transfers/{id}/failure`
@@ -504,31 +492,33 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-failure = account_token.get "#{transfer_url}/failure"
+failure = app_token.get "#{transfer_url}/failure"
 failure.code # => "R1"
 ```
 ```php
-/**
- *  No example for this language yet.
- **/
+<?php
+$transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
+
+$transfersApi = new DwollaSwagger\TransfersApi($apiClient);
+
+$transferFailure = $transfersApi->failureById($transferUrl);
+$transferFailure->code; # => "R01"
+?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-failure = account_token.get('%s/failure' % transfer_url)
+failure = app_token.get('%s/failure' % transfer_url)
 failure.body['code'] # => 'R1'
 ```
 ```javascript
 var transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${transferUrl}/failure`)
   .then(res => res.body.code); // => 'R1'
 ```
@@ -536,10 +526,6 @@ accountToken
 ## Cancel a transfer
 
 When a bank transfer is eligible for cancellation, Dwolla returns a `cancel` link  when [getting the transfer by Id](#retrieve-a-transfer). This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
 
 ### HTTP Request
 `POST https://api.dwolla.com/transfers/{id}`
@@ -551,7 +537,7 @@ When a bank transfer is eligible for cancellation, Dwolla returns a `cancel` lin
 
 ### Request and Response
 
-```noselect
+```raw
 POST https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -593,5 +579,47 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     "baz": "boo"
   }
 }
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+transfer_url = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
+request_body = {
+      "status" => "cancelled",
+}
+
+transfer = app_token.post "#{transfer_url}", request_body
+transfer.status # => "cancelled"
+```
+```php
+<?php
+$transfersApi = new DwollaSwagger\TransfersApi($apiClient);
+
+$transferUrl = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388';
+$transfer = $transfersApi->update([
+  'status' => 'cancelled',
+], $transferUrl);
+
+$transfer->status; # => "cancelled"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+transfer_url = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
+request_body = {
+  "status": "cancelled"
+}
+
+transfer = app_token.post(transfer_url, request_body)
+transfer.body['status'] # => 'cancelled'
+```
+```javascript
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var requestBody = {
+  name: "Test Checking - 1234"
+};
+
+appToken
+  .post(fundingSourceUrl, requestBody)
+  .then(res => res.body.name); // => "Test Checking - 1234"
 ```
 * * *

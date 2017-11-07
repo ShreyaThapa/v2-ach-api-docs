@@ -4,13 +4,13 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 
 ### Events resource
 
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
-|_links | Contains links to the event, associated resource, and the Account associated with the event.
-|id | Event id
-|created | ISO-8601 timestamp when event was created
-|topic | Type of event
-|resourceId | id of the resource associated with the event.
+|_links | Contains links to the event, associated resource, and the Account associated with the event. |
+|id | Event id |
+|created | ISO-8601 timestamp when event was created |
+|topic | Type of event |
+|resourceId | id of the resource associated with the event. |
 
 ```noselect
 {
@@ -103,7 +103,7 @@ Retrieve a list of events for the application.
 | limit | no | integer | How many results to return |
 | offset | no | integer | How many results to skip |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Resource not found. |
@@ -191,7 +191,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 events = app_token.get "events"
 events.total # => 3
 ```
@@ -204,7 +204,7 @@ $events->total; # => 3
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 events = app_token.get('events')
 events.body['total'] # => 3
 ```
@@ -226,7 +226,7 @@ This section covers how to retrieve an event by id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | ID of application event to get. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Application event not found. |
@@ -262,7 +262,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 event = app_token.get event_url
@@ -279,7 +279,7 @@ $event->topic; # => "customer_transfer_created"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 event = app_token.get(event_url)

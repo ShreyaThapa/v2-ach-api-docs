@@ -54,7 +54,7 @@ This section shows you how to retrieve basic account information belonging to th
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to get an Account by id. |
@@ -142,7 +142,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 | name | yes | string | Arbitrary nickname for the funding source. |
 | channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 400 | Duplicate funding source or validation error.
@@ -151,7 +151,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 
 ### Request and response
 
-```noselect
+```raw
 POST https://api-sandbox.dwolla.com/funding-sources
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -168,6 +168,56 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
 ```
+```php
+<?php
+$fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fundingApi->createFundingSource([
+  "routingNumber" => "222222226",
+  "accountNumber" => "123456789",
+  "bankAccountType" => "checking",
+  "name" => "My Bank"
+]);
+$fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
+?>
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+request_body = {
+  routingNumber: '222222226',
+  accountNumber: '123456789',
+  bankAccountType: 'checking',
+  name: 'My Bank'
+}
+
+funding_source = app_token.post "funding-sources", request_body
+funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+request_body = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'My Bank'
+}
+
+funding_source = app_token.post('funding-sources', request_body)
+funding_source.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
+```
+```javascript
+var requestBody = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'My Bank'
+};
+
+appToken
+  .post(`funding-sources`, requestBody)
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
+```
+
 ## List funding sources for an account
 
 Retrieve a list of funding sources that belong to an Account. By default, all funding sources are returned unless the `removed` querystring parameter is set to `false` in the request.
@@ -181,7 +231,7 @@ Retrieve a list of funding sources that belong to an Account. By default, all fu
 | id | yes | string | Account's unique identifier. |
 | removed | no | boolean | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /accounts/{id}/funding-sources?removed=false). |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to list funding sources.
@@ -291,11 +341,7 @@ appToken
 
 ## List and search transfers for an account
 
-This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
-</ol>
+This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional query string parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
 
 ### HTTP request
 `GET https://api.dwolla.com/accounts/{id}/transfers`
@@ -314,7 +360,7 @@ This section covers how to retrieve an Account's list of transfers. Transaction 
 | limit | no | integer | Number of search results to return. Defaults to 25. |
 | offset | no | integer | Number of search results to skip. Used for pagination. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Account not found. |
@@ -434,7 +480,7 @@ This section covers how to retrieve an Account's list of previously created mass
 | offset | no | integer | How many results to skip. |
 | correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------------|
 | 403 | NotAuthorized | Not authorized to list mass payments. |
@@ -496,6 +542,7 @@ mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
+<?php
 $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
 
 $masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);

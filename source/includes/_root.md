@@ -38,7 +38,7 @@ $accountUrl = $root->_links["account"]->href; # => "https://api-sandbox.dwolla.c
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 root = token.get('/')
 root.body['_links']['account']['href'] # => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```

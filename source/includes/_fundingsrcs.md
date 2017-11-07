@@ -67,7 +67,7 @@ This section covers how to retrieve a funding source by id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to retrieve. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Funding source not found. |
@@ -115,7 +115,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'
 
 funding_source = app_token.get funding_source_url
@@ -132,7 +132,7 @@ $fundingSource->name; # => "Test checking account"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/49dbaa24-1580-4b1c-8b58-24e26656fa31'
 
 funding_source = app_token.get(funding_source_url)
@@ -185,7 +185,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
       "name" => "Test Checking - 1234",
@@ -200,13 +200,13 @@ funding_source.name # => "Test Checking - 1234"
  **/
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "name": "Test Checking - 1234"
 }
 
-funding_source = app_token.post('funding-sources', request_body)
+funding_source = app_token.post(funding_source_url, request_body)
 funding_source.body['name'] # => 'Test Checking - 1234'
 ```
 ```javascript
@@ -232,7 +232,7 @@ This section covers how to retrieve the `balance` of a funding source. The fundi
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to retrieve a balance for. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
 | 404 | NotFound | Funding source not found. |
@@ -267,7 +267,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source = app_token.get "#{funding_source_url}/balance"
 ```
 ```php
@@ -280,7 +280,7 @@ $fundingSource = $fsApi->getBalance($fundingSourceUrl);
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
 
 funding_source = app_token.get('%s/balance' % funding_source_url)
@@ -306,7 +306,7 @@ This section covers how to initiate micro-deposits for bank verification. Refere
 | id | yes | string | id of funding source to initiate micro-deposits to. |
 
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
 | 201 | Created | Micro deposits initiated |
@@ -324,7 +324,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909/micro-deposits
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 
 app_token.post "#{funding_source_url}/micro-deposits"
@@ -335,7 +335,7 @@ var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-
 appToken.post(`#{fundingSourceUrl}/micro-deposits`);
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 
 app_token.post('%s/micro-deposits' % funding_source_url)
@@ -365,7 +365,7 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 | amount2 | yes | string | An amount JSON object of second micro-deposit. Contains `value` and `currency`. |
 
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
 | 200 | OK | Micro deposits verified  |
@@ -397,7 +397,7 @@ Accept: application/vnd.dwolla.v1.hal+json
 HTTP 200 OK
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 request_body = {
   :amount1 => {
@@ -428,7 +428,7 @@ var requestBody = {
 appToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 request_body = {
     "amount1": {
@@ -483,7 +483,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 | status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `procesed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
 | failure | Determines if micro-deposits fail to complete to a bank. Failure is an object that contains a `code` and `description`, which represents the ACH return code and description of the return. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description
 |--------------|-------------|-----------|
 | 200 | Ok | Pending micro-deposits exist. |
@@ -519,7 +519,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 funding_source = app_token.get "#{funding_source_url}/micro-deposits"
@@ -536,7 +536,7 @@ $fundingSource->status; # => "failed"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 funding_source = app_token.get('%s/micro-deposits' % funding_source_url)
@@ -564,7 +564,7 @@ Remove a funding source by id. A removed funding source is soft deleted and can 
 | id | yes | string | id of funding source to delete. |
 | removed | yes | string |Specify a value of `true` to remove the associated funding source. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Funding source not found. |
@@ -601,7 +601,7 @@ HTTP 200 OK
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
 request_body = {
@@ -620,7 +620,7 @@ $fsApi->softDelete(['removed' => true ], $fundingSourceUrl);
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "removed": true
