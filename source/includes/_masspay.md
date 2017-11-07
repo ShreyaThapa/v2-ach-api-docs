@@ -44,11 +44,11 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
         "batch": "batch1"
     },
     "total": {
-        "value": "$0.02",
+        "value": "0.02",
         "currency": "USD"
     },
     "totalFees": {
-        "value": "$0.00",
+        "value": "0.00",
         "currency": "USD"
     },
     "correlationId": "d028beed-8152-481d-9427-21b6c4d99644"
@@ -117,7 +117,7 @@ Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account 
 }
 ```
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 
 | HTTP Status | Code | Description |
 |--------------|-------------|-----------------|
@@ -125,7 +125,7 @@ Email | `mailto:johndoe@email.com` | Email address of existing Transfer Account 
 | 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, Invalid job item correlation ID, or Invalid funding source. |
 | 401 | NotAuthorized | OAuth token does not have Send scope. |
 
-### Request and response (masspayment from Account to Customers)
+### Request and response (mass payment from Account to Customers)
 
 ```raw
 POST https://api-sandbox.dwolla.com/mass-payments
@@ -133,6 +133,7 @@ Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
+
 {
     "_links": {
         "source": {
@@ -182,7 +183,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   _links: {
     source: {
@@ -230,12 +231,113 @@ mass_payment = account_token.post "mass-payments", request_body
 mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$massPaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
+
+$massPayment = $massPaymentsApi->create([
+  '_links' =>
+  [
+    'source' =>
+    [
+      'href' => 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4',
+    ],
+  ],
+  'items' =>
+  [
+    [
+      '_links' =>
+      [
+        'destination' =>
+        [
+          'href' => 'https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db',
+        ],
+      ],
+      'amount' =>
+      [
+        'currency' => 'USD',
+        'value' => '1.00',
+      ],
+      'metadata' =>
+      [
+        'payment1' => 'payment1',
+      ],
+      'correlationId' => 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841',
+    ],
+    [
+      '_links' =>
+      [
+        'destination' =>
+        [
+          'href' => 'https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd',
+        ],
+      ],
+      'amount' =>
+      [
+        'currency' => 'USD',
+        'value' => '5.00',
+      ],
+      'metadata' =>
+      [
+        'payment2' => 'payment2',
+      ],
+    ],
+  ],
+  'metadata' =>
+  [
+    'batch1' => 'batch1',
+  ],
+  'correlationId' => '6d127333-69e9-4c2b-8cae-df850228e130',
+]);
+$massPayment; # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
+?>
 ```
 ```python
-# No example for this language yet. Coming soon.
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+request_body = {
+  '_links': {
+    'source': {
+      'href': 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    }
+  },
+  'items': [
+    {
+      '_links': {
+        'destination': {
+          'href': 'https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'
+        }
+      },
+      'amount': {
+        'currency': 'USD',
+        'value': '1.00'
+      },
+      'metadata': {
+        'payment1': 'payment1'
+      },
+      'correlationId': 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'
+    },
+    {
+      '_links': {
+        'destination': {
+          'href': 'https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd'
+        }
+      },
+      'amount': {
+        'currency': 'USD',
+        'value': '5.00'
+      },
+      'metadata': {
+        'payment2': 'payment2'
+      }
+    }
+  ],
+  'metadata': {
+    'batch1': 'batch1'
+  },
+  'correlationId': '6d127333-69e9-4c2b-8cae-df850228e130'
+}
+
+mass_payment = app_token.post('mass-payments', request_body)
+mass_payment.headers['location'] # => 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
 ```javascript
 var requestBody = {
@@ -298,7 +400,7 @@ This section outlines how to retrieve a mass payment by its id. All mass payment
 |-----------|----------|----------------|-------------|
 | id | yes | string | The id of the mass payment to retrieve information for. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------|
@@ -332,19 +434,28 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
 
 mass_payment = account_token.get mass_payment_url
 mass_payment.status # => "processing"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
+
+$massPaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
+
+$massPayment = $massPaymentsApi->byId($massPaymentUrl);
+$massPayment->status; # => "processing"
+?>
 ```
 ```python
-# No example for this language yet. Coming soon.
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+
+mass_payment = app_token.get(mass_payment_url)
+mass_payment.body['status'] # => 'processing'
 ```
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
@@ -367,7 +478,7 @@ This section covers how to update a mass payment's status to `pending` which tri
 | id | yes | string | id of mass payment to update. |
 | status | yes | string | Either `pending` or `cancelled` depending on the action you want to take on a deferred mass payment. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
 | 404 | NotFound | Mass payment not found. |
@@ -388,7 +499,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
       "status" => "pending",
@@ -403,7 +514,7 @@ mass_payment.status # => "pending"
  **/
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "status": "pending"
@@ -438,7 +549,7 @@ A mass payment contains a list of payments called `items`. An `item` is distinct
 | offset | no | integer | How many results to skip. |
 | status | no | string | Filter results on item status. Possible values: `failed`, `pending`, and `success`. Values delimited by `&status=` (i.e. - `/items?status=failed&status=pending`). |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 
 | HTTP Status | Code | Description
 |--------------|-------------|------------------|
@@ -524,19 +635,28 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
 mass_payment_items = account_token.get "#{mass_payment_url}/items"
 mass_payment_items.total # => 2
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
+
+$massPaymentItemsApi = new DwollaSwagger\MasspaymentitemsApi($apiClient);
+
+$massPaymentItems = $massPaymentItemsApi->getMassPaymentItems($massPaymentUrl);
+$massPaymentItems->total; # => "2"
+?>
 ```
 ```python
-# No example for this language yet. Coming soon.
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+
+mass_payment_items = app_token.get('%s/items' % mass_payment_url)
+mass_payment_items.body['total'] # => "2"
 ```
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
@@ -558,7 +678,7 @@ This section covers how to retrieve a mass payment item by its unique identifier
 |-----------|----------|----------------|-------------|
 | id | yes | string | The id of the item to be retrieved in a mass payment. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 
 | HTTP Status | Code | Description
 |--------------|-------------|------------------|
@@ -601,19 +721,24 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
 mass_payment_item = account_token.get mass_payment_item_url
 mass_payment_item.status # => "success"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$massPaymentItemUrl = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
+
+$massPaymentItemsApi = new DwollaSwagger\MasspaymentitemsApi($apiClient);
+
+$massPaymentItem = $massPaymentItemsApi->byId($massPaymentItemUrl);
+$massPaymentItem->status; # => "success"
+?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
 mass_payment_item = account_token.get(mass_payment_item_url)

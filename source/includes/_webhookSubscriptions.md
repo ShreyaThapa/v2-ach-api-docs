@@ -34,11 +34,7 @@ Dwolla will re-attempt delivery 8 times over the course of 72 hours according th
 
 This section details how to create a webhook subscription to deliver [webhooks](#webhooks) to a specified URL.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
-### HTTP Request
+### HTTP request
 `POST https://api.dwolla.com/webhook-subscriptions`
 
 ### Request parameters
@@ -60,7 +56,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   :url => "http://myawesomeapplication.com/destination",
   :secret => "your webhook secret"
@@ -80,7 +76,7 @@ applicationToken
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
   'url': 'http://myapplication.com/webhooks',
   'secret': 'sshhhhhh'
@@ -105,10 +101,6 @@ $subscription; # => "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c1
 
 This section details how to retrieve a webhook subscription by its id.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions/{id}`
 
@@ -117,7 +109,7 @@ This section details how to retrieve a webhook subscription by its id.
 |-----------|----------|----------------|-------------|
 | id | yes | string | Webhook subscription unique identifier. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Webhook subscription not found. |
@@ -146,7 +138,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 webhook_subscription = app_token.get webhook_subscription_url
@@ -160,7 +152,7 @@ applicationToken
   .then(res => res.body.created); // => '2016-04-20T15:49:50.340Z'
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 webhook_subscription = app_token.get(webhook_subscription_url)
@@ -179,11 +171,7 @@ $retrieved->created; # => 2015-10-28T16:20:47+00:00
 
 This section details how to pause a webhook subscription. When a webhook subscription is paused Dwolla will continue to create webhooks but not send them to your subscribed webhook url. This is useful if your webhook endpoint is unavailable and you want to temporarily disable webhook requests.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
-### HTTP Request
+### HTTP request
 `POST https://api.dwolla.com/webhook-subscriptions/{id}`
 
 ### Request parameters
@@ -204,7 +192,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 request_body = {
@@ -225,7 +213,7 @@ applicationToken
   .then(res => res.body.paused); // => 'true'
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 request_body = {
@@ -294,7 +282,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscriptions = app_token.get "webhook-subscriptions"
 webhook_subscriptions.total # => 1
 ```
@@ -304,7 +292,7 @@ applicationToken
   .then(res => res.body.total); // => 1
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscriptions = app_token.get('webhook-subscriptions')
 webhook_subscriptions.body['total'] # => 1
 ```
@@ -321,10 +309,6 @@ $retrieved->total; # => 1
 
 Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. If using an SDK, the request was successful unless an exception was thrown stating otherwise.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
 ### HTTP request
 `DELETE https://api.dwolla.com/webhook-subscriptions/{id}`
 
@@ -333,7 +317,7 @@ Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. I
 |-----------|----------|----------------|-------------|
 | id | yes | string | Webhook unique identifier. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Webhook subscription not found. |
@@ -346,7 +330,7 @@ Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 app_token.delete webhook_subscription_url
@@ -357,7 +341,7 @@ var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptio
 applicationToken.delete(webhookSubscriptionUrl);
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 app_token.delete(webhook_subscription_url)
@@ -372,10 +356,6 @@ $webhookApi->deleteById('https://api-sandbox.dwolla.com/webhook-subscriptions/5a
 ## List webhooks for a webhook subscription
 
 This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks`
@@ -439,7 +419,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 hooks = app_token.get "#{webhook_subscription_url}/webhooks"
@@ -453,7 +433,7 @@ applicationToken
   .then(res => res.body.total); // => 5
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 hooks = app_token.get('%s/hooks' % webhook_subscription_url)

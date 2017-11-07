@@ -21,38 +21,38 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 ### Customer links
 | Link | Description|
 |------|------------|
-| self | URL of the Customer resource
-| receive | Follow the link to create a transfer to this Customer.
-| funding-sources | GET this link to list the Customer's funding sources.
-| transfers | GET this link to list the Customer's transfers
-| send | (optional) If this link exists, this Customer can send funds.  POST to this URL to create a transfer.
-| retry-verification | If the Customer has a `status` of `retry`, POST to this link to attempt to correct their identity verification information.
-| verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the authorized representaive of the business. Read about [Documents](#documents).
-| verify-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about [Documents](#documents).
-| verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about [Documents](#documents).
+| self | URL of the Customer resource |
+| receive | Follow the link to create a transfer to this Customer. |
+| funding-sources | GET this link to list the Customer's funding sources. |
+| transfers | GET this link to list the Customer's transfers |
+| send | (optional) If this link exists, this Customer can send funds.  POST to this URL to create a transfer. |
+| retry-verification | If the Customer has a `status` of `retry`, POST to this link to attempt to correct their identity verification information. |
+| verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the authorized representative of the business. Read about [Documents](#documents). |
+| verify-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about [Documents](#documents). |
+| verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about [Documents](#documents). |
 
 ### Customer resource
 
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
-|id | Customer’s unique identifier.
-|firstName | Customer's first name.
-|lastName | Customer's last name.
-|email | Customer's email address.
-|type | Either `unverified`, `personal`, `business`, or `receive-only`.
-|status | If type is **unverified** or **receive-only**: status can be `unverified` or `suspended`. <br> If type is **personal** or **business**: status can be `retry`, `document`, `verified`, or `suspended`.
-|created | ISO-8601 timestamp.
+|id | Customer’s unique identifier. |
+|firstName | Customer's first name. |
+|lastName | Customer's last name. |
+|email | Customer's email address. |
+|type | Either `unverified`, `personal`, `business`, or `receive-only`. |
+|status | If type is **unverified** or **receive-only**: status can be `unverified` or `suspended`. <br> If type is **personal** or **business**: status can be `retry`, `document`, `verified`, or `suspended`. |
+|created | ISO-8601 timestamp. |
 
 ### Customer statuses
 
-| Status | Description
+| Status | Description |
 |--------|------------|
-| unverified | Customers of type `unverified` or `receive-only` always have this status.
-| retry | Verified Customers of type `personal` or `business` can have this status. The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
-| document | Verified Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
-| verified | Verified Customers of type `personal` or `business` can have this status. The Customer is currently verified.
-| suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.
-| deactivated | All Customer types can have a status of `deactivated`. A deactivated Customer may neither send nor receive funds. A deactivated Customer can be [reactivated](#reactivate-a-customer) which moves the Customer to the status they were in prior to being deactivated.
+| unverified | Customers of type `unverified` or `receive-only` always have this status. |
+| retry | Verified Customers of type `personal` or `business` can have this status. The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`. |
+| document | Verified Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents). |
+| verified | Verified Customers of type `personal` or `business` can have this status. The Customer is currently verified. |
+| suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information. |
+| deactivated | All Customer types can have a status of `deactivated`. A deactivated Customer may neither send nor receive funds. A deactivated Customer can be [reactivated](#reactivate-a-customer) which moves the Customer to the status they were in prior to being deactivated. |
 
 ```noselect
 {
@@ -111,7 +111,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable.  `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable. `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers`
@@ -128,23 +128,23 @@ This section details how to create a new Customer. To create `Unverified Custome
 ### Request parameters - verified Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer or if business, authorized representative’s first name.
-| lastName | yes | string | Customer or if business, authorized representative’s last name.
-| email | yes | string | Customer's email address.
-| ipAddress | no | string | Customer's IP address.
-| type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information.
-| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed.
-| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed.
-| city | yes | string | City of Customer's permanent residence.
-| state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`.
-| postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
-| dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older.
-| ssn | yes | string | Last four digits of the Customer's Social Security Number.
-| phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
+| firstName | yes | string | Customer or if business, authorized representative’s first name. |
+| lastName | yes | string | Customer or if business, authorized representative’s last name. |
+| email | yes | string | Customer's email address. |
+| ipAddress | no | string | Customer's IP address. |
+| type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
+| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
+| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
+| city | yes | string | City of Customer's permanent residence. |
+| state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
+| postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
+| dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
+| ssn | yes | string | Last four digits of the Customer's Social Security Number. |
+| phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
 ### Additional request parameters for verified Customer with type=business
 | Parameter | Required | Type | Description |
-|-----------|----------|----------------|-----------|
+|-----------|----------|------|-------------|
 | businessClassification | yes | string | The [industry classification](#list-business-classifications) id that corresponds to Customer’s business  |
 | businessType | yes | string | Business structure. Possible values are `corporation`, `llc`, `partnership`, and `soleproprietorship` |
 | businessName | yes | string | Customer’s registered business name. |
@@ -162,7 +162,7 @@ This section details how to create a new Customer. To create `Unverified Custome
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 400 | Duplicate customer or validation error.
@@ -188,6 +188,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   :firstName => 'Jane',
   :lastName => 'Merchant',
@@ -195,7 +196,6 @@ request_body = {
   :ipAddress => '99.99.99.99'
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 customer = app_token.post "customers", request_body
 customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ```
@@ -214,7 +214,7 @@ $customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB9
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
   'firstName': 'Jane',
   'lastName': 'Merchant',
@@ -290,7 +290,7 @@ $customer; # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B
 ?>
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   :firstName => 'John',
   :lastName => 'Doe',
@@ -315,6 +315,7 @@ customer = app_token.post "customers", request_body
 customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
   'firstName': 'John',
   'lastName': 'Doe',
@@ -332,7 +333,6 @@ request_body = {
   'ssn': '1234'
 }
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 customer = app_token.post('customers', request_body)
 customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 ```
@@ -379,7 +379,7 @@ HTTP/1.1 201 Created
 Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
   :firstName => 'Jane',
   :lastName => 'Merchant',
@@ -408,7 +408,7 @@ $customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB9
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
   'firstName': 'Jane',
   'lastName': 'Merchant',
@@ -445,7 +445,7 @@ Retrieve a list of industry classifications to identify the Customer’s busines
 
 ### Request and response
 
-```noselect
+```raw
 GET https://api-sandbox.dwolla.com/business-classifications
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -525,6 +525,29 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "total": 27
 }
 ```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+business_classifications = app_token.get "business-classifications"
+business_classifications._embedded.business-classifications[0].name # => "Food retail and service"
+```
+```php
+<?php
+$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
+
+$busClassifications = $businessClassificationsApi->_list();
+$busClassifications->_embedded->business-classifications[0]->name; # => "Food retail and service"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+business_classifications = app_token.get('business-classifications')
+business_classifications.body['_embedded']['business-classifications'][0]['name'] # => 'Food retail and service'
+```
+```javascript
+appToken
+  .get('business-classifications')
+  .then(res => res.body._embedded.business-classifications[0].name); // => 'Food retail and service'
+```
 
 ## Retrieve a business classification
 
@@ -540,7 +563,7 @@ This section shows you how to retrieve a business classification from a list of 
 
 ### Request and response
 
-```noselect
+```raw
 GET https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -627,6 +650,37 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "name": "Entertainment and media"
 }
 ```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
+
+business_classification = app_token.get business_classification_url
+business_classification._embedded.name # => "Entertainment and media"
+```
+```php
+<?php
+$businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
+
+$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
+
+$busClassifications = $customersApi->getBusinessClassification($businessClassificationUrl);
+$busClassifications->_embedded->name; # => "Entertainment and media"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
+
+busClassification = app_token.get(business_classification_url)
+busClassification.body['_embedded']['name']
+```
+```javascript
+var businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
+
+appToken
+  .get(businessClassificationUrl)
+  .then(res => res.body._embedded.name); // => 'Entertainment and media'
+```
 
 ## Update a customer
 
@@ -648,14 +702,14 @@ A limited set of information can be updated on an existing created Customer. **N
 ##### Request parameters -  verified Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| email | no | string | Customer's email address.
-| ipAddress | no | string | Customer's IP address.
-| address1 | no | string | First line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed.
-| address2 | no | string | Second line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed.
-| city | no | string | City of customer's peramanent residence.
-| state | no | string | Two letter abbreviation of the state in which the customer resides.  e.g. `NY`.
-| postalCode | no | string | Postal code of customer's permanent residence. Should be a five digit postal code, e.g. `50314`.
-| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
+| email | no | string | Customer's email address. |
+| ipAddress | no | string | Customer's IP address. |
+| address1 | no | string | First line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed. |
+| address2 | no | string | Second line of the street address of the customer's permanent residence. **Note:** PO Boxes are not allowed. |
+| city | no | string | City of customer's permanent residence. |
+| state | no | string | Two letter abbreviation of the state in which the customer resides.  e.g. `NY`. |
+| postalCode | no | string | Postal code of customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
+| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
 ##### Request parameters - verified Customer with type=business
 In addition to the table above, business verified Customers can update the following fields.
@@ -699,34 +753,61 @@ If the verified Customer has a status of `retry`, some information may have been
 
 ```noselect
 {
-  "_links": {
-    "self": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F"
+    "_links": {
+        "deactivate": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "edit-form": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json; profile=\"https://github.com/dwolla/hal-forms\"",
+            "resource-type": "customer"
+        },
+        "edit": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "funding-sources": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f/funding-sources",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "retry-verification": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "transfers": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f/transfers",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "transfer"
+        }
     },
-    "funding-sources": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F/funding-sources"
-    },
-    "transfers": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F/transfers"
-    },
-    "retry-verification": {
-      "href": "https://api.dwolla.com/customers/730CA23F-06C5-45CC-AA6B-8EC2D6EE109F"
-    }
-  },
-  "id": "730CA23F-06C5-45CC-AA6B-8EC2D6EE109F",
-  "firstName": "Jane",
-  "lastName": "Doe",
-  "email": "jdoe@nomail.com",
-  "type": "personal",
-  "status": "retry",
-  "created": "2015-10-06T01:18:26.923Z"
+    "id": "53863b11-1758-47c8-821f-00e6a126f97f",
+    "firstName": "retry",
+    "lastName": "doe",
+    "email": "jdoe@nomail.com",
+    "type": "personal",
+    "status": "retry",
+    "created": "2017-11-06T20:11:13.430Z",
+    "address1": "99-99 33rd St",
+    "city": "Some City",
+    "state": "NY",
+    "postalCode": "11101"
 }
 ```
 
 ### Request and response
 
 ```raw
-POST https://api-sandbox.dwolla.com/customers/132681FA-1B4D-4181-8FF2-619CA46235B1
+POST https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -746,15 +827,71 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "ssn": "123-45-6789"
 }
 
-HTTP/1.1 200 OK
-Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+...
+
+{
+    "_links": {
+        "deactivate": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "receive": {
+            "href": "https://api-sandbox.dwolla.com/transfers",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "transfer"
+        },
+        "edit-form": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json; profile=\"https://github.com/dwolla/hal-forms\"",
+            "resource-type": "customer"
+        },
+        "edit": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "funding-sources": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f/funding-sources",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "transfers": {
+            "href": "https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f/transfers",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "transfer"
+        },
+        "send": {
+            "href": "https://api-sandbox.dwolla.com/transfers",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "transfer"
+        }
+    },
+    "id": "53863b11-1758-47c8-821f-00e6a126f97f",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "jdoe@nomail.com",
+    "type": "personal",
+    "status": "verified",
+    "created": "2017-11-06T20:11:13.430Z",
+    "address1": "221 Corrected Address St.",
+    "address2": "Apt 201",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94104"
+}
 ```
 ```php
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
-$customerUrl = 'https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F';
-$customer = $customersApi->updateCustomer($customerUrl, array (
+$customerUrl = 'https://api.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f';
+$customer = $customersApi->updateCustomer(array (
   'firstName' => 'John',
   'lastName' => 'Doe',
   'email' => 'jdoe@nomail.com',
@@ -767,12 +904,14 @@ $customer = $customersApi->updateCustomer($customerUrl, array (
   'postalCode' => '94104',
   'dateOfBirth' => '1970-07-11',
   'ssn' => '123-45-6789',
-));
-$customer->id; # => "FC451A7A-AE30-4404-AB95-E3553FCD733F"
+), $customerUrl);
+
+$customer->id; # => "53863b11-1758-47c8-821f-00e6a126f97f"
 ?>
 ```
 ```ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f'
 request_body = {
       "firstName" => "John",
        "lastName" => "Doe",
@@ -788,12 +927,12 @@ request_body = {
             "ssn" => "123-45-6789"
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 customer = app_token.post customer_url, request_body
-customer.id # => "FC451A7A-AE30-4404-AB95-E3553FCD733F"
+customer.id # => "53863b11-1758-47c8-821f-00e6a126f97f"
 ```
 ```python
-customer_url = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f'
 request_body = {
   "firstName": "John",
   "lastName": "Doe",
@@ -809,12 +948,11 @@ request_body = {
   "ssn": "123-45-6789"
 }
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = app_token.post('customers', request_body)
-customer.body.id # => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
+customer = app_token.post(customer_url, request_body)
+customer.body.id # => '53863b11-1758-47c8-821f-00e6a126f97f'
 ```
 ```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f';
 var requestBody = {
   firstName: "John",
   lastName: "Doe",
@@ -832,7 +970,7 @@ var requestBody = {
 
 appToken
   .post(customerUrl, requestBody)
-  .then(res => res.body.id); // => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  .then(res => res.body.id); // => '53863b11-1758-47c8-821f-00e6a126f97f'
 ```
 
 ### If you try more than once, or Customer is not in retry state:
@@ -861,11 +999,11 @@ appToken
 | ssn | yes | string | Customer's **full** Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
-| 400 | Duplicate customer or validation error.
-| 403 | Not authorized to create customers.
+| 400 | Duplicate customer or validation error. |
+| 403 | Not authorized to create customers. |
 
 ## List and search customers
 
@@ -922,7 +1060,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customers = app_token.get "customers", limit: 10
 customers._embedded.customers[0].firstName # => "Jane"
 ```
@@ -935,7 +1073,7 @@ $customers->_embedded->customers[0]->firstName; # => "Jane"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer = app_token.get('customers', limit = 10)
 customer.body['_embedded']['customers'][0]['firstName'] # => 'Jane'
 ```
@@ -957,7 +1095,7 @@ This section shows you how to retrieve a Customer belonging to the authorized us
 |-----------|----------|----------------|-------------|
 | id | yes | string | Customer unique identifier. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to get a customer by id. |
@@ -986,9 +1124,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 customer = app_token.get customer_url
 customer.firstName # => "Jane"
 ```
@@ -1003,9 +1141,9 @@ $customer->firstName; # => "Jane"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 customer = app_token.get(customer_url)
 customer.body['firstName']
 ```
@@ -1026,7 +1164,7 @@ When on-demand authorization is enabled for your application the Customer is pre
 ### HTTP request
 `POST https://api.dwolla.com/on-demand-authorizations`
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|---------------|
 | 403 | Forbidden | The supplied credentials are not authorized for this resource. |
@@ -1054,12 +1192,15 @@ on_demand_authorization = app_token.post "on-demand-authorizations"
 on_demand_authorization.buttonText # => "Agree & Continue"
 ```
 ```php
-/**
- * No example for this language yet.
- **/
+<?php
+$onDemandApi = new DwollaSwagger\OndemandauthorizationsApi($apiClient);
+
+$onDemandAuth = $onDemandApi->createAuthorization();
+$onDemandAuth->_links["self"]->href; # => "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 on_demand_authorization = app_token.post('on-demand-authorizations')
 on_demand_authorization.body['buttonText'] # => 'Agree & Continue'
 ```
@@ -1090,7 +1231,7 @@ Create a new Funding Source for a Customer.  Customers can have a maximum of 6 f
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
 | channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
 | 400 | ValidationError | Can be: Duplicate funding source or validation error. Authorization already associated to a funding source. |
@@ -1127,7 +1268,7 @@ $fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a
 ?>
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 request_body = {
   routingNumber: '222222226',
@@ -1140,7 +1281,7 @@ funding_source = app_token.post "#{customer_url}/funding-sources", request_body
 funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 request_body = {
   'routingNumber': '222222226',
@@ -1173,9 +1314,21 @@ IAV is a simple and secure process which requires both server-side and client-si
 <script type="text/javascript">
   var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
   dwolla.configure('sandbox');
-  dwolla.iav.start(iavToken, { container: 'iavContainer' }, function(err, res) {
+  dwolla.iav.start(iavToken, {
+  container: 'iavContainer',
+  stylesheets: [
+    'https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext',
+    'https://myapp.com/iav/customStylesheet.css'
+  ],
+  microDeposits: false,
+  fallbackToMicroDeposits: true,
+  backButton: true,
+  subscriber: ({ currentPage, error }) => {
+      console.log('currentPage:', currentPage, 'error:', JSON.stringify(error))
+    }
+  }, function(err, res) {
     console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res))
-  })
+  });
 </script>
 ```
 
@@ -1191,7 +1344,7 @@ Get a single-use IAV token for a Customer.
 |-----------|----------|----------------|-------------|
 | id | yes | string | Customer unique identifier. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Customer not found. |
@@ -1216,7 +1369,7 @@ HTTP/1.1 200 OK
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
 
 customer = app_token.post "#{customer_url}/iav-token"
@@ -1231,7 +1384,7 @@ appToken
   .then(res => res.body.token); // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'http://api.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
 
 app_token.post('%s/iav-token' % customer_url)
@@ -1327,7 +1480,7 @@ $('#start').click(function() {
 
 ## List funding sources for a customer
 
-Retrieve a list of funding sources that belong to a Customer. By default, all funding sources are returned unless the `removed` querystring parameter is set to `false` in the request.
+Retrieve a list of funding sources that belong to a Customer. By default, all funding sources are returned unless the `removed` query string parameter is set to `false` in the request.
 
 ### HTTP request
 `GET https://api.dwolla.com/customers/{id}/funding-sources`
@@ -1338,7 +1491,7 @@ Retrieve a list of funding sources that belong to a Customer. By default, all fu
 | id | yes | string | Customer's unique identifier. |
 | removed | no | string | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /customers/{id}/funding-sources?removed=false). |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to list funding sources.
@@ -1410,7 +1563,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 funding_sources = app_token.get "#{customer}/funding-sources"
@@ -1427,7 +1580,7 @@ $fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Che
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 funding_sources = app_token.get('%s/funding-sources' % customer_url)
@@ -1462,7 +1615,7 @@ This section details how to retrieve a Customer's list of transfers. Transaction
 | limit | no | integer | Number of search results to return. Defaults to 25. |
 | offset | no | integer | Number of search results to skip. Used for pagination. |
 
-### Errors
+### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to list transfers. |
@@ -1545,7 +1698,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 transfers = app_token.get "#{customer_url}/transfers"
@@ -1562,7 +1715,7 @@ $transfers->_embedded->transfers[0]->status; # => "pending"
 ?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 transfers = app_token.get('%s/transfers' % customer_url)
@@ -1591,7 +1744,7 @@ This section covers how to retrieve a [verified Customer's](#customers) list of 
 | offset | no | integer | How many results to skip. |
 | correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
 
-### HTTP Status and Error Codes
+### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------------|
 | 403 | NotAuthorized | Not authorized to list mass payments. |
@@ -1646,19 +1799,24 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
 
 mass_payments = app_token.get "#{customer_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+
+$masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
+
+$masspayments = $masspaymentsApi->getByCustomer($customerUrl);
+$masspayments->_embedded->mass-payments[0]->status; # => "complete"
+?>
 ```
 ```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
 
 mass_payments = app_token.get('%s/mass-payments' % customer_url)
