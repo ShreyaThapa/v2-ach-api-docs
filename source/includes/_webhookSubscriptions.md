@@ -178,7 +178,7 @@ This section details how to pause a webhook subscription. When a webhook subscri
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Webhook unique identifier. |
-| paused | yes | string | Specify a value of `true` to pause the associated webhook subscription. |
+| paused | yes | string | Specify a value of `true` to pause the associated webhook subscription or `false` to unpause a paused subscription. |
 
 ### Request and response
 
@@ -238,10 +238,6 @@ $subscription = $webhookApi->updateSubscription(array (
 ## List webhook subscriptions
 
 This section covers how to retrieve a list of webhook subscriptions that belong to an application.
-
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions`

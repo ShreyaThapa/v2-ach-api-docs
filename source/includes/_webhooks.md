@@ -36,10 +36,6 @@ When a new [event](#events) is created and there is an active [webhook subscript
 
 This section covers how to retrieve a single webhook.
 
-<ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
-</ol>
-
 ### HTTP request
 `GET https://api.dwolla.com/webhooks/{id}`
 
