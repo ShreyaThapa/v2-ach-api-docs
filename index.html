@@ -8050,7 +8050,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>account_activated</td>
-<td>A Dwolla account moves from deactive or suspended to active state of verification.</td>
+<td>A Dwolla account moves from deactivated or suspended to active state of verification.</td>
 </tr>
 </tbody></table>
 <h3 id='event-topics---a-hrefcustomerscustomersa'>Event topics - (<a href="#customers">Customers</a>)</h3>
@@ -8133,6 +8133,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A bank transfer was created for a Customer. Represents funds moving either from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
 </tr>
 <tr>
+<td>customer_bank_transfer_creation_failed</td>
+<td>An attempt to initiate a transfer to a verified Customer&rsquo;s bank was made, but failed. Transfers initiated to a verified Customer&rsquo;s bank must pass through the verified Customer&rsquo;s balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a verified Customer&rsquo;s bank if the funds available in the balance are less than the transfer amount.</td>
+</tr>
+<tr>
 <td>customer_bank_transfer_cancelled</td>
 <td>A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
 </tr>
@@ -8171,6 +8175,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_mass_payment_cancelled</td>
 <td>A Verified Customer&rsquo;s created and deferred mass payment was cancelled.</td>
+</tr>
+<tr>
+<td>customer_balance_inquiry_completed</td>
+<td>Upon checking a Customer&rsquo;s bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of <code class="prettyprint">processing</code>. This event will be triggered when the bank balance check has completed processing.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
@@ -8469,8 +8477,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
-<h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most Partners maintain one webhook subsciption, you can have up to <strong>ten</strong> active webhook subsciptions at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
 <p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
