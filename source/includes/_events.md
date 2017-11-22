@@ -56,7 +56,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | mass_payment_completed | A mass payment completed. |
 | mass_payment_cancelled | A created and deferred mass payment was cancelled. |
 | account_suspended | An account was suspended. |
-| account_activated | A Dwolla account moves from deactive or suspended to active state of verification. |
+| account_activated | A Dwolla account moves from deactivated or suspended to active state of verification. |
 
 ### Event topics - ([Customers](#customers))
 | Topic          | Description                                                                                                       |
@@ -79,16 +79,18 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_microdeposits_completed | The two <=10¢ transfers to a Customer’s linked bank account have cleared successfully. |
 | customer_microdeposits_maxattempts | The Customer has reached their max verification attempts limit of three. The Customer can no longer verify their funding source with the completed micro-deposit amounts. |
 | customer_bank_transfer_created | A bank transfer was created for a Customer. Represents funds moving either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
+| customer_bank_transfer_creation_failed | An attempt to initiate a transfer to a verified Customer's bank was made, but failed. Transfers initiated to a verified Customer's bank must pass through the verified Customer's balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a verified Customer's bank if the funds available in the balance are less than the transfer amount. |
 | customer_bank_transfer_cancelled | A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_bank_transfer_failed | A Customer bank transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_bank_transfer_completed | A bank transfer that was created for a Customer has cleared successfully. Represents funds clearing either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_transfer_created | A transfer was created for a Customer. Represents funds transferring from a verified Customer's balance or unverified Customer's bank  |
 | customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
-| customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance.|
-| customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance.|
+| customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. |
+| customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_mass_payment_created | A Verified Customer's mass payment was created. |
 | customer_mass_payment_completed | A Verified Customer's mass payment completed. |
 | customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
+| customer_balance_inquiry_completed | Upon checking a Customer's bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of `processing`. This event will be triggered when the bank balance check has completed processing. |
 
 ## List events
 
