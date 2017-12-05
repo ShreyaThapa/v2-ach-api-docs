@@ -692,7 +692,7 @@ appToken
 
 ### Mass Payment item failure codes
 
-Failed mass payment items are subject to much criticism, as they are the dredges of society
+Individual mass payment items can have a status of `failed`. You can find reference the failure code and message to get a better understanding of why the particular item failed.
 
 | Code                    | Message               | Description |
 |-------------------------|-----------------------|-------------|
