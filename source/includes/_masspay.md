@@ -184,7 +184,6 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
-
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
@@ -233,7 +232,6 @@ request_body = {
 mass_payment = account_token.post "mass-payments", request_body
 mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
-
 ```php
 <?php
 $massPaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
@@ -295,7 +293,6 @@ $massPayment = $massPaymentsApi->create([
 $massPayment; # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ?>
 ```
-
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
@@ -344,7 +341,6 @@ request_body = {
 mass_payment = app_token.post('mass-payments', request_body)
 mass_payment.headers['location'] # => 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
-
 ```javascript
 var requestBody = {
   _links: {
@@ -513,7 +509,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "pending"
 }
 ```
-
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
@@ -524,13 +519,11 @@ request_body = {
 mass_payment = account_token.post "#{mass_payment_url}", request_body
 mass_payment.status # => "pending"
 ```
-
 ```php
 /**
  *  No example for this language yet. Coming soon.
  **/
 ```
-
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
@@ -541,7 +534,6 @@ request_body = {
 mass_payments = account_token.post('mass-payments', request_body)
 mass_payments.body['status'] # => 'pending'
 ```
-
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 var requestBody = {
@@ -556,6 +548,18 @@ accountToken
 ## List items for a mass payment
 
 A mass payment contains a list of payments called `items`. An `item` is distinct from the transfer which it creates. An item can contain a status of either `failed`, `pending`, or `success` depending on whether the payment was created by the Dwolla service or not. A mass payment item status of `success` is an indication that a transfer was successfully created. A mass payment's items will be returned in the `_embedded` object as a list of `items`.
+
+### Mass payment item failures
+
+Individual mass payment items can have a status of `failed`. If an item has a status of `failed`, an `_embedded` object will be returned within the item which contains a list of `errors`. Each error object includes a top-level error `code`, a `message` with a detailed description of the error, and a `path` which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.
+
+| Code                    | Message               | Description |
+|-------------------------|-----------------------|-------------|
+| InsufficientFunds     | "Insufficient funds." | The `source` funding source has insufficient funds, and as a result failed to create a transfer. |
+| Invalid     | "Receiver not found."   | The `destination` was not a valid Customer or Funding Source. |
+| Invalid    | "Receiver cannot be the owner of the source funding source." | The `destination` of the transfer cannot be the same as the `source`.  |
+| RequiresFundingSource | "Receiver requires funding source."  | The `destination` of the mass payment item does not have an active funding source attached.  |
+| Restricted | "Receiver restricted." | The `destination` customer is either `deactivated` or `suspended` and is not eligible to receive funds. |
 
 ### HTTP Request
 `GET https://api.dwolla.com/mass-payments/{id}/items`
@@ -626,27 +630,40 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       },
       {
         "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
-          },
-          "mass-payment": {
-            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
-          },
-          "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
-          },
-          "transfer": {
-            "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
-          }
+            "self": {
+                "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "mass-payment-item"
+            },
+            "mass-payment": {
+                "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "mass-payment"
+            },
+            "destination": {
+                "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "customer"
+            }
+        },
+        "_embedded": {
+            "errors": [
+                {
+                    "code": "RequiresFundingSource",
+                    "message": "Receiver requires funding source.",
+                    "path": "/items/destination/href",
+                    "_links": {}
+                }
+            ]
         },
         "id": "30845bc9-41ed-e511-80df-0aa34a9b2388",
-        "status": "success",
+        "status": "failed",
         "amount": {
-          "value": "2.00",
-          "currency": "USD"
+            "value": "0.02",
+            "currency": "USD"
         },
         "metadata": {
-          "item2": "item2"
+            "item2": "item2"
         }
       }
     ]
@@ -654,7 +671,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "total": 2
 }
 ```
-
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
@@ -662,7 +678,6 @@ mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4
 mass_payment_items = account_token.get "#{mass_payment_url}/items"
 mass_payment_items.total # => 2
 ```
-
 ```php
 <?php
 $massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
@@ -673,7 +688,6 @@ $massPaymentItems = $massPaymentItemsApi->getMassPaymentItems($massPaymentUrl);
 $massPaymentItems->total; # => "2"
 ?>
 ```
-
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
@@ -681,7 +695,6 @@ mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4
 mass_payment_items = app_token.get('%s/items' % mass_payment_url)
 mass_payment_items.body['total'] # => "2"
 ```
-
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
@@ -689,18 +702,6 @@ appToken
   .get(`${massPaymentUrl}/items`)
   .then(res => res.body.total); // => 2
 ```
-
-### Mass Payment item failure codes
-
-Individual mass payment items can have a status of `failed`. You can find reference the failure code and message to get a better understanding of why the particular item failed.
-
-| Code                    | Message               | Description |
-|-------------------------|-----------------------|-------------|
-| `InsufficientFunds`     | "Insufficient funds." | The `source` funding source has insufficient funds and cannot initiate a mass payment|
-| `Invalid`    | "Receiver not found"   | The `destination` was not a valid Customer or Funding Source |
-| `Invalid`    | "Receiver cannot be the owner of the source funding source." | The `source` of the transfer cannot be the `destination`  |
-| `RequiresFundingSource` | "Receiver requires funding source."  | The `destination` of the mass payment item holds no  |
-| `Restricted` | "Receiver restricted." | The `destination` customer is either `deactivated` or `suspended` and can not receive funds |
 
 ## Retrieve a mass payment item
 
