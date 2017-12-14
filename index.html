@@ -6902,7 +6902,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
 <p>This section covers how to initiate a mass payment from a Partner Dwolla <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> and a <code class="prettyprint">correlationId</code> on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a <code class="prettyprint">correlationId</code> is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.</p>
-<h4 id='deferred-mass-payment'>Deferred mass payment</h4>
+<h3 id='deferred-mass-payment'>Deferred mass payment</h3>
 <p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/mass-payments</code></p>
@@ -6949,7 +6949,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h3 id='source-and-destination-values'>Source and destination values</h3>
 <table><thead>
 <tr>
-<th>Source Type</th>
+<th><strong>Source</strong> Type</th>
 <th>URI</th>
 <th>Description</th>
 </tr>
@@ -6963,7 +6963,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <table><thead>
 <tr>
-<th>Destination Type</th>
+<th><strong>Destination</strong> Type</th>
 <th>URI</th>
 <th>Description</th>
 </tr>
@@ -7013,7 +7013,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
-<h4 id='item-object-example'>Item object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+<h4 id='item-object-example'>Item object example</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/funding-sources/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
@@ -7586,6 +7586,42 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
 <p>A mass payment contains a list of payments called <code class="prettyprint">items</code>. An <code class="prettyprint">item</code> is distinct from the transfer which it creates. An item can contain a status of either <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, or <code class="prettyprint">success</code> depending on whether the payment was created by the Dwolla service or not. A mass payment item status of <code class="prettyprint">success</code> is an indication that a transfer was successfully created. A mass payment&rsquo;s items will be returned in the <code class="prettyprint">_embedded</code> object as a list of <code class="prettyprint">items</code>.</p>
+<h3 id='mass-payment-item-failures'>Mass payment item failures</h3>
+<p>Individual mass payment items can have a status of <code class="prettyprint">failed</code>. If an item has a status of <code class="prettyprint">failed</code>, an <code class="prettyprint">_embedded</code> object will be returned within the item which contains a list of <code class="prettyprint">errors</code>. Each error object includes a top-level error <code class="prettyprint">code</code>, a <code class="prettyprint">message</code> with a detailed description of the error, and a <code class="prettyprint">path</code> which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.</p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>InsufficientFunds</td>
+<td>&ldquo;Insufficient funds.&rdquo;</td>
+<td>The <code class="prettyprint">source</code> funding source has insufficient funds, and as a result failed to create a transfer.</td>
+</tr>
+<tr>
+<td>Invalid</td>
+<td>&ldquo;Receiver not found.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> was not a valid Customer or Funding Source.</td>
+</tr>
+<tr>
+<td>Invalid</td>
+<td>&ldquo;Receiver cannot be the owner of the source funding source.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> of the transfer cannot be the same as the <code class="prettyprint">source</code>.</td>
+</tr>
+<tr>
+<td>RequiresFundingSource</td>
+<td>&ldquo;Receiver requires funding source.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> of the mass payment item does not have an active funding source attached.</td>
+</tr>
+<tr>
+<td>Restricted</td>
+<td>&ldquo;Receiver restricted.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> customer is either <code class="prettyprint">deactivated</code> or <code class="prettyprint">suspended</code> and is not eligible to receive funds.</td>
+</tr>
+</tbody></table>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/mass-payments/{id}/items</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -7696,27 +7732,40 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       },
       {
         "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388"
-          },
-          "mass-payment": {
-            "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
-          },
-          "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
-          },
-          "transfer": {
-            "href": "https://api-sandbox.dwolla.com/transfers/fb3999db-41ed-e511-80df-0aa34a9b2388"
-          }
+            "self": {
+                "href": "https://api-sandbox.dwolla.com/mass-payment-items/30845bc9-41ed-e511-80df-0aa34a9b2388",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "mass-payment-item"
+            },
+            "mass-payment": {
+                "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "mass-payment"
+            },
+            "destination": {
+                "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "customer"
+            }
+        },
+        "_embedded": {
+            "errors": [
+                {
+                    "code": "RequiresFundingSource",
+                    "message": "Receiver requires funding source.",
+                    "path": "/items/destination/href",
+                    "_links": {}
+                }
+            ]
         },
         "id": "30845bc9-41ed-e511-80df-0aa34a9b2388",
-        "status": "success",
+        "status": "failed",
         "amount": {
-          "value": "2.00",
-          "currency": "USD"
+            "value": "0.02",
+            "currency": "USD"
         },
         "metadata": {
-          "item2": "item2"
+            "item2": "item2"
         }
       }
     ]
