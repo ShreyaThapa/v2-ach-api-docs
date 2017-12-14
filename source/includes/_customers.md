@@ -1018,6 +1018,7 @@ This section outlines how to retrieve your list of created Customers.
 | limit | no | integer | How many results to return. |
 | offset | no | integer | How many results to skip. |
 | search | no | string | Searches on `firstName`, `lastName`, and `email` fields. (`/customers?search=Doe`) |
+| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `receive-only`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
 
 ### Request and response
 
