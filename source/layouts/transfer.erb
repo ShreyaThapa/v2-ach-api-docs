@@ -82,23 +82,22 @@ under the License.
     <header>
         <div class="header__primary js-two-col-header-primary">
           <div class="page-wrap">
-            <div>
-              <a class="logo icon-logo-dwolla-white" href="https://www.dwolla.com/">Dwolla</a>
-              <img src="images/logo-dwolla-orange.png" alt="Dwolla" class="print-only" />
-              <div class="hamburger">
-                <a href="https://www.dwolla.com/contact?b=nav">Let's talk</a>
-                <a class="btn primary js-hamburger">Menu</a>
-              </div>
-            </div>
-            <nav class="js-hamburger-nav">
-              <a href="https://www.dwolla.com/about">About</a>
-              <a href="https://www.dwolla.com/products">Products</a>
-              <a href="https://developers.dwolla.com">Developers</a>
-              <a href="https://www.dwolla.com/login">Log in</a>
-              <a href="https://accounts.dwolla.com/interest">Sign up</a>
-              <a class="btn primary" href="https://www.dwolla.com/contact?b=nav">Let's talk</a>
-            </nav>
-          </div>
+           <div>
+             <a class="logo icon-logo-dwolla-white" href="https://www.dwolla.com/">Dwolla</a>
+             <img src="images/logo-dwolla-orange.png" alt="Dwolla" class="print-only" />
+             <div class="hamburger">
+               <a href="https://www.dwolla.com/contact?b=nav">Contact Sales</a>
+               <a class="btn primary js-hamburger">Menu</a>
+             </div>
+           </div>
+           <nav class="js-hamburger-nav">
+             <a href="https://www.dwolla.com/platform">Platform</a>
+             <a href="https://developers.dwolla.com">Developers</a>
+             <a href="https://www.dwolla.com/updates/">Blog</a>
+             <a href="https://www.dwolla.com/login">Login</a>
+             <a class="btn primary" href="https://www.dwolla.com/contact?b=nav">Contact Sales</a>
+           </nav>
+         </div>
       </div>
       <nav class="header__secondary js-two-col-nav-toggle">
         <div class="js-two-col-header-secondary">
@@ -170,56 +169,42 @@ under the License.
           <% current_page.data.includes && current_page.data.includes.each do |include| %>
             <%= partial "includes/#{include}" %>
           <% end %>
-          <footer>
-            <div class="page-wrap">
-              <nav>
-                  <h6>Products</h6>
-                  <a href="https://www.dwolla.com/products/access-api">Access API</a>
-                  <a href="https://www.dwolla.com/products/transfer">Transfer</a>
-              </nav>
-              <nav>
-                 <h6>Features</h6>
-                 <a href="https://www.dwolla.com/bank-transfers">Bank Transfers</a>
-                 <a href="https://www.dwolla.com/mass-payments-api">Mass Payments</a>
-                 <a href="https://www.dwolla.com/same-day-ach">Same Day ACH</a>
-                 <a href="https://www.dwolla.com/white-label">White Label</a>
-                 <a href="https://www.dwolla.com/ach-transfer-dashboard">Dashboard & Admin</a>
-                 <a href="https://www.dwolla.com/dwollajs-bank-verification">Instant Bank Account Verification</a>
-                 <a href="https://www.dwolla.com/integrations">Integrations</a>
-              </nav>
-              <nav>
-                <h6>Account</h6>
-                <a href="https://accounts.dwolla.com/interest">Sign up</a>
-                <a href="https://www.dwolla.com/login">Log in</a>
-                <a href="http://help.dwolla.com/">Support</a>
-                <a href="https://www.dwolla.com/security">Security</a>
-                <a href="https://www.dwolla.com/legal/privacy/">Privacy</a>
-                <a href="https://www.dwolla.com/legal/tos/">Legal</a>
-              </nav>
-              <nav>
-                 <h6>Case Studies</h6>
-                 <a href="https://www.dwolla.com/updates/case-study-delivery-platform-leverages-dwolla-ach-api-for-payouts/">On-Demand Payouts</a>
-                 <a href="https://www.dwolla.com/updates/case-study-instagram-ad-platform-leverages-dwolla-api-for-payouts/">Ad Platform</a>
-                 <a href="https://www.dwolla.com/updates/dwolla-case-study-featuring-goat-for-ach-payouts/">Marketplace Payouts</a>
-                 <a href="https://www.dwolla.com/updates/kill-bill-adds-dwolla-to-offer-subscription-billing-with-ach-payments/">Subscription Billing</a>
-                 <a href="https://www.dwolla.com/updates/case-study-how-a-leading-rental-management-platform-used-an-ach-api/">Rental Collection</a>
-                 <a href="https://www.dwolla.com/updates/case-study-how-sweep-uses-dwolla-ach-api-for-bank-transfers/">Savings Tool</a>
-                 <a href="https://www.dwolla.com/updates/solar-investing-platform-uses-dwolla-api-to-power-bank-transfers/">Investment Platform</a>
-                 <a href="https://www.dwolla.com/updates/case-study-clear-capital-streamlines-disbursements-with-dwolla/">B2B Disbursements</a>
-               </nav>
+            <footer>
+             <div class="page-wrap">
                <nav>
-                <h6>Learn More</h6>
-                <a href="https://www.dwolla.com/about">About us</a>
-                <a href="https://www.dwolla.com/contact">Let's talk</a>
-                <a href="https://developers.dwolla.com">Developer Docs</a>
-                <a href="https://discuss.dwolla.com/c/api-support">Community</a>
-                <a href="https://www.dwolla.com/updates">Updates</a>
-                <a href="https://www.dwolla.com/press">Press</a>
-                <a href="https://www.dwolla.com/careers">Careers</a>
-                <a href="https://www.dwolla.com/industry-initiatives">Industry Initiatives</a>
-              </nav>
-            </div>
-          </footer>
+               <h6>Product</h6>
+                 <a href="https://www.dwolla.com/platform">Platform</a>
+                 <a href="https://www.dwolla.com/bank-transfers">Bank Transfers</a>
+                 <a href="https://www.dwolla.com/same-day-ach">Expedited Payments</a>
+                 <a href="https://www.dwolla.com/dwollajs-bank-verification">Instant Bank Account Verification</a>
+                 <a href="https://www.dwolla.com/mass-payments-api">Mass Payments</a>
+                 <a href="https://www.dwolla.com/integrations?b=footer">Integrations</a>
+                 <a href="https://www.dwolla.com/white-label">White Label</a>
+                 <a href="https://www.dwolla.com/ach-transfer-dashboard">Dashboard</a>
+               </nav>
+             <nav>
+               <h6>Legal</h6>
+                 <a href="https://www.dwolla.com/legal/tos/">Terms of Service</a>
+                 <a href="https://www.dwolla.com/legal/privacy/">Privacy Policy</a>
+                 <a href="https://www.dwolla.com/security">Security</a>
+                 <a href="https://www.dwolla.com/legal/about-our-financial-institution-partner/">Financial Institution Partners</a>
+             </nav>
+             <nav>
+               <h6>Learn More</h6>
+                 <a href="https://www.dwolla.com/case-studies?b=accesscta1">Case Studies</a>
+                 <a href="https://www.dwolla.com/updates/">Blog</a>
+                 <a href="https://www.dwolla.com/industry-initiatives">Industry Initiatives</a>
+                 <a href="https://developers.dwolla.com/?b=footer">Developer Resources</a>
+             </nav>
+             <nav>
+               <h6>Company</h6>
+                 <a href="https://www.dwolla.com/about?b=footer">About</a>
+                 <a href="https://www.dwolla.com/careers">Careers</a>
+                 <a href="https://www.dwolla.com/press">Press</a>
+                 <a href="https://www.dwolla.com/contact?b=footer">Contact Us</a>
+             </nav>
+           </div>
+         </footer>
           <section class="disclaimer">
             <div class="page-wrap">
               <h5>Financial institutions play an important role in the Dwolla network.</h5>
