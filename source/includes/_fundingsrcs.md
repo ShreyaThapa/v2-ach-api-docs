@@ -12,12 +12,12 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 | bankAccountType | An optional attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
 | name | Arbitrary nickname for the funding source. |
 | created | ISO-8601 timestamp for when the funding source was created. |
-| balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for an Access API Customer account balance.   |
+| balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for a Dwolla API Customer account balance.   |
 | removed | Determines if the funding source has been [removed](#remove-a-funding-source). A boolean `true` if the funding source was removed or `false` if the funding source is not removed. |
 | channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach` or `wire`. |
 | bankName | The financial institution name. |
 | iavAccountHolders | An optional object that includes optional `selected` and `other` parameters. `selected`, a string with the account holder name(s) on file with the financial institution for the IAV selected account. `other`, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account. |
-| fingerprint | Fingerprint is an optional unique identifying string value returned for funding sources of type `bank`. This attribute can be used to check across all Access API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the `fingerprint`. |
+| fingerprint | Fingerprint is an optional unique identifying string value returned for funding sources of type `bank`. This attribute can be used to check across all Dwolla API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the `fingerprint`. |
 
 ```noselect
 {

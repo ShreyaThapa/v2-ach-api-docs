@@ -52,7 +52,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 ## Initiate a transfer
 
-This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Access API [Customer](#customers) resource.
+This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
 
 ### HTTP request
 `POST https://api.dwolla.com/transfers`
@@ -64,7 +64,7 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Access API](https://www.dwolla.com/access-api) partners. Next-day ACH functionality must be enabled. |
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla API](https://www.dwolla.com/platform) partners. Next-day ACH functionality must be enabled. |
 | correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination types
@@ -117,7 +117,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 | 403 | OAuth token does not have Send scope. |
 
 ### Request and response (using Same Day ACH)
-The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to an Access API Customer's bank account, part of Dwolla's Access API.
+The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a Dwolla API Customer's bank account, part of Dwolla's API.
 
 ```raw
 POST https://api-sandbox.dwolla.com/transfers

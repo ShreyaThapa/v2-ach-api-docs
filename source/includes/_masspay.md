@@ -86,7 +86,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | **Destination** Type | URI                                           | Description                                                                                   |
 |------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------------|
 | Funding source   | `https://api.dwolla.com/funding-sources/{id}` | Destination of a Verified Customer's own `bank` or `balance` funding source, an Unverified Customer's `bank` funding source, or a Receive-only Customer's `bank` funding source. |
-| Customer  | `https://api.dwolla.com/customers/{id}`       | Destination Access API [Customer](#customers) of a transfer.     |
+| Customer  | `https://api.dwolla.com/customers/{id}`       | Destination Dwolla API [Customer](#customers) of a transfer.     |
 | Account          | `https://api.dwolla.com/accounts/{id}`        | Destination Transfer [Account](#accounts) of a transfer.  |
 | Email            | `mailto:johndoe@email.com`                    | Email address of existing Transfer Account or recipient (recipient will create a Transfer Account to claim funds)         |
 

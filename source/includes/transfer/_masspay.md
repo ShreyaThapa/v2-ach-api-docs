@@ -549,7 +549,7 @@ mass_payment_items.total # => 2
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Dwolla API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${massPaymentUrl}/items`)
   .then(res => res.body.total); // => 2
@@ -635,7 +635,7 @@ mass_payment_item.body['status'] # => 'success'
 ```javascript
 var massPaymentItemUrl = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
+// For Dwolla API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(massPaymentItemUrl)
   .then(res => res.body.status); // => 'success'

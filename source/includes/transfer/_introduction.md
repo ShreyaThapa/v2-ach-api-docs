@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla [Transfer](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage [OAuth](https://developers.dwolla.com/guides/auth/authorization-code-flow.html) to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Access API](https://www.dwolla.com/products/access-api).
+Welcome to the Dwolla [Transfer](https://www.dwolla.com/products/transfer) documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage [OAuth](https://developers.dwolla.com/guides/auth/authorization-code-flow.html) to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Dwolla API](https://www.dwolla.com/platform).
 
 ## Making requests
 
