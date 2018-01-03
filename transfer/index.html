@@ -105,8 +105,8 @@
               <span>Product</span>
                 <div class="custom-select custom-select--blue">
                 <select onChange="window.location.href=this.value" name="select">
-                      <option value="/">Access API</option>
-                      <option value="/transfer/" selected>Transfer</option>
+                      <option value="/">Dwolla API</option>
+                      <option value="/transfer/" selected>Transfer API (Legacy)</option>
                 </select>
                 <div class="arrow"></div>
               </div>
@@ -125,7 +125,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/transfer">Transfer</a> documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/products/access-api">Access API</a>.</p>
+<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/transfer">Transfer</a> documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/platform">Dwolla API</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
@@ -1123,8 +1123,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>With a transfer of money, at least one party must complete the identity verification process through creation of a Transfer CIP Verified account, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Dwolla user <code class="prettyprint">Account</code> is sending funds to or receiving funds from your <code class="prettyprint">Account</code>, the <code class="prettyprint">Account</code> can remain unverified because your account is already verified. However, if you need to transfer funds between your users, at least one of them will need to have a Transfer CIP Verified Dwolla account.</p>
 
 <p>For more information on Transfer accounts, both Transfer CIP Verified and Dwolla Direct, reference the <a href="https://developers.dwolla.com/resources/account-types/transfer-accounts.html">account types</a> resource article.</p>
-<h3 id='migrating-dwolla-user-accounts-to-access-api-customers'>Migrating Dwolla user Accounts to Access API Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="/transfers/#accounts">Accounts</a> managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<h3 id='migrating-dwolla-user-accounts-to-dwolla-api-customers'>Migrating Dwolla user Accounts to Dwolla API Customers</h3>
+<p>Dwolla offers a seamless process for migrating existing user <a href="/transfers/#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='account-links'>Account links</h3>
 <table><thead>
 <tr>
@@ -1150,7 +1150,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customers</td>
-<td>(optional) If this link exists, this account can create and manage Access API Customers.</td>
+<td>(optional) If this link exists, this account can create and manage Dwolla API Customers.</td>
 </tr>
 <tr>
 <td>send</td>
@@ -4392,7 +4392,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
-<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Dwolla API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">massPaymentUrl</span><span class="p">}</span><span class="sr">/items`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 2</span>
@@ -4522,7 +4522,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">massPaymentItemUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span><span class="p">;</span>
 
-<span class="c1">// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
+<span class="c1">// For Dwolla API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)</span>
 <span class="nx">accountToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">massPaymentItemUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'success'</span>
@@ -4986,7 +4986,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are an Access API partner, you will use these events to notify your customers via email as described in the Access API terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are a Dwolla API partner, you will use these events to notify your customers via email as described in the Dwolla API terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>

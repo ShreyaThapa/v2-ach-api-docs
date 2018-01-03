@@ -126,16 +126,6 @@
           <nav class="side-nav js-side-nav">
           </nav>
           <nav class="side-nav tocify-wrapper active js-side-nav">
-              <section class="side-nav__product-select">
-              <span>Product</span>
-                <div class="custom-select custom-select--blue">
-                <select onChange="window.location.href=this.value" name="select">
-                      <option value="/" selected>Access API</option>
-                      <option value="/transfer/">Transfer</option>
-                </select>
-                <div class="arrow"></div>
-              </div>
-            </section>
               <section id="toc">
               </section>
               <section class="side-nav__options">
@@ -150,7 +140,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/access-api">Access API</a> documentation. Connect your software to the banking infrastructure. The Access API is <a href="https://www.dwolla.com/white-label">white label</a> by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy <a href="https://docs.dwolla.com/">API v1</a> (no longer supported). For more information on transitioning v1 to the Access API, see our <a href="https://developers.dwolla.com/guides/migrate-to-v2/">migration guide</a>.</p>
+<p>Welcome to the <a href="https://www.dwolla.com/platform">Dwolla API</a> documentation. Connect your software to the banking infrastructure. The Dwolla API is <a href="https://www.dwolla.com/white-label">white label</a> by design, however some co-branded experiences and capabilities have been and will continue to be migrated from the legacy <a href="https://docs.dwolla.com/">API v1</a> (no longer supported). For more information on transitioning v1 to the Dwolla API, see our <a href="https://developers.dwolla.com/guides/migrate-to-v2/">migration guide</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
@@ -375,7 +365,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <hr>
 
             <h1 id='sdk-support'>SDK Support</h1>
-<p>The Dwolla Access API has officially maintained software packages to make it easier for developers to get started with making requests. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.</p>
+<p>The Dwolla API has officially maintained software packages to make it easier for developers to get started with making requests. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.</p>
 
 <p>Officially maintained SDKs are available for Ruby, Node.js, Python, and C#.</p>
 
@@ -506,13 +496,13 @@ mvn install package
 <hr>
 
             <h1 id='authorization'>Authorization</h1>
-<p>Dwolla utilizes the <a href="https://oauth.net/2/">OAuth 2 protocol</a> to facilitate authorization. OAuth is an authorization framework that enables a third-party application to obtain access to protected resources (Transfers, Funding Sources, Customers etc.) in the Dwolla API. Access to the Dwolla API can be granted to an application either on behalf of a user or on behalf of the application itself. This section covers application auth which is meant for server-to-server applications using the Access API.  </p>
+<p>Dwolla utilizes the <a href="https://oauth.net/2/">OAuth 2 protocol</a> to facilitate authorization. OAuth is an authorization framework that enables a third-party application to obtain access to protected resources (Transfers, Funding Sources, Customers etc.) in the Dwolla API. Access to the Dwolla API can be granted to an application either on behalf of a user or on behalf of the application itself. This section covers application auth which is meant for server-to-server applications using the Dwolla API.</p>
 <h4 id='creating-an-application'>Creating an application</h4>
 <p>Before you can get started with making OAuth requests, you’ll need to first register an application with Dwolla by logging in and navigating to the applications page. Once an application is registered you will obtain your <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> (aka App Key and Secret), which will be used to identify your application when calling the Dwolla API. The Sandbox environment provides you with a created application once you have signed up for an account. Learn more in our <a href="https://developers.dwolla.com/guides/sandbox-setup/">getting started guide</a>. <strong>Remember:</strong> Your client_secret should be kept a secret! Be sure to store your client credentials securely.</p>
 <h4 id='token-lifetime'>Token lifetime</h4>
 <p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour. To refresh authorization on an application access token, your application will simply exchange its client credentials for a new app access token which will invalidate the previous token.</p>
 <h2 id='application-authorization'>Application authorization</h2>
-<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is used when an application needs to obtain permission to act on its own behalf. An application will exchange it&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token can then be used to make calls to the Dwolla API on behalf of the application, for example, create a webhook subscription, retrieve events, and make calls to Access API Customer related endpoints. The primary reason for obtaining an application access token is for managing webhooks and events. However, Dwolla has modified this grant type by allowing applications to access Access API <a href="https://docsv2.dwolla.com/#customers">Customer</a> related endpoints using the application access token.</p>
+<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is used when an application needs to obtain permission to act on its own behalf. An application will exchange it&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token can then be used to make calls to the Dwolla API on behalf of the application, for example, create a webhook subscription, retrieve events, and make calls to Dwolla API Customer related endpoints. The primary reason for obtaining an application access token is for managing webhooks and events. However, Dwolla has modified this grant type by allowing applications to access Dwolla API <a href="https://docsv2.dwolla.com/#customers">Customer</a> related endpoints using the application access token.</p>
 <h4 id='http-request'>HTTP request</h4>
 <p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -716,9 +706,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='accounts'>Accounts</h1>
-<p>An <code class="prettyprint">Account</code> represents an Access API partner Dwolla account that was established on dwolla.com.</p>
-<h3 id='migrating-transfer-user-accounts-to-access-api-customers'>Migrating Transfer user Accounts to Access API Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<p>An <code class="prettyprint">Account</code> represents a Dwolla API partner Dwolla account that was established on dwolla.com.</p>
+<h3 id='migrating-transfer-user-accounts-to-dwolla-api-customers'>Migrating Transfer user Accounts to Dwolla API Customers</h3>
+<p>Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='account-links'>Account links</h3>
 <table><thead>
 <tr>
@@ -744,7 +734,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customers</td>
-<td>(optional) If this link exists, this account is authorized to create and manage Access API Customers.</td>
+<td>(optional) If this link exists, this account is authorized to create and manage Dwolla API Customers.</td>
 </tr>
 <tr>
 <td>send</td>
@@ -945,7 +935,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/access-api">Access API</a> partners.</td>
+<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla API</a> partners.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -1613,15 +1603,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='customers'>Customers</h1>
 <p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/access-api">the Access API</a>, a premium product that only approved partners may access in production. To learn more about entering into an Access API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/platform">the Dwolla API</a>, a premium product that only approved partners may access in production. To learn more about entering into a Dwolla API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 </li></ol><h3 id='verified-and-unverified-customers'>Verified and unverified Customers</h3>
 <p>With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.</p>
 
-<p>For more information on Access API account types, reference the <a href="https://developers.dwolla.com/resources/account-types/access-api-accounts.html">account types</a> resource article.</p>
+<p>For more information on Dwolla API account types, reference the <a href="https://developers.dwolla.com/resources/account-types/access-api-accounts.html">account types</a> resource article.</p>
 <h3 id='receive-only'>Receive-only</h3>
 <p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla <code class="prettyprint">Account</code> that created it.</p>
-<h3 id='migrating-dwolla-user-accounts-to-access-api-customers'>Migrating Dwolla user Accounts to Access API Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Access API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<h3 id='migrating-dwolla-user-accounts-to-dwolla-api-customers'>Migrating Dwolla user Accounts to Dwolla API Customers</h3>
+<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='customer-links'>Customer links</h3>
 <table><thead>
 <tr>
@@ -3458,7 +3448,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='create-an-on-demand-transfer-authorization'>Create an on-demand transfer authorization</h2>
 <p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#new-funding-source-for-a-customer">new Customer funding source</a>.</p>
 
-<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Access API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
+<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/on-demand-authorizations</code></p>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -3546,7 +3536,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='create-a-funding-source-for-a-customer'>Create a funding source for a customer</h2>
 <p>There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer&rsquo;s bank account information and pass it to Dwolla via the <a href="#new-funding-source-for-a-customer">new Customer funding source</a> endpoint, or you can send the Customer through the the <a href="#instant-account-verification-iav">Instant Account Verification</a> (IAV) flow which will add and verify a bank account within seconds.</p>
 
-<p>Before a Dwolla account or Access API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
+<p>Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
 <h3 id='new-funding-source-for-a-customer'>New funding source for a customer</h3>
 <p>Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -3594,7 +3584,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/access-api">Access API</a> partners.</td>
+<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla API</a> partners.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -4876,7 +4866,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>balance</td>
-<td>An optional object that includes <code class="prettyprint">value</code> and <code class="prettyprint">currency</code> parameters. <code class="prettyprint">value</code> is a string value for the amount available and <code class="prettyprint">currency</code> is a string value currency code. Only returned for an Access API Customer account balance.</td>
+<td>An optional object that includes <code class="prettyprint">value</code> and <code class="prettyprint">currency</code> parameters. <code class="prettyprint">value</code> is a string value for the amount available and <code class="prettyprint">currency</code> is a string value currency code. Only returned for a Dwolla API Customer account balance.</td>
 </tr>
 <tr>
 <td>removed</td>
@@ -4896,7 +4886,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>fingerprint</td>
-<td>Fingerprint is an optional unique identifying string value returned for funding sources of type <code class="prettyprint">bank</code>. This attribute can be used to check across all Access API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the <code class="prettyprint">fingerprint</code>.</td>
+<td>Fingerprint is an optional unique identifying string value returned for funding sources of type <code class="prettyprint">bank</code>. This attribute can be used to check across all Dwolla API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the <code class="prettyprint">fingerprint</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -5995,7 +5985,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h2 id='initiate-a-transfer'>Initiate a transfer</h2>
-<p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Access API <a href="#customers">Customer</a> resource.</p>
+<p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Dwolla API <a href="#customers">Customer</a> resource.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/transfers</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -6035,7 +6025,7 @@ HTTP 200 OK
 <td>clearing</td>
 <td>no</td>
 <td>object</td>
-<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/access-api">Access API</a> partners. Next-day ACH functionality must be enabled.</td>
+<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla API</a> partners. Next-day ACH functionality must be enabled.</td>
 </tr>
 <tr>
 <td>correlationId</td>
@@ -6137,7 +6127,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h3 id='request-and-response-using-same-day-ach'>Request and response (using Same Day ACH)</h3>
-<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to an Access API Customer&rsquo;s bank account, part of Dwolla&rsquo;s Access API.</p>
+<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a Dwolla API Customer&rsquo;s bank account, part of Dwolla&rsquo;s API.</p>
 <div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6981,7 +6971,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>Customer</td>
 <td><code class="prettyprint">https://api.dwolla.com/customers/{id}</code></td>
-<td>Destination Access API <a href="#customers">Customer</a> of a transfer.</td>
+<td>Destination Dwolla API <a href="#customers">Customer</a> of a transfer.</td>
 </tr>
 <tr>
 <td>Account</td>
@@ -9797,7 +9787,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           <section class="copyright">
             <div class="page-wrap">
               <div>
-                <span>© 2016 Dwolla, Inc.</span>
+                <span>© 2018 Dwolla, Inc.</span>
                 <a href="https://www.dwolla.com/legal/about-our-financial-institution-partner/">Dwolla, Inc. is an agent of its Financial Institution Partner(s)</a>
               </div>
             </div>
