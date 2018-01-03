@@ -1,9 +1,9 @@
 About Dwolla
 ========
 
-Dwolla is a software platform that makes it easy to move money between banks. When using Dwolla APIs your software platform can move money between any 2 bank accounts, or network members, with no transaction fees.
+Dwolla is a software platform that makes it easy to move money between banks. 
 
-Our software platform is compatible with all banks in the United States. The developer documents are designed to support our development partners who are building on top of Dwolla’s branded platform (v1) or our white labeled infrastructure (v2).
+Our software platform is compatible with all banks in the United States.
 
 The Dwolla API developer portal lives here: https://developers.dwolla.com/
 
@@ -14,14 +14,8 @@ About the v2 Developer Docs
 
 The v2 API docs are built on Slate. Our modifications are also available to the community.
 
-About the v2 API
-------------------------------
-
-The initial focus of API Version 2 centers around a premium product: white label, and provides different functionality from API Version 1. Over time, we are adding the same functionality currently available in V1 to V2.
-
 Official SDKs for Java, Node.JS, PHP, Ruby, and Python are being actively developed.
 
-Documentation for Dwolla's v2 API built on Slate
 ========
 
 Documentation is reflected here - https://docsv2.dwolla.com/
@@ -77,7 +71,7 @@ To run the test run
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Dwolla
+Copyright (c) 2018 Dwolla
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
