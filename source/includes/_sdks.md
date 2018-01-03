@@ -1,6 +1,6 @@
 # SDK Support
 
-The Dwolla Access API has officially maintained software packages to make it easier for developers to get started with making requests. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.
+The Dwolla API has officially maintained software packages to make it easier for developers to get started with making requests. This section is here to provide basic instructions on how to install these packages and get up and running with them. We recommend you use a POSIX-standardized shell on your development machine, and assume that you are already familiar and set-up with any tools required for your specific technical ecosystem.
 
 Officially maintained SDKs are available for Ruby, Node.js, Python, and C#.
 

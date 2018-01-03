@@ -8,8 +8,8 @@ With a transfer of money, at least one party must complete the identity verifica
 
 For more information on Transfer accounts, both Transfer CIP Verified and Dwolla Direct, reference the [account types](https://developers.dwolla.com/resources/account-types/transfer-accounts.html) resource article.
 
-### Migrating Dwolla user Accounts to Access API Customers
-Dwolla offers a seamless process for migrating existing user [Accounts](/transfers/#accounts) managed via OAuth on your platform to Access API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
+### Migrating Dwolla user Accounts to Dwolla API Customers
+Dwolla offers a seamless process for migrating existing user [Accounts](/transfers/#accounts) managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
 
 ### Account links
 | Link | Description|
@@ -18,7 +18,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](/transfe
 | receive | Follow the link to create a transfer to this Account.
 | funding-sources | GET this link to list the Accounts's funding sources.
 | transfers | GET this link to list the Account's transfers
-| customers | (optional) If this link exists, this account can create and manage Access API Customers.
+| customers | (optional) If this link exists, this account can create and manage Dwolla API Customers.
 | send | Follow the link to create a transfer to this Account.
 
 ## Retrieve account details

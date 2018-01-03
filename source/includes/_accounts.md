@@ -1,9 +1,9 @@
 # Accounts
 
-An `Account` represents an Access API partner Dwolla account that was established on dwolla.com.
+An `Account` represents a Dwolla API partner Dwolla account that was established on dwolla.com.
 
-### Migrating Transfer user Accounts to Access API Customers
-Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Access API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
+### Migrating Transfer user Accounts to Dwolla API Customers
+Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
 
 ### Account links
 | Link | Description|
@@ -12,7 +12,7 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 | receive | Follow the link to create a transfer to this Account.
 | funding-sources | GET this link to list the Accounts's funding sources.
 | transfers | GET this link to list the Account's transfers
-| customers | (optional) If this link exists, this account is authorized to create and manage Access API Customers.
+| customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers.
 | send | Follow the link to create a transfer to this Account.
 
 ```noselect
@@ -140,7 +140,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 | routingNumber | yes | string | The bank account's routing number. |
 | bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. |
-| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
+| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla API](https://www.dwolla.com/platform) partners. |
 
 ### HTTP status and error codes
 | HTTP Status | Message |

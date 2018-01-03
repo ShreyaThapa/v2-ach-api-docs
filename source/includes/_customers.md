@@ -3,20 +3,20 @@
 A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.
 
 <ol class="alerts">
-    <li class="alert icon-alert-info">This section outlines functionality for [the Access API](https://www.dwolla.com/access-api), a premium product that only approved partners may access in production. To learn more about entering into an Access API agreement, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
-</ol>
+    <li class="alert icon-alert-info">This section outlines functionality for [the Dwolla API](https://www.dwolla.com/platform), a premium product that only approved partners may access in production. To learn more about entering into a Dwolla API agreement, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
+</ol> 
 
 ### Verified and unverified Customers
 
 With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.
 
-For more information on Access API account types, reference the [account types](https://developers.dwolla.com/resources/account-types/access-api-accounts.html) resource article.
+For more information on Dwolla API account types, reference the [account types](https://developers.dwolla.com/resources/account-types/access-api-accounts.html) resource article.
 
 ### Receive-only
 Receive-only customers are restricted to a "payouts only" business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla `Account` that created it.
 
-### Migrating Dwolla user Accounts to Access API Customers
-Dwolla offers a seamless process for migrating existing user [Accounts](#accounts) managed via OAuth on your platform to Access API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Access API Customer upon completion of the migration. To learn more about upgrading to the Access API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
+### Migrating Dwolla user Accounts to Dwolla API Customers
+Dwolla offers a seamless process for migrating existing user [Accounts](#accounts) managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
 
 ### Customer links
 | Link | Description|
@@ -1160,7 +1160,7 @@ appToken
 
 This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#new-funding-source-for-a-customer).
 
-When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Access API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
+When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
 
 ### HTTP request
 `POST https://api.dwolla.com/on-demand-authorizations`
@@ -1214,7 +1214,7 @@ appToken
 ## Create a funding source for a customer
 There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#new-funding-source-for-a-customer) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
 
-Before a Dwolla account or Access API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
+Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
 ### New funding source for a customer
 Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.
@@ -1230,7 +1230,7 @@ Create a new Funding Source for a Customer.  Customers can have a maximum of 6 f
 | accountNumber | yes | string | The bank account number. |
 | bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
-| channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Access API](https://www.dwolla.com/access-api) partners. |
+| channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla API](https://www.dwolla.com/platform) partners. |
 
 ### HTTP status and error codes
 | HTTP Status | Code | Description |
