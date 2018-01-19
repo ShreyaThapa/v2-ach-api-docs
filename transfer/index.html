@@ -101,16 +101,6 @@
           <nav class="side-nav js-side-nav">
           </nav>
           <nav class="side-nav tocify-wrapper active js-side-nav">
-            <section class="side-nav__product-select">
-              <span>Product</span>
-                <div class="custom-select custom-select--blue">
-                <select onChange="window.location.href=this.value" name="select">
-                      <option value="/">Dwolla API</option>
-                      <option value="/transfer/" selected>Transfer API (Legacy)</option>
-                </select>
-                <div class="arrow"></div>
-              </div>
-            </section>
               <section id="toc">
               </section>
               <section class="side-nav__options">
@@ -125,7 +115,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla <a href="https://www.dwolla.com/products/transfer">Transfer</a> documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/platform">Dwolla API</a>.</p>
+<p>Welcome to the Dwolla Transfer documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/platform">Dwolla API</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
