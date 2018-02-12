@@ -4,7 +4,7 @@ A Customer represents an individual or business with whom you intend to transact
 
 <ol class="alerts">
     <li class="alert icon-alert-info">This section outlines functionality for [the Dwolla API](https://www.dwolla.com/platform), a premium product that only approved partners may access in production. To learn more about entering into a Dwolla API agreement, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
-</ol> 
+</ol>
 
 ### Verified and unverified Customers
 
@@ -692,12 +692,13 @@ This endpoint can be used to facilitate the following use cases: Update Customer
 ### Update a Customer's information
 A limited set of information can be updated on an existing created Customer. **Note:** A Customer's information cannot be updated when in a [status](#customer-statuses) of `document` or `suspended`.
 
-##### Request parameters -  unverified Customer
+##### Request parameters -  unverified Customer and receive-only Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | firstName | no | string | Customer's first name. |
 | lastName | no | string | Customer's last name. |
 | email | no | string | Customer's email address. |
+| businessName | no | string | Customer's registered business name. An empty string value will unset businessName. |
 
 ##### Request parameters -  verified Customer
 | Parameter | Required | Type | Description |
@@ -1018,7 +1019,7 @@ This section outlines how to retrieve your list of created Customers.
 | limit | no | integer | How many results to return. |
 | offset | no | integer | How many results to skip. |
 | search | no | string | Searches on `firstName`, `lastName`, and `email` fields. (`/customers?search=Doe`) |
-| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `receive-only`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
+| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
 
 ### Request and response
 
