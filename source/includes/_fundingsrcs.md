@@ -623,10 +623,10 @@ $fsApi->softDelete(['removed' => true ], $fundingSourceUrl);
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
-  "removed": true
+  "removed": True
 }
 
-funding_source = app_token.post('funding-sources', request_body)
+funding_source = app_token.post(funding_source_url, request_body)
 ```
 ```javascript
 var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
