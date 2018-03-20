@@ -2677,7 +2677,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}</code></p>
 <h3 id='update-a-customer39s-information'>Update a Customer&rsquo;s information</h3>
 <p>A limited set of information can be updated on an existing created Customer. <strong>Note:</strong> A Customer&rsquo;s information cannot be updated when in a <a href="#customer-statuses">status</a> of <code class="prettyprint">document</code> or <code class="prettyprint">suspended</code>.</p>
-<h5 id='request-parameters---unverified-customer'>Request parameters -  unverified Customer</h5>
+<h5 id='request-parameters---unverified-customer-and-receive-only-customer'>Request parameters -  unverified Customer and receive-only Customer</h5>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2703,6 +2703,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>string</td>
 <td>Customer&rsquo;s email address.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>no</td>
+<td>string</td>
+<td>Customer&rsquo;s registered business name. An empty string value will unset businessName.</td>
 </tr>
 </tbody></table>
 <h5 id='request-parameters---verified-customer'>Request parameters -  verified Customer</h5>
@@ -3234,7 +3240,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>status</td>
 <td>no</td>
 <td>string</td>
-<td>Filter by Customer status or multiple Customer statuses. Possible values: <code class="prettyprint">unverified</code>, <code class="prettyprint">receive-only</code>, <code class="prettyprint">retry</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, <code class="prettyprint">suspended</code>, or <code class="prettyprint">deactivated</code>. (e.g. <code class="prettyprint">/customers?status=retry&amp;status=document</code>)</td>
+<td>Filter by Customer status or multiple Customer statuses. Possible values: <code class="prettyprint">unverified</code>, <code class="prettyprint">retry</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, <code class="prettyprint">suspended</code>, or <code class="prettyprint">deactivated</code>. (e.g. <code class="prettyprint">/customers?status=retry&amp;status=document</code>)</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5874,10 +5880,10 @@ HTTP 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"removed"</span><span class="p">:</span> <span class="n">true</span>
+  <span class="s">"removed"</span><span class="p">:</span> <span class="bp">True</span>
 <span class="p">}</span>
 
-<span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'funding-sources'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -9744,37 +9750,31 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div>
             <footer>
              <div class="page-wrap">
-               <nav>
+            <nav>
                <h6>Product</h6>
                  <a href="https://www.dwolla.com/platform">Platform</a>
-                 <a href="https://www.dwolla.com/bank-transfers">Bank Transfers</a>
-                 <a href="https://www.dwolla.com/same-day-ach">Expedited Payments</a>
-                 <a href="https://www.dwolla.com/dwollajs-bank-verification">Instant Bank Account Verification</a>
-                 <a href="https://www.dwolla.com/mass-payments-api">Mass Payments</a>
-                 <a href="https://www.dwolla.com/integrations?b=footer">Integrations</a>
-                 <a href="https://www.dwolla.com/white-label">White Label</a>
-                 <a href="https://www.dwolla.com/ach-transfer-dashboard">Dashboard</a>
-               </nav>
+                 <a href="https://www.dwolla.com/pricing">Pricing</a>
+                 <a href="https://www.dwolla.com/integrations">Integrations</a>
+                 <a href="https://www.dwolla.com/security">Security</a>
+             </nav>
+             <nav>
+               <h6>Learn More</h6>
+                 <a href="https://www.dwolla.com/updates">Blog</a>
+                 <a href="https://www.dwolla.com/case-studies">Case Studies</a>
+                 <a href="https://developers.dwolla.com">Developers</a>
+                 <a href="https://www.dwolla.com/contact">Contact sales</a>
+             </nav>
+             <nav>
+               <h6>Company</h6>
+                 <a href="https://www.dwolla.com/about">About</a>
+                 <a href="https://www.dwolla.com/careers">Careers</a>
+                 <a href="https://www.dwolla.com/industry-initiatives">Industry Initiatives</a>
+                 <a href="https://www.dwolla.com/press">Press</a>
+             </nav>
              <nav>
                <h6>Legal</h6>
                  <a href="https://www.dwolla.com/legal/tos/">Terms of Service</a>
                  <a href="https://www.dwolla.com/legal/privacy/">Privacy Policy</a>
-                 <a href="https://www.dwolla.com/security">Security</a>
-                 <a href="https://www.dwolla.com/legal/about-our-financial-institution-partner/">Financial Institution Partners</a>
-             </nav>
-             <nav>
-               <h6>Learn More</h6>
-                 <a href="https://www.dwolla.com/case-studies?b=accesscta1">Case Studies</a>
-                 <a href="https://www.dwolla.com/updates/">Blog</a>
-                 <a href="https://www.dwolla.com/industry-initiatives">Industry Initiatives</a>
-                 <a href="https://developers.dwolla.com/?b=footer">Developer Resources</a>
-             </nav>
-             <nav>
-               <h6>Company</h6>
-                 <a href="https://www.dwolla.com/about?b=footer">About</a>
-                 <a href="https://www.dwolla.com/careers">Careers</a>
-                 <a href="https://www.dwolla.com/press">Press</a>
-                 <a href="https://www.dwolla.com/contact?b=footer">Contact Us</a>
              </nav>
            </div>
          </footer>
