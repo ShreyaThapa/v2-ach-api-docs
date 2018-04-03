@@ -34,9 +34,13 @@ Create a document for a Customer pending verification by uploading a photo of th
 
 ### HTTP request
 
+`POST https://api.dwolla.com/customers/{id}/documents`
+
+### Request Parameters
+
 |Form Field| Description|
 |----------|-------------|
-| documentType | One of `passport`, `license`, `idCard`, or `other` |
+| documentType | Acceptable values of: `passport`, `license`, `idCard`, or `other` |
 | file | File contents. |
 
 ### Request and response
