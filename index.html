@@ -146,7 +146,8 @@
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
 <p>Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
-<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla will discontinue support for TLS 1.0 and TLS 1.1 across the platform on June 30th, 2018. This impacts a small number of integrations, however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher. This change will occur in Dwolla’s sandbox environment on May 30th, 2018. We recommend that you test your Dwolla integrations to ensure a seamless transition.</p>
+</li></ol><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer myOAuthAccessToken123
@@ -8232,6 +8233,18 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_balance_inquiry_completed</td>
 <td>Upon checking a Customer&rsquo;s bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of <code class="prettyprint">processing</code>. This event will be triggered when the bank balance check has completed processing.</td>
+</tr>
+<tr>
+<td>customer_bill_payment_created</td>
+<td>Represents a <code class="prettyprint">pending</code> Regalii transaction status. This is only part of the bill payment integration. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
+</tr>
+<tr>
+<td>customer_bill_payment_completed</td>
+<td>Represents a <code class="prettyprint">confirmed</code> Regalii transaction status and a <code class="prettyprint">processed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
+</tr>
+<tr>
+<td>customer_bill_payment_failed</td>
+<td>Represents a <code class="prettyprint">rejected</code> Regalii transaction status and a <code class="prettyprint">failed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
