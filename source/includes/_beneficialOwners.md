@@ -47,19 +47,18 @@ This section details how to create a new beneficial owner. To create `Beneficial
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| address - address1 | yes | string | First line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-| address - address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-| address - address3 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-| address - city | yes | string | City of beneficial owner's permanent residence. |
-| address - stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of Beneficial Owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
-| address - country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
-| address - postalCode | yes | string | Postal code of beneficial owner's permanent residence. Should be a five digit postal code, e.g. `50314`. |
+| address1 | yes | string | First line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+|  address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+| address3 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+| city | yes | string | City of beneficial owner's permanent residence. |
+| stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of Beneficial Owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
+| country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
+| postalCode | yes | string | Postal code of beneficial owner's permanent residence. Should be a five digit postal code, e.g. `50314`. |
 
 ### Passport JSON object
 
-| passport - number | conditional | string | Required if Beneficial resides outside of United States and has no Social Security number. |
-| passport - country | conditional | string | Country of issued passport. |
-
+| number | conditional | string | Required if Beneficial resides outside of United States and has no Social Security number. |
+| country | conditional | string | Country of issued passport. |
 
 ### Request and response
 
