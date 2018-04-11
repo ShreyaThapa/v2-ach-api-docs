@@ -146,7 +146,7 @@
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
 <p>Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
-<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla will discontinue support for TLS 1.0 and TLS 1.1 across the platform on June 30th, 2018. This impacts a small number of integrations, however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher. This change will occur in Dwolla’s sandbox environment on May 30th, 2018. We recommend that you test your Dwolla integrations to ensure a seamless transition.</p>
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla will discontinue support for TLS 1.0 and TLS 1.1 across the platform on June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher. This change will occur in Dwolla’s sandbox environment on May 30, 2018. We recommend that you test your Dwolla integrations to ensure a seamless transition.</p>
 </li></ol><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -1920,40 +1920,166 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </thead><tbody>
 <tr>
-<td>businessClassification</td>
-<td>yes</td>
-<td>string</td>
-<td>The <a href="#list-business-classifications">industry classification</a> id that corresponds to Customer’s business</td>
-</tr>
-<tr>
-<td>businessType</td>
-<td>yes</td>
-<td>string</td>
-<td>Business structure. Possible values are <code class="prettyprint">corporation</code>, <code class="prettyprint">llc</code>, <code class="prettyprint">partnership</code>, and <code class="prettyprint">soleproprietorship</code></td>
-</tr>
-<tr>
 <td>businessName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer’s registered business name.</td>
-</tr>
-<tr>
-<td>ein</td>
-<td>yes</td>
-<td>string</td>
-<td>Employer Identification Number. <strong>Note:</strong> If the <code class="prettyprint">businessType</code> is a sole proprietorship then ein can be omitted from the request.</td>
+<td>Registered business name.</td>
 </tr>
 <tr>
 <td>doingBusinessAs</td>
 <td>no</td>
 <td>string</td>
-<td>Name that is different from the officially registered name of Customer’s business.</td>
+<td>Alternative business name.</td>
 </tr>
 <tr>
-<td>website</td>
+<td>businessType</td>
+<td>yes</td>
+<td>string</td>
+<td>Business structure. Possible values are <code class="prettyprint">corporation</code>, <code class="prettyprint">llc</code>, <code class="prettyprint">partnership</code>, and <code class="prettyprint">soleProprietorship</code>.</td>
+</tr>
+<tr>
+<td>businessClassification</td>
+<td>yes</td>
+<td>string</td>
+<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference our Dev Docs</a> to learn how to generate this Id.</td>
+</tr>
+<tr>
+<td>ein</td>
+<td>yes</td>
+<td>string</td>
+<td>Employer Identification Number. <strong>Note:</strong> If the <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code>, then ein can be omitted from the request.</td>
+</tr>
+<tr>
+<td>controller</td>
+<td>yes</td>
+<td>object</td>
+<td>A controller JSON object.</td>
+</tr>
+</tbody></table>
+<h5 id='controller-json-object'>Controller JSON object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>String</td>
+<td>The legal first name of the controller.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>String</td>
+<td>The legal last name of the controller.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>yes</td>
+<td>String</td>
+<td>Job title of the Customer’s Controller.  IE - Chief Financial Officer</td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>yes</td>
+<td>String</td>
+<td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>SSN</td>
+<td>conditional</td>
+<td>String</td>
+<td>Last four-digits of Controller’s social security number. Required for Controllers who reside in the United States</td>
+</tr>
+<tr>
+<td>address</td>
+<td>yes</td>
+<td>object</td>
+<td>An address JSON object. Full address of the controller&rsquo;s physical address.</td>
+</tr>
+<tr>
+<td>passport</td>
+<td>condititional</td>
+<td>object</td>
+<td>An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country.</td>
+</tr>
+</tbody></table>
+<h5 id='controller-address-json-object'>Controller address JSON object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>Street number, street name of Controller’s physical address.</td>
+</tr>
+<tr>
+<td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>www.domain.com</td>
+<td>Apartment, floor, suite, bldg. # of Controller’s physical address.</td>
+</tr>
+<tr>
+<td>address3</td>
+<td>no</td>
+<td>string</td>
+<td>Third line of the street address of the Controller&rsquo;s physical address.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of Controller’s physical address.</td>
+</tr>
+<tr>
+<td>stateProvinceRegion</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>no</td>
+<td>string</td>
+<td>Controller’s’ US five-digit ZIP or ZIP + 4 code.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>yes</td>
+<td>string</td>
+<td>Country of Controller’s physical address</td>
+</tr>
+</tbody></table>
+<h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>number</td>
+<td>conditional</td>
+<td>string</td>
+<td>Required if Controller resides outside of United States and has no Social Security number.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>conditional</td>
+<td>string</td>
+<td>Country of issued passport.</td>
 </tr>
 </tbody></table>
 <h3 id='request-parameters---receive-only'>Request parameters - receive-only</h3>
@@ -4472,6 +4598,1046 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'mass-payments'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "complete"</span>
 </code></pre></div></div>
 <hr>
+
+            <h1 id='beneficial-owners'>Beneficial owners</h1>
+<p>Verified Customers of type <code class="prettyprint">business</code> are required to verify the identity of beneficial owners in addition to the controller of the business if they satisfy the following requirements:</p>
+
+<p>[bullet points here]</p>
+
+<p>For more information on creating and verifying beneficial owners, reference our <a href="https://developers.dwolla.com/resources/business-customer-verification.html">Business Customer verification</a> resource article.</p>
+<h3 id='beneficial-owners-resource'>Beneficial owners resource</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>The beneficial owner unique identifier</td>
+</tr>
+<tr>
+<td>firstName</td>
+<td>The legal first name of the beneficial owner</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>The legal last name of the beneficial owner</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Possible values of <code class="prettyprint">verified</code>, <code class="prettyprint">document</code>, or <code class="prettyprint">incomplete</code></td>
+</tr>
+<tr>
+<td>created</td>
+<td>ISO-8601 timestamp.</td>
+</tr>
+</tbody></table>
+<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
+  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-11T21:42:16.000Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><h2 id='create-a-beneficial-owner'>Create a beneficial owner</h2>
+<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">Beneficial Owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. <code class="prettyprint">Beneficial Owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/beneficial-owners</code></p>
+<h3 id='request-parameters'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>String</td>
+<td>The legal first name of the Beneficial Owner</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal last name of the Beneficial Owner</td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>conditional</td>
+<td>String</td>
+<td>Full nine digits of Beneficial Owner’s social security number.</td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>Yes</td>
+<td>string</td>
+<td>Beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>Yes</td>
+<td>object</td>
+<td>Street number, street name of Beneficial Owner’s physical address</td>
+</tr>
+<tr>
+<td>passport</td>
+<td>conditional</td>
+<td>object</td>
+<td>An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country.</td>
+</tr>
+</tbody></table>
+<h3 id='address-json-object'>Address JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>First line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Second line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>address3</td>
+<td>no</td>
+<td>string</td>
+<td>Second line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of beneficial owner&rsquo;s permanent residence.</td>
+</tr>
+<tr>
+<td>stateProvinceRegion</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of Beneficial Owner’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>yes</td>
+<td>string</td>
+<td>Country of beneficial owner&rsquo;s permanent residence. Two digit ISO code, e.g. <code class="prettyprint">US</code>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Postal code of beneficial owner&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='passport-json-object'>Passport JSON object</h3>
+<p>| number | conditional | string | Required if Beneficial resides outside of United States and has no Social Security number. |
+| country | conditional | string | Country of issued passport. |</p>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8/beneficial-owners
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "ssn": "123-456-7890",
+  "dateOfBirth": "1960-11-30",
+  "address": {
+    "address1": "123 Main St.",
+    "city": "New York",
+    "stateProvinceRegion": "NY",
+    "country": "US",
+    "postalCode": "10005"
+  }
+}
+
+HTTP/1.1 201 Created
+Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553FCD733F
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
+  <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Doe'</span><span class="p">,</span>
+  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'123-456-7890'</span><span class="p">,</span>
+  <span class="ss">:dateOfBirth</span> <span class="o">=&gt;</span> <span class="s1">'1970-01-01'</span><span class="p">,</span>
+  <span class="ss">:address</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Some City'</span><span class="p">,</span>
+    <span class="ss">:stateProvinceRegion</span> <span class="o">=&gt;</span> <span class="s1">'NY'</span><span class="p">,</span>
+    <span class="ss">:country</span> <span class="o">=&gt;</span> <span class="s1">'US'</span><span class="p">,</span>
+    <span class="ss">:postalCode</span> <span class="o">=&gt;</span> <span class="s1">'11101'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-owners"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">beneficial_owner</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'John'</span><span class="p">,</span>
+  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Doe'</span><span class="p">,</span>
+  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1970-01-01'</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-456-7890'</span>
+  <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'address1'</span><span class="p">:</span> <span class="s">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="s">'city'</span><span class="p">:</span> <span class="s">'Some City'</span><span class="p">,</span>
+    <span class="s">'stateProvinceRegion'</span><span class="p">:</span> <span class="s">'NY'</span><span class="p">,</span>
+    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span>
+    <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'11101'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/beneficial-owners'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">beneficial_owner</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="s1">'John'</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Doe'</span><span class="p">,</span>
+  <span class="na">dateOfBirth</span><span class="p">:</span> <span class="s1">'1970-01-01'</span><span class="p">,</span>
+  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'123-456-7890'</span><span class="p">,</span>
+  <span class="na">address</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">address1</span><span class="p">:</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="na">city</span><span class="p">:</span> <span class="s1">'Some City'</span><span class="p">,</span>
+    <span class="na">stateProvinceRegion</span><span class="p">:</span> <span class="s1">'NY'</span><span class="p">,</span>
+    <span class="na">country</span><span class="p">:</span> <span class="s1">'US'</span>
+    <span class="na">postalCode</span><span class="p">:</span> <span class="s1">'11101'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/beneficial-owners`, requestBody</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+</code></pre></div></div><h2 id='retrieve-a-beneficial-owner'>Retrieve a beneficial owner</h2>
+<p>This section contains information on how to retrieve a beneficial owner which belongs to a Customer.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/beneficial-owners/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Beneficial owner unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/beneficial-owners/07D59716-EF22-4FE6-98E8-F3190233DFB8
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
+
+<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">beneficial_owner_url</span>
+<span class="n">beneficial_owner</span><span class="p">.</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfB8'</span>
+
+<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">)</span>
+<span class="n">beneficial_owner</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'firstName'</span><span class="p">]</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
+</code></pre></div></div><h2 id='list-beneficial-owners'>List beneficial owners</h2>
+<p>This section contains information on how to retrieve a list of beneficial owners that belong to a Customer.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers/{id}/beneficial-owners</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/beneficial-owners
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
+
+<span class="n">beneficial_owners</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-owners"</span>
+<span class="n">beneficial_owners</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">beneficial_owners</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
+
+<span class="n">beneficial_owners</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/beneficial-owners'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">beneficial_owners</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span><span class="p">;</span>
+
+<span class="nx">token</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/beneficial-owners`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">beneficial_owners</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+</code></pre></div></div><h2 id='remove-a-beneficial-owner'>Remove a beneficial owner</h2>
+<p>Remove a beneficial owner id. A removed beneficial owner is soft deleted and can still be accessed when retrieved.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>id of beneficial owner to delete.</td>
+</tr>
+<tr>
+<td>removed</td>
+<td>yes</td>
+<td>string</td>
+<td>Specify a value of <code class="prettyprint">true</code> to remove the associated beneficial owner.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>404</td>
+<td>Beneficial owner not found.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+{
+    "removed": true
+}
+
+...
+
+HTTP 200 OK
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:removed</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="p">}</span>
+
+<span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"removed"</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+
+<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">removed</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">);</span>
+</code></pre></div></div><h2 id='retrieve-beneficial-ownership-status'>Retrieve beneficial ownership status</h2>
+<p>This section contains information on how to retrieve a Customer&rsquo;s beneficial ownership status.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers/{id}/beneficial-ownership</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+
+<span class="n">beneficial_ownership</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-ownership"</span>
+<span class="n">beneficial_ownership</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "failed"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+
+<span class="n">beneficial_ownership</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/beneficial-ownership'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">beneficial_ownership</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'failed'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customer_url</span><span class="p">}</span><span class="sr">/beneficial-ownership`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "failed"</span>
+</code></pre></div></div><h2 id='certify-beneficial-ownership'>Certify beneficial ownership</h2>
+<p>This section contains information on how to certify beneficial ownership for a business Verified Customer.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/beneficial-ownership</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc/beneficial-ownership
+Accept: application/vnd.dwolla.v1.hal+json
+Content-Type: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "status": "certified"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:status</span> <span class="o">=&gt;</span> <span class="s2">"certified"</span>
+<span class="p">}</span>
+
+<span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-ownership"</span><span class="p">,</span> <span class="n">request_body</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">status</span><span class="p">:</span> <span class="s1">'certified'</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/beneficial-ownership`, requestBody</span><span class="se">)</span><span class="err">;
+</span></code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"status"</span><span class="p">:</span> <span class="s">"certified"</span>
+<span class="p">}</span>
+
+<span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/beneficial-ownership'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><h2 id='create-a-document-for-a-beneficial-owner'>Create a document for a beneficial owner</h2>
+<p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, <code class="prettyprint">.tif</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}/documents</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Form Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>documentType</td>
+<td>One of <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code></td>
+</tr>
+<tr>
+<td>file</td>
+<td>File contents.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">curl -X POST
+\ -H "Authorization: Bearer tJlyMNW6e3QVbzHjeJ9JvAPsRglFjwnba4NdfCzsYJm7XbckcR"
+\ -H "Accept: application/vnd.dwolla.v1.hal+json"
+\ -H "Cache-Control: no-cache"
+\ -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+\ -F "documentType=passport"
+\ -F "file=@foo.png"
+\ 'https://api-sandbox.dwolla.com/beneficial-owners/1de32ec7-ff0b-4c0c-9f09-19629e6788ce/documents'
+
+...
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'</span>
+
+<span class="n">file</span> <span class="o">=</span> <span class="no">Faraday</span><span class="o">::</span><span class="no">UploadIO</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">,</span> <span class="s1">'image/jpeg'</span><span class="p">)</span>
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">/documents"</span><span class="p">,</span> <span class="ss">file: </span><span class="n">file</span><span class="p">,</span> <span class="ss">documentType: </span><span class="s1">'license'</span>
+<span class="n">document</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'mclovin.jpg'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">),</span> <span class="n">documentType</span> <span class="o">=</span> <span class="s">'license'</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormData</span><span class="p">();</span>
+<span class="nx">body</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'file'</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">),</span> <span class="p">{</span>
+  <span class="na">filename</span><span class="p">:</span> <span class="s1">'mclovin.jpg'</span><span class="p">,</span>
+  <span class="na">contentType</span><span class="p">:</span> <span class="s1">'image/jpeg'</span><span class="p">,</span>
+  <span class="na">knownLength</span><span class="p">:</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">statSync</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">).</span><span class="nx">size</span>
+<span class="p">});</span>
+<span class="nx">body</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">'documentType'</span><span class="p">,</span> <span class="s1">'license'</span><span class="p">);</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">beneficialOwnerUrl</span><span class="p">}</span><span class="sr">/documents`, requestBody</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; "https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
+</code></pre></div></div><h2 id='retrieve-a-document-for-a-beneficial-owner'>Retrieve a document for a beneficial owner</h2>
+<p>This section contains information on how to retrieve a document by its id.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/documents/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Document unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+    }
+  },
+  "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
+  "status": "pending",
+  "type": "passport",
+  "created": "2015-09-29T21:42:16.000Z"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">document_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">document_url</span>
+<span class="n">document</span><span class="p">.</span><span class="nf">type</span> <span class="c1"># =&gt; "passport"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$documentUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span><span class="p">;</span>
+
+<span class="nv">$documentsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\DocumentsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$document</span> <span class="o">=</span> <span class="nv">$documentsApi</span><span class="o">-&gt;</span><span class="na">getDocument</span><span class="p">(</span><span class="nv">$documentUrl</span><span class="p">);</span>
+<span class="nv">$document</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span> <span class="c1"># =&gt; "passport"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">document_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+
+<span class="n">documents</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">document_url</span><span class="p">)</span>
+<span class="n">documents</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="c"># =&gt; 'passport'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">documentUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">document_url</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span> <span class="c1">// =&gt; "passport"</span>
+</code></pre></div></div><h2 id='list-documents-for-beneficial-owners'>List documents for beneficial owners</h2>
+<p>This section contains information on how to retrieve a list of documents that belong to a beneficial owner.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/beneficial-owners/{id}/documents</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Beneficial owner unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents"
+    }
+  },
+  "_embedded": {
+    "documents": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+          }
+        },
+        "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
+        "status": "pending",
+        "type": "passport",
+        "created": "2015-09-29T21:42:16.000Z"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0"
+          }
+        },
+        "id": "11fe0bab-39bd-42ee-bb39-275afcc050d0",
+        "status": "pending",
+        "type": "passport",
+        "created": "2015-09-29T21:45:37.000Z"
+      }
+    ]
+  },
+  "total": 2
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
+
+<span class="n">documents</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">/documents"</span>
+<span class="n">documents</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
+
+<span class="n">documents</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/documents'</span> <span class="o">%</span> <span class="n">beneficial_owner_url</span><span class="p">)</span>
+<span class="n">documents</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 2</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span><span class="p">;</span>
+
+<span class="nx">token</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">beneficialOwnerUrl</span><span class="p">}</span><span class="sr">/documents`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+</code></pre></div></div>
+<ul>
+<li>* *</li>
+</ul>
 
             <h1 id='documents'>Documents</h1>
 <p>Verified Customers of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> and of status <code class="prettyprint">document</code> require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.</p>
@@ -8236,15 +9402,51 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customer_bill_payment_created</td>
-<td>Represents a <code class="prettyprint">pending</code> Regalii transaction status. This is only part of the bill payment integration. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
+<td>Represents a <code class="prettyprint">pending</code> Regalii transaction status. This is only part of the bill payment integration. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Payment developer resources article</a>.</td>
 </tr>
 <tr>
 <td>customer_bill_payment_completed</td>
-<td>Represents a <code class="prettyprint">confirmed</code> Regalii transaction status and a <code class="prettyprint">processed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
+<td>Represents a <code class="prettyprint">confirmed</code> Regalii transaction status and a <code class="prettyprint">processed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Payment developer resources article</a>.</td>
 </tr>
 <tr>
 <td>customer_bill_payment_failed</td>
-<td>Represents a <code class="prettyprint">rejected</code> Regalii transaction status and a <code class="prettyprint">failed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Pay developer resources article</a>.</td>
+<td>Represents a <code class="prettyprint">rejected</code> Regalii transaction status and a <code class="prettyprint">failed</code> Dwolla transfer status. For more information, check out <a href="https://developers.dwolla.com/resources/dwolla-billpayment-integration.html">our Bill Payment developer resources article</a>.</td>
+</tr>
+</tbody></table>
+<h3 id='event-topics---a-hrefbeneficial-ownersbeneficial-ownersa'>Event topics - (<a href="#beneficial-owners">Beneficial Owners</a>)</h3>
+<table><thead>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>customer_beneficial_owner_created</td>
+<td>Beneficial owner successfully created.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_verification_document_needed</td>
+<td>Additional documentation is needed to verify an  individual beneficial owner.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_verification_document_uploaded</td>
+<td>A verification document was uploaded for beneficial owner.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_verification_document_failed</td>
+<td>A verification document has been rejected for a beneficial owner.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_verification_document_approved</td>
+<td>A verification document was approved for a beneficial owner.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_reverification_needed</td>
+<td>A previously <code class="prettyprint">verifed</code> beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days.</td>
+</tr>
+<tr>
+<td>customer_beneficial_owner_verified</td>
+<td>A beneficial owner has been verified.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
