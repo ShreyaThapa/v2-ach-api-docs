@@ -19,6 +19,7 @@ includes:
   - root
   - accounts
   - customers
+  - beneficialOwners
   - documents
   - fundingsrcs
   - transfers
