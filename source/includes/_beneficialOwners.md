@@ -31,7 +31,7 @@ For more information on how to add beneficial owners, or to see more information
 
 This section details how to create a new beneficial owner. To create `beneficial owners`, you need to collect the beneficial owner's full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. `Beneficial owners` require additional information that will give Dwolla the ability to confirm the identity of the individual.
 
-For more information on how to create a beneificial owner, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html)
+For more information on how to create a beneficial owner, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html)
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}/beneficial-owners`
