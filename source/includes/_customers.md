@@ -143,6 +143,9 @@ This section details how to create a new Customer. To create `Unverified Custome
 | phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
 ### Additional request parameters for verified Customer with type=business
+
+For more information on business verified Customers, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer.html)
+
 | Parameter | Required | Type | Description |
 | ---------------|--------------|--------|----------------|
 | businessName | yes | string | Registered business name. |
@@ -150,7 +153,7 @@ This section details how to create a new Customer. To create `Unverified Custome
 | businessType | yes | string | Business structure. Possible values are `corporation`, `llc`, `partnership`, and `soleProprietorship`. |
 | businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](https://docsv2.dwolla.com/#list-business-classifications) to learn how to generate this Id. |
 | ein | yes | string | Employer Identification Number. **Note:** If the `businessType` is `soleProprietorship`, then ein can be omitted from the request. |
-| controller | yes | object | A controller JSON object. |
+| controller | conditional | object | A controller JSON object. |
 
 ##### Controller JSON object
 
@@ -158,29 +161,29 @@ This section details how to create a new Customer. To create `Unverified Custome
 | ---------------|--------------|--------|----------------|
 |  firstName | yes  |  String |  The legal first name of the controller. |
 |  lastName | yes  |  String |  The legal last name of the controller. |
-|  title | yes | String | Job title of the Customer’s Controller.  IE - Chief Financial Officer |
+|  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
 |  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
-|  SSN | conditional  |  String | Last four-digits of Controller’s social security number. Required for Controllers who reside in the United States  |
-|  address | yes | object | An address JSON object. Full address of the controller's physical address. |
-|  passport | condititional | object | An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country. |
+|  ssn | conditional  |  String | Last four-digits of controller’s social security number. Required for US persons. |
+|  address | yes | object | An [address JSON object](/#controller-address-json-object). Full address of the controller's physical address. |
+|  passport | condititional | object | An [optional passport JSON object](/#controller-passport-json-object). Required for non-US persons. Includes passport identification number and country. |
 
 ##### Controller address JSON object
 
 | Parameter | Required | Type | Description |
 | ---------------|--------------|--------|----------------|
-|  address1 | yes | string | Street number, street name of Controller’s physical address. |
-|  address2 | no | string | Apartment, floor, suite, bldg. # of Controller’s physical address. |
-|  address3 | no | string | Third line of the street address of the Controller's physical address. |
-|  city | yes | string | City of Controller’s physical address. |
+|  address1 | yes | string | Street number, street name of controller’s physical address. |
+|  address2 | no | string | Apartment, floor, suite, bldg. # of controller’s physical address. |
+|  address3 | no | string | Third line of the street address of the controller's physical address. |
+|  city | yes | string | City of controller’s physical address. |
 |  stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 |  postalCode | no | string | Controller’s’ US five-digit ZIP or ZIP + 4 code. |
-|  country | yes | string | Country of Controller’s physical address |
+|  country | yes | string | Country of controller’s physical address |
 
 ##### Controller passport JSON object
 
 | Parameter | Required | Type | Description |
 | ---------------|--------------|--------|----------------|
-|  number | conditional | string | Required if Controller resides outside of United States and has no Social Security number. |
+|  number  | conditional | string | Required if controller is a non-US person and has no Social Security number. |
 |  country | conditional | string | Country of issued passport. |
 
 ### Request parameters - receive-only

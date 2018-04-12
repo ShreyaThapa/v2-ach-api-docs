@@ -1,10 +1,12 @@
 # Beneficial owners
 
-Verified Customers of type `business` are required to verify the identity of beneficial owners in addition to the controller of the business if they satisfy the following requirements:
+Verified Customers of type `business` are required to verify the identity of beneficial owners in addition to the controller of the business if they are one of the following business types:
 
-[bullet points here]
+* Corporation
+* LLC
+* Partnership
 
-For more information on creating and verifying beneficial owners, reference our [Business Customer verification](https://developers.dwolla.com/resources/business-customer-verification.html) resource article.
+For more information on how to add beneficial owners, or to see more information on whether your business type is exempt, check out our [beneficial owner developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html)
 
 ### Beneficial owners resource
 
@@ -27,7 +29,9 @@ For more information on creating and verifying beneficial owners, reference our 
 
 ## Create a beneficial owner
 
-This section details how to create a new beneficial owner. To create `Beneficial Owners`, you need to collect the beneficial owner's full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. `Beneficial Owners` require additional information that will give Dwolla the ability to confirm the identity of the individual.
+This section details how to create a new beneficial owner. To create `beneficial owners`, you need to collect the beneficial owner's full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. `Beneficial owners` require additional information that will give Dwolla the ability to confirm the identity of the individual.
+
+For more information on how to create a beneificial owner, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html)
 
 ### HTTP request
 `POST https://api.dwolla.com/customers/{id}/beneficial-owners`
@@ -36,28 +40,30 @@ This section details how to create a new beneficial owner. To create `Beneficial
 
 | Parameter | Required | Type | Description |
 | ---------------|--------------|--------|----------------|
-| firstName | yes  |  String |  The legal first name of the Beneficial Owner |
-| lastName | yes | string | The legal last name of the Beneficial Owner |
-| ssn | conditional | String | Full nine digits of Beneficial Owner’s social security number. |
-| dateOfBirth | Yes | string | Beneficial owner’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
-| address | Yes | object | Street number, street name of Beneficial Owner’s physical address |
-| passport | conditional | object | An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country.  |
+| firstName | yes  |  String |  The legal first name of the beneficial owner |
+| lastName | yes | string | The legal last name of the beneficial owner |
+| ssn | conditional | String | **Full nine digits** of beneficial owner’s social security number. |
+| dateOfBirth | Yes | string | beneficial owner’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
+| address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the controller's physical address.  |
+| passport | conditional | object | An [optional passport JSON object](/#passport-json-object). Required for non-US persons. Includes passport identification number and country.  |
 
 ### Address JSON object
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | address1 | yes | string | First line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-|  address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+| address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | address3 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of beneficial owner's permanent residence. |
-| stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of Beneficial Owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
+| stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 | country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
 | postalCode | yes | string | Postal code of beneficial owner's permanent residence. Should be a five digit postal code, e.g. `50314`. |
 
 ### Passport JSON object
 
-| number | conditional | string | Required if Beneficial resides outside of United States and has no Social Security number. |
+| Parameter | Required | Type | Description |
+|-----------|----------|------|-------------|
+| number | conditional | string | Required if beneficial owner is a non-US person and has no Social Security number. |
 | country | conditional | string | Country of issued passport. |
 
 ### Request and response
@@ -85,6 +91,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 HTTP/1.1 201 Created
 Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553FCD733F
 ```
+
 ```php
 /**
  * No example for this language yet.
@@ -110,6 +117,7 @@ request_body = {
 beneficial_owner = app_token.post "#{customer_url}/beneficial-owners", request_body
 beneficial_owner.headers[:location] # => "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
@@ -130,6 +138,7 @@ request_body = {
 beneficial_owner = app_token.post('%s/beneficial-owners' % customer_url, request_body)
 beneficial_owner.headers['location'] # => 'https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C'
 ```
+
 ```javascript
 var customerUrl = 'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8';
 var requestBody = {
