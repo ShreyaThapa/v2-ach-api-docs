@@ -1911,6 +1911,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h3 id='additional-request-parameters-for-verified-customer-with-typebusiness'>Additional request parameters for verified Customer with type=business</h3>
+<p>For more information on business verified Customers, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a></p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1951,7 +1953,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>controller</td>
-<td>yes</td>
+<td>conditional</td>
 <td>object</td>
 <td>A controller JSON object.</td>
 </tr>
@@ -1981,7 +1983,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>title</td>
 <td>yes</td>
 <td>String</td>
-<td>Job title of the Customer’s Controller.  IE - Chief Financial Officer</td>
+<td>Job title of the business verified Customer’s controller.  IE - Chief Financial Officer</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
@@ -1990,22 +1992,22 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
 </tr>
 <tr>
-<td>SSN</td>
+<td>ssn</td>
 <td>conditional</td>
 <td>String</td>
-<td>Last four-digits of Controller’s social security number. Required for Controllers who reside in the United States</td>
+<td>Last four-digits of controller’s social security number. Required for US persons.</td>
 </tr>
 <tr>
 <td>address</td>
 <td>yes</td>
 <td>object</td>
-<td>An address JSON object. Full address of the controller&rsquo;s physical address.</td>
+<td>An <a href="/#controller-address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
 </tr>
 <tr>
 <td>passport</td>
 <td>condititional</td>
 <td>object</td>
-<td>An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country.</td>
+<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
 </tr>
 </tbody></table>
 <h5 id='controller-address-json-object'>Controller address JSON object</h5>
@@ -2021,25 +2023,25 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>Street number, street name of Controller’s physical address.</td>
+<td>Street number, street name of controller’s physical address.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Apartment, floor, suite, bldg. # of Controller’s physical address.</td>
+<td>Apartment, floor, suite, bldg. # of controller’s physical address.</td>
 </tr>
 <tr>
 <td>address3</td>
 <td>no</td>
 <td>string</td>
-<td>Third line of the street address of the Controller&rsquo;s physical address.</td>
+<td>Third line of the street address of the controller&rsquo;s physical address.</td>
 </tr>
 <tr>
 <td>city</td>
 <td>yes</td>
 <td>string</td>
-<td>City of Controller’s physical address.</td>
+<td>City of controller’s physical address.</td>
 </tr>
 <tr>
 <td>stateProvinceRegion</td>
@@ -2057,7 +2059,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>country</td>
 <td>yes</td>
 <td>string</td>
-<td>Country of Controller’s physical address</td>
+<td>Country of controller’s physical address</td>
 </tr>
 </tbody></table>
 <h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
@@ -2073,7 +2075,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>number</td>
 <td>conditional</td>
 <td>string</td>
-<td>Required if Controller resides outside of United States and has no Social Security number.</td>
+<td>Required if controller is a non-US person and has no Social Security number.</td>
 </tr>
 <tr>
 <td>country</td>
@@ -4600,11 +4602,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='beneficial-owners'>Beneficial owners</h1>
-<p>Verified Customers of type <code class="prettyprint">business</code> are required to verify the identity of beneficial owners in addition to the controller of the business if they satisfy the following requirements:</p>
+<p>Verified Customers of type <code class="prettyprint">business</code> are required to verify the identity of beneficial owners in addition to the controller of the business if they are one of the following business types:</p>
 
-<p>[bullet points here]</p>
+<ul>
+<li>Corporation</li>
+<li>LLC</li>
+<li>Partnership</li>
+</ul>
 
-<p>For more information on creating and verifying beneficial owners, reference our <a href="https://developers.dwolla.com/resources/business-customer-verification.html">Business Customer verification</a> resource article.</p>
+<p>For more information on how to add beneficial owners, or to see more information on whether your business type is exempt, check out our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">beneficial owner developer resource article</a></p>
 <h3 id='beneficial-owners-resource'>Beneficial owners resource</h3>
 <table><thead>
 <tr>
@@ -4640,7 +4646,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-11T21:42:16.000Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-beneficial-owner'>Create a beneficial owner</h2>
-<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">Beneficial Owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. <code class="prettyprint">Beneficial Owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
+<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">beneficial owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. <code class="prettyprint">Beneficial owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
+
+<p>For more information on how to create a beneficial owner, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">developer resource article</a></p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/beneficial-owners</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -4656,37 +4664,37 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>firstName</td>
 <td>yes</td>
 <td>String</td>
-<td>The legal first name of the Beneficial Owner</td>
+<td>The legal first name of the beneficial owner</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal last name of the Beneficial Owner</td>
+<td>The legal last name of the beneficial owner</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>conditional</td>
 <td>String</td>
-<td>Full nine digits of Beneficial Owner’s social security number.</td>
+<td><strong>Full nine digits</strong> of beneficial owner’s social security number.</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
 <td>Yes</td>
 <td>string</td>
-<td>Beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
 </tr>
 <tr>
 <td>address</td>
 <td>Yes</td>
 <td>object</td>
-<td>Street number, street name of Beneficial Owner’s physical address</td>
+<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
 </tr>
 <tr>
 <td>passport</td>
 <td>conditional</td>
 <td>object</td>
-<td>An optional passport JSON object. Required for foreign individuals. Includes passport identification number and country.</td>
+<td>An <a href="/#passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
 </tr>
 </tbody></table>
 <h3 id='address-json-object'>Address JSON object</h3>
@@ -4726,7 +4734,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>stateProvinceRegion</td>
 <td>yes</td>
 <td>string</td>
-<td>Two-letter US state or territory abbreviation code of Beneficial Owner’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+<td>Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
 </tr>
 <tr>
 <td>country</td>
@@ -4742,8 +4750,27 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h3 id='passport-json-object'>Passport JSON object</h3>
-<p>| number | conditional | string | Required if Beneficial resides outside of United States and has no Social Security number. |
-| country | conditional | string | Country of issued passport. |</p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>number</td>
+<td>conditional</td>
+<td>string</td>
+<td>Required if beneficial owner is a non-US person and has no Social Security number.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>conditional</td>
+<td>string</td>
+<td>Country of issued passport.</td>
+</tr>
+</tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
