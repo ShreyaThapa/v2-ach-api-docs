@@ -27,9 +27,9 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | transfers | GET this link to list the Customer's transfers |
 | send | (optional) If this link exists, this Customer can send funds.  POST to this URL to create a transfer. |
 | retry-verification | If the Customer has a `status` of `retry`, POST to this link to attempt to correct their identity verification information. |
-| verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the authorized representative of the business. Read about [Documents](#documents). |
+| verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the controller of the business. Read about [Documents](#documents). |
 | verify-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about [Documents](#documents). |
-| verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about [Documents](#documents). |
+| verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the controller of the business as well as the business itself.  Read about [Documents](#documents). |
 
 ### Customer resource
 
@@ -111,7 +111,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable. `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable. `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the controller for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers`
@@ -128,8 +128,8 @@ This section details how to create a new Customer. To create `Unverified Custome
 ### Request parameters - verified Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer or if business, authorized representative’s first name. |
-| lastName | yes | string | Customer or if business, authorized representative’s last name. |
+| firstName | yes | string | Customer or if business, the controller's first name. |
+| lastName | yes | string | Customer or if business, controller's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
 | type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
@@ -138,9 +138,9 @@ This section details how to create a new Customer. To create `Unverified Custome
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
-| dateOfBirth | yes | string | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
+| dateOfBirth | yes | string | Customer or if business, the controller's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. |
-| phone | no | string | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
+| phone | no | string | Customer or if business, controller's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
 ### Additional request parameters for verified Customer with type=business
 
