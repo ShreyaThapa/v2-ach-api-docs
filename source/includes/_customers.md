@@ -29,7 +29,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 | retry-verification | If the Customer has a `status` of `retry`, POST to this link to attempt to correct their identity verification information. |
 | verify-with-document | If the Verified Customer of type `personal` or `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the Customer's identity. If type `business`, the controller of the business. Read about [Documents](#documents). |
 | verify-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about [Documents](#documents). |
-| verify-authorized-representative-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the controller of the business as well as the business itself.  Read about [Documents](#documents). |
+| verify-controller-and-business-with-document | If the Verified Customer of type `business` has a `status` of `document`, POST to this link to upload new photo documents to verify the identity of the controller of the business as well as the business itself.  Read about [Documents](#documents). |
 
 ### Customer resource
 
@@ -128,8 +128,8 @@ This section details how to create a new Customer. To create `Unverified Custome
 ### Request parameters - verified Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer or if business, the controller's first name. |
-| lastName | yes | string | Customer or if business, controller's last name. |
+| firstName | yes | string | Customer or if business, the Dwolla Admin's first name. |
+| lastName | yes | string | Customer or if business, Dwolla Admin's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
 | type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
