@@ -1647,15 +1647,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>verify-with-document</td>
-<td>If the Verified Customer of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the Customer&rsquo;s identity. If type <code class="prettyprint">business</code>, the authorized representative of the business. Read about <a href="#documents">Documents</a>.</td>
+<td>If the Verified Customer of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the Customer&rsquo;s identity. If type <code class="prettyprint">business</code>, the controller of the business. Read about <a href="#documents">Documents</a>.</td>
 </tr>
 <tr>
 <td>verify-business-with-document</td>
 <td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about <a href="#documents">Documents</a>.</td>
 </tr>
 <tr>
-<td>verify-authorized-representative-and-business-with-document</td>
-<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload new photo documents to verify the identity of the authorized representative of the business as well as the business itself.  Read about <a href="#documents">Documents</a>.</td>
+<td>verify-controller-and-business-with-document</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload new photo documents to verify the identity of the controller of the business as well as the business itself.  Read about <a href="#documents">Documents</a>.</td>
 </tr>
 </tbody></table>
 <h3 id='customer-resource'>Customer resource</h3>
@@ -1779,7 +1779,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5554321234"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer. To create <code class="prettyprint">Unverified Customers</code>, you need to provide only the customer&rsquo;s full name and email address, as well as a business name if applicable. <code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the “authorized representative” for that business. For <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p>This section details how to create a new Customer. To create <code class="prettyprint">Unverified Customers</code>, you need to provide only the customer&rsquo;s full name and email address, as well as a business name if applicable. <code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the controller for that business. For <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers</code></p>
 <h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
@@ -1835,13 +1835,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer or if business, authorized representative’s first name.</td>
+<td>Customer or if business, the Dwolla Admin&rsquo;s first name.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer or if business, authorized representative’s last name.</td>
+<td>Customer or if business, Dwolla Admin&rsquo;s last name.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -1895,7 +1895,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer or if business, authorized representative’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>Customer or if business, the controller&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
 </tr>
 <tr>
 <td>ssn</td>
@@ -1907,7 +1907,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>phone</td>
 <td>no</td>
 <td>string</td>
-<td>Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
+<td>Customer or if business, controller&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='additional-request-parameters-for-verified-customer-with-typebusiness'>Additional request parameters for verified Customer with type=business</h3>
