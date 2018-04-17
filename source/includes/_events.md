@@ -92,13 +92,13 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_mass_payment_completed | A Verified Customer's mass payment completed. |
 | customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
 | customer_balance_inquiry_completed | Upon checking a Customer's bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of `processing`. This event will be triggered when the bank balance check has completed processing. |
-| customer_bill_payment_created | Represents a `pending` Regalii transaction status. This is only part of the bill payment integration. For more information, check out [our Bill Payment developer resources article](https://developers.dwolla.com/resources/dwolla-billpayment-integration.html). |
-| customer_bill_payment_completed | Represents a `confirmed` Regalii transaction status and a `processed` Dwolla transfer status. For more information, check out [our Bill Payment developer resources article](https://developers.dwolla.com/resources/dwolla-billpayment-integration.html).  |
-| customer_bill_payment_failed | Represents a `rejected` Regalii transaction status and a `failed` Dwolla transfer status. For more information, check out [our Bill Payment developer resources article](https://developers.dwolla.com/resources/dwolla-billpayment-integration.html). |
+| customer_bill_payment_created | Represents a `pending` bill payment transaction status. This is only part of the bill payment integration. |
+| customer_bill_payment_completed | Represents a `confirmed` bill payment transaction status and a `processed` Dwolla transfer status. |
+| customer_bill_payment_failed | Represents a `rejected` bill payment transaction status and a `failed` Dwolla transfer status. |
 
 ### Event topics - ([Beneficial Owners](#beneficial-owners))
 
-| Topic | Description | 
+| Topic | Description |
 |---------|-----------------|
 | customer_beneficial_owner_created | Beneficial owner successfully created. |
 | customer_beneficial_owner_verification_document_needed | Additional documentation is needed to verify an  individual beneficial owner. |
