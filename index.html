@@ -4610,7 +4610,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <li>Partnership</li>
 </ul>
 
-<p>For more information on how to add beneficial owners, or to see more information on whether your business type is exempt, check out our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">beneficial owner developer resource article</a></p>
+<p>For more information on how to add beneficial owners, or to learn more on whether certain business types are exempt, check out our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">beneficial owner developer resource article</a>.</p>
 <h3 id='beneficial-owners-resource'>Beneficial owners resource</h3>
 <table><thead>
 <tr>
@@ -4620,35 +4620,51 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>The beneficial owner unique identifier</td>
+<td>The beneficial owner unique identifier.</td>
 </tr>
 <tr>
 <td>firstName</td>
-<td>The legal first name of the beneficial owner</td>
+<td>The legal first name of the beneficial owner.</td>
 </tr>
 <tr>
 <td>lastName</td>
-<td>The legal last name of the beneficial owner</td>
+<td>The legal last name of the beneficial owner.</td>
 </tr>
 <tr>
-<td>status</td>
-<td>Possible values of <code class="prettyprint">verified</code>, <code class="prettyprint">document</code>, or <code class="prettyprint">incomplete</code></td>
+<td>address</td>
+<td>The beneficial owner&rsquo;s physical address.</td>
 </tr>
 <tr>
-<td>created</td>
-<td>ISO-8601 timestamp.</td>
+<td>verificationStatus</td>
+<td>Possible values of <code class="prettyprint">verified</code>, <code class="prettyprint">document</code>, or <code class="prettyprint">incomplete</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-11T21:42:16.000Z"</span><span class="w">
+    </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api-sandbox.dwolla.com/beneficial-owners/caa81a5f-ec1e-4559-8b32-d90655bfd03c"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/vnd.dwolla.v1.hal+json"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"beneficial-owner"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"caa81a5f-ec1e-4559-8b32-d90655bfd03c"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"owner"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"address1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345 18th st"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apt 12"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address3"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Des Moines"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"stateProvinceRegion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IA"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50265"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"verificationStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-beneficial-owner'>Create a beneficial owner</h2>
-<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">beneficial owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued ssn. <code class="prettyprint">Beneficial owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
+<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">beneficial owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued SSN. <code class="prettyprint">Beneficial owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
 
-<p>For more information on how to create a beneficial owner, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">developer resource article</a></p>
+<p>For more information on how to create a beneficial owner, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">developer resource article</a>.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/beneficial-owners</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -4663,20 +4679,20 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>firstName</td>
 <td>yes</td>
-<td>String</td>
-<td>The legal first name of the beneficial owner</td>
+<td>string</td>
+<td>The legal first name of the beneficial owner.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal last name of the beneficial owner</td>
+<td>The legal last name of the beneficial owner.</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>conditional</td>
-<td>String</td>
-<td><strong>Full nine digits</strong> of beneficial owner’s social security number.</td>
+<td>string</td>
+<td><strong>Full nine digits</strong> of beneficial owner’s social security number. If ssn is omitted, <a href="#passport-json-object">passport</a> is required.</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
@@ -4694,7 +4710,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>passport</td>
 <td>conditional</td>
 <td>object</td>
-<td>An <a href="/#passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
+<td>An optional <a href="/#passport-json-object">passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
 </tr>
 </tbody></table>
 <h3 id='address-json-object'>Address JSON object</h3>
@@ -4722,7 +4738,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>address3</td>
 <td>no</td>
 <td>string</td>
-<td>Second line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+<td>Third line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -4779,15 +4795,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8/beneficial-owners
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5/beneficial-owners
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
-  "firstName": "Jane",
-  "lastName": "Doe",
-  "ssn": "123-456-7890",
+  "firstName": "document",
+  "lastName": "owner",
+  "ssn": "123-46-7890",
   "dateOfBirth": "1960-11-30",
   "address": {
     "address1": "123 Main St.",
@@ -4808,9 +4824,27 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$verified_customer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5'</span><span class="p">;</span>
+
+<span class="nv">$addOwner</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">addBeneficialOwner</span><span class="p">([</span>
+      <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'document'</span><span class="p">,</span>
+      <span class="s1">'lastName'</span><span class="o">=&gt;</span> <span class="s1">'owner'</span><span class="p">,</span>
+      <span class="s1">'dateOfBirth'</span> <span class="o">=&gt;</span> <span class="s1">'1990-11-11'</span><span class="p">,</span>
+      <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'123-34-9876'</span><span class="p">,</span>
+      <span class="s1">'address'</span> <span class="o">=&gt;</span>
+      <span class="p">[</span>
+          <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'18749 18th st'</span><span class="p">,</span>
+          <span class="s1">'address2'</span> <span class="o">=&gt;</span> <span class="s1">'apt 12'</span><span class="p">,</span>
+          <span class="s1">'address3'</span> <span class="o">=&gt;</span> <span class="s1">''</span><span class="p">,</span>
+          <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+          <span class="s1">'stateProvinceRegion'</span> <span class="o">=&gt;</span> <span class="s1">'IA'</span><span class="p">,</span>
+          <span class="s1">'postalCode'</span> <span class="o">=&gt;</span> <span class="s1">'50265'</span><span class="p">,</span>
+          <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'US'</span>
+      <span class="p">],</span>
+  <span class="p">],</span> <span class="nv">$verified_customer</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -4820,11 +4854,11 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
   <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Doe'</span><span class="p">,</span>
-  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'123-456-7890'</span><span class="p">,</span>
+  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'123-46-7890'</span><span class="p">,</span>
   <span class="ss">:dateOfBirth</span> <span class="o">=&gt;</span> <span class="s1">'1970-01-01'</span><span class="p">,</span>
   <span class="ss">:address</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
@@ -4851,7 +4885,7 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
   <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'John'</span><span class="p">,</span>
   <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Doe'</span><span class="p">,</span>
   <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1970-01-01'</span>
-  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-456-7890'</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-46-7890'</span>
   <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'address1'</span><span class="p">:</span> <span class="s">'99-99 33rd St'</span><span class="p">,</span>
     <span class="s">'city'</span><span class="p">:</span> <span class="s">'Some City'</span><span class="p">,</span>
@@ -4876,7 +4910,7 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
   <span class="na">firstName</span><span class="p">:</span> <span class="s1">'John'</span><span class="p">,</span>
   <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Doe'</span><span class="p">,</span>
   <span class="na">dateOfBirth</span><span class="p">:</span> <span class="s1">'1970-01-01'</span><span class="p">,</span>
-  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'123-456-7890'</span><span class="p">,</span>
+  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'123-56-7890'</span><span class="p">,</span>
   <span class="na">address</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">address1</span><span class="p">:</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
     <span class="na">city</span><span class="p">:</span> <span class="s1">'Some City'</span><span class="p">,</span>
@@ -4917,7 +4951,7 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/beneficial-owners/07D59716-EF22-4FE6-98E8-F3190233DFB8
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfB8
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -4931,7 +4965,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfB8'</span>
 
 <span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">beneficial_owner_url</span>
 <span class="n">beneficial_owner</span><span class="p">.</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
@@ -4943,9 +4977,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$beneficialOwnersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BeneficialownersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfB8'</span><span class="p">;</span>
+<span class="nv">$beneficialOwner</span> <span class="o">=</span> <span class="nv">$beneficialOwnersApi</span><span class="o">-&gt;</span><span class="na">getById</span><span class="p">(</span><span class="nv">$beneficialOwnerUrl</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -4972,7 +5009,306 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
-</code></pre></div></div><h2 id='list-beneficial-owners'>List beneficial owners</h2>
+</code></pre></div></div><h2 id='update-a-beneficial-owner'>Update a beneficial owner</h2>
+<p>This endpoint can be used to update a beneficial owner&rsquo;s information to <code class="prettyprint">retry</code> verification. A beneficial owner&rsquo;s information can only be updated if their verification status is <code class="prettyprint">incomplete</code>.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}</code></p>
+<h3 id='request-parameters'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal first name of the beneficial owner.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal last name of the beneficial owner.</td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>conditional</td>
+<td>string</td>
+<td><strong>Full nine digits</strong> of beneficial owner’s social security number. If ssn is omitted, <a href="#passport-json-object">passport</a> is required.</td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>Yes</td>
+<td>string</td>
+<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>Yes</td>
+<td>object</td>
+<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
+</tr>
+<tr>
+<td>passport</td>
+<td>conditional</td>
+<td>object</td>
+<td>An optional <a href="/#passport-json-object">passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
+</tr>
+</tbody></table>
+<h3 id='address-json-object'>Address JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>First line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Second line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>address3</td>
+<td>no</td>
+<td>string</td>
+<td>Third line of the street address of the beneficial owner&rsquo;s permanent residence. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of beneficial owner&rsquo;s permanent residence.</td>
+</tr>
+<tr>
+<td>stateProvinceRegion</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>yes</td>
+<td>string</td>
+<td>Country of beneficial owner&rsquo;s permanent residence. Two digit ISO code, e.g. <code class="prettyprint">US</code>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Postal code of beneficial owner&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='passport-json-object'>Passport JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>number</td>
+<td>conditional</td>
+<td>string</td>
+<td>Required if beneficial owner is a non-US person and has no Social Security number.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>conditional</td>
+<td>string</td>
+<td>Country of issued passport.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "firstName": "beneficial",
+  "lastName": "owner",
+  "ssn": "123-54-6789",
+  "dateOfBirth": "1963-11-11",
+  "address": {
+    "address1": "123 Main St.",
+    "address2": "Apt 123",
+    "city": "Des Moines",
+    "stateProvinceRegion": "IA",
+    "country": "US",
+    "postalCode": "50309"
+  }
+}
+
+...
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "beneficial-owner"
+        }
+    },
+    "id": "00cb67f2-768c-4ee3-ac81-73bc4faf9c2b",
+    "firstName": "beneficial",
+    "lastName": "owner",
+    "address": {
+        "address1": "123 Main St.",
+        "address2": "Apt 123",
+        "city": "Des Moines",
+        "stateProvinceRegion": "IA",
+        "country": "US",
+        "postalCode": "50309"
+    },
+    "verificationStatus": "verified"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$beneficialOwnersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BeneficialownersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span><span class="p">;</span>
+<span class="nv">$updateBeneficialOwner</span> <span class="o">=</span> <span class="nv">$beneficialOwnersApi</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">([</span>
+      <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'beneficial'</span><span class="p">,</span>
+      <span class="s1">'lastName'</span><span class="o">=&gt;</span> <span class="s1">'owner'</span><span class="p">,</span>
+      <span class="s1">'dateOfBirth'</span> <span class="o">=&gt;</span> <span class="s1">'1963-11-11'</span><span class="p">,</span>
+      <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'123-54-6789'</span><span class="p">,</span>
+      <span class="s1">'address'</span> <span class="o">=&gt;</span>
+      <span class="p">[</span>
+          <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'123 Main St.'</span><span class="p">,</span>
+          <span class="s1">'address2'</span> <span class="o">=&gt;</span> <span class="s1">'Apt 123'</span><span class="p">,</span>
+          <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+          <span class="s1">'stateProvinceRegion'</span> <span class="o">=&gt;</span> <span class="s1">'IA'</span><span class="p">,</span>
+          <span class="s1">'postalCode'</span> <span class="o">=&gt;</span> <span class="s1">'50309'</span><span class="p">,</span>
+          <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'US'</span>
+      <span class="p">],</span>
+  <span class="p">],</span> <span class="nv">$beneficialOwnerUrl</span><span class="p">);</span>
+
+<span class="nv">$updateBeneficialOwner</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "00cb67f2-768c-4ee3-ac81-73bc4faf9c2b"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'beneficial'</span><span class="p">,</span>
+  <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'owner'</span><span class="p">,</span>
+  <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'123-54-6789'</span><span class="p">,</span>
+  <span class="ss">:dateOfBirth</span> <span class="o">=&gt;</span> <span class="s1">'1963-11-11'</span><span class="p">,</span>
+  <span class="ss">:address</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'123 Main St'</span><span class="p">,</span>
+    <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+    <span class="ss">:stateProvinceRegion</span> <span class="o">=&gt;</span> <span class="s1">'IA'</span><span class="p">,</span>
+    <span class="ss">:country</span> <span class="o">=&gt;</span> <span class="s1">'US'</span><span class="p">,</span>
+    <span class="ss">:postalCode</span> <span class="o">=&gt;</span> <span class="s1">'50309'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">update_beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="n">beneficial_owner_url</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">update_beneficial_owner</span><span class="p">.</span><span class="nf">id</span> <span class="c1"># =&gt; "00cb67f2-768c-4ee3-ac81-73bc4faf9c2b"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'beneficial'</span><span class="p">,</span>
+  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'owner'</span><span class="p">,</span>
+  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1963-11-11'</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-54-6789'</span>
+  <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'address1'</span><span class="p">:</span> <span class="s">'123 Main St'</span><span class="p">,</span>
+    <span class="s">'city'</span><span class="p">:</span> <span class="s">'Des Moines'</span><span class="p">,</span>
+    <span class="s">'stateProvinceRegion'</span><span class="p">:</span> <span class="s">'IA'</span><span class="p">,</span>
+    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span>
+    <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'50309'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">update_beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">update_beneficial_owner</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="nb">id</span> <span class="c"># =&gt; '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="s1">'beneficial'</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="s1">'owner'</span><span class="p">,</span>
+  <span class="na">dateOfBirth</span><span class="p">:</span> <span class="s1">'1963-11-11'</span><span class="p">,</span>
+  <span class="na">ssn</span><span class="p">:</span> <span class="s1">'123-54-6789'</span><span class="p">,</span>
+  <span class="na">address</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">address1</span><span class="p">:</span> <span class="s1">'123 Main St'</span><span class="p">,</span>
+    <span class="na">city</span><span class="p">:</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+    <span class="na">stateProvinceRegion</span><span class="p">:</span> <span class="s1">'IA'</span><span class="p">,</span>
+    <span class="na">country</span><span class="p">:</span> <span class="s1">'US'</span>
+    <span class="na">postalCode</span><span class="p">:</span> <span class="s1">'50309'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'</span>
+</code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Duplicate customer or validation error.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Not authorized to create customers.</td>
+</tr>
+</tbody></table>
+<h2 id='list-beneficial-owners'>List beneficial owners</h2>
 <p>This section contains information on how to retrieve a list of beneficial owners that belong to a Customer.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/customers/{id}/beneficial-owners</code></p>
@@ -5000,11 +5336,75 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/beneficial-owners
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5/beneficial-owners
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5/beneficial-owners",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "beneficial-owner"
+        }
+    },
+    "_embedded": {
+        "beneficial-owners": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/beneficial-owners/55469604-40ab-44b6-962f-de2c0837ba98",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "beneficial-owner"
+                    },
+                    "verify-with-document": {
+                        "href": "https://api-sandbox.dwolla.com/beneficial-owners/55469604-40ab-44b6-962f-de2c0837ba98/documents",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "document"
+                    }
+                },
+                "id": "55469604-40ab-44b6-962f-de2c0837ba98",
+                "firstName": "document",
+                "lastName": "owner1",
+                "address": {
+                    "address1": "18749 18th st",
+                    "address2": "apt 12",
+                    "address3": "",
+                    "city": "Des Moines",
+                    "stateProvinceRegion": "IA",
+                    "country": "US",
+                    "postalCode": "50265"
+                },
+                "verificationStatus": "document"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/beneficial-owners/caa81a5f-ec1e-4559-8b32-d90655bfd03c",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "beneficial-owner"
+                    }
+                },
+                "id": "caa81a5f-ec1e-4559-8b32-d90655bfd03c",
+                "firstName": "Joe",
+                "lastName": "owner2",
+                "address": {
+                    "address1": "18749 18th st",
+                    "address2": "apt 12",
+                    "address3": "",
+                    "city": "Des Moines",
+                    "stateProvinceRegion": "IA",
+                    "country": "US",
+                    "postalCode": "50265"
+                },
+                "verificationStatus": "verified"
+            }
+        ]
+    },
+    "total": 2
+}
 
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -5027,9 +5427,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/81696e5d-a593-45a6-8863-3c20ad634de5'</span><span class="p">;</span>
+<span class="nv">$beneficialOwnerList</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getBeneficialOwners</span><span class="p">(</span><span class="nv">$customerUrl</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5057,9 +5460,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/beneficial-owners`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">beneficial_owners</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div><h2 id='remove-a-beneficial-owner'>Remove a beneficial owner</h2>
-<p>Remove a beneficial owner id. A removed beneficial owner is soft deleted and can still be accessed when retrieved.</p>
+<p>Delete a beneficial owner. A removed beneficial owner cannot be retrieved after being removed.</p>
 <h3 id='http-request'>HTTP request</h3>
-<p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}</code></p>
+<p><code class="prettyprint">DELETE https://api.dwolla.com/beneficial-owners/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
 <tr>
@@ -5074,12 +5477,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>yes</td>
 <td>string</td>
 <td>id of beneficial owner to delete.</td>
-</tr>
-<tr>
-<td>removed</td>
-<td>yes</td>
-<td>string</td>
-<td>Specify a value of <code class="prettyprint">true</code> to remove the associated beneficial owner.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -5102,12 +5499,31 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c
-Content-Type: application/vnd.dwolla.v1.hal+json
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
 {
-    "removed": true
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/beneficial-owners/0f394602-d714-4d77-9d58-3a3e8394bcdd",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "beneficial-owner"
+        }
+    },
+    "id": "0f394602-d714-4d77-9d58-3a3e8394bcdd",
+    "firstName": "B",
+    "lastName": "Owner",
+    "address": {
+        "address1": "123 Main St.",
+        "city": "New York",
+        "stateProvinceRegion": "NY",
+        "country": "US",
+        "postalCode": "10005"
+    },
+    "verificationStatus": "verified"
 }
 
 ...
@@ -5124,12 +5540,8 @@ HTTP 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
 
-<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">:removed</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-<span class="p">}</span>
-
-<span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
-</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<span class="n">app_token</span><span class="p">.</span><span class="nf">delete</span> <span class="n">beneficial_owner_url</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -5137,9 +5549,9 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+
+<span class="nx">applicationToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">);</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5150,12 +5562,9 @@ HTTP 200 OK
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
-<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"removed"</span><span class="p">:</span> <span class="bp">True</span>
-<span class="p">}</span>
 
-<span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<span class="n">app_token</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">)</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -5163,12 +5572,11 @@ HTTP 200 OK
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">removed</span><span class="p">:</span> <span class="kc">true</span>
-<span class="p">};</span>
-
-<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">);</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$beneficialOwnersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BeneficialownersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$beneficialOwner</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+<span class="nv">$deletedBeneficialOwner</span> <span class="o">=</span> <span class="nv">$beneficialOwnersApi</span><span class="o">-&gt;</span><span class="na">deleteById</span><span class="p">(</span><span class="nv">$beneficialOwner</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='retrieve-beneficial-ownership-status'>Retrieve beneficial ownership status</h2>
 <p>This section contains information on how to retrieve a Customer&rsquo;s beneficial ownership status.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -5203,6 +5611,17 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
 
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc/beneficial-ownership",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "beneficial-ownership"
+        }
+    },
+    "status": "uncertified"
+}
+
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5212,10 +5631,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 
 <span class="n">beneficial_ownership</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-ownership"</span>
-<span class="n">beneficial_ownership</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "failed"</span>
+<span class="n">beneficial_ownership</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "uncertified"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5224,9 +5643,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$newCustomer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span><span class="p">;</span>
+<span class="nv">$customerOwnershipStatus</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getOwnershipStatus</span><span class="p">(</span><span class="nv">$newCustomer</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5236,10 +5658,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
-<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 
 <span class="n">beneficial_ownership</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/beneficial-ownership'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
-<span class="n">beneficial_ownership</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'failed'</span>
+<span class="n">beneficial_ownership</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'uncertified'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5248,11 +5670,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customer_url</span><span class="p">}</span><span class="sr">/beneficial-ownership`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "failed"</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "uncertified"</span>
 </code></pre></div></div><h2 id='certify-beneficial-ownership'>Certify beneficial ownership</h2>
 <p>This section contains information on how to certify beneficial ownership for a business Verified Customer.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -5288,6 +5710,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "status": "certified"
+}
+
+...
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc/beneficial-ownership",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "beneficial-ownership"
+        }
+    },
+    "status": "certified"
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -5341,9 +5776,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$customerId</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
+<span class="nv">$certifyCustomer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">changeOwnershipStatus</span><span class="p">([</span><span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="s1">'certified'</span> <span class="p">],</span> <span class="nv">$customerId</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='create-a-document-for-a-beneficial-owner'>Create a document for a beneficial owner</h2>
 <p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, <code class="prettyprint">.tif</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -5632,9 +6069,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$beneficialOwnersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BeneficialownersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$beneficialOwner</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/55469604-40ab-44b6-962f-de2c0837ba98'</span><span class="p">;</span>
+<span class="nv">$listDocsBeneficialOwner</span> <span class="o">=</span> <span class="nv">$beneficialOwnersApi</span><span class="o">-&gt;</span><span class="na">getBeneficialOwnerDocuments</span><span class="p">(</span><span class="nv">$beneficialOwner</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5662,9 +6101,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">beneficialOwnerUrl</span><span class="p">}</span><span class="sr">/documents`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div>
-<ul>
-<li>* *</li>
-</ul>
+<hr>
 
             <h1 id='documents'>Documents</h1>
 <p>Verified Customers of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> and of status <code class="prettyprint">document</code> require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.</p>
