@@ -216,7 +216,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/ v'
+beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfB8'
 
 beneficial_owner = app_token.get beneficial_owner_url
 beneficial_owner.firstName # => "Jane"
