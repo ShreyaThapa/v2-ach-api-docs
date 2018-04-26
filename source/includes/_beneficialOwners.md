@@ -69,7 +69,7 @@ For more information on how to create a beneficial owner, refer to our [develope
 |-----------|----------|----------------|-----------|
 | address1 | yes | string | First line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-| address3 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+| address3 | no | string | Third line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of beneficial owner's permanent residence. |
 | stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 | country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
@@ -267,7 +267,7 @@ This endpoint can be used to update a beneficial owner's information to `retry` 
 |-----------|----------|----------------|-----------|
 | address1 | yes | string | First line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
-| address3 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
+| address3 | no | string | Third line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of beneficial owner's permanent residence. |
 | stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 | country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
