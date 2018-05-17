@@ -33,6 +33,4 @@ search: true
 google_tag_manager_id: GTM-WV9L5CM
 
 google_analytics_id: UA-30404064-1
-
-intercom_id: dfdjs7vb
 ---
