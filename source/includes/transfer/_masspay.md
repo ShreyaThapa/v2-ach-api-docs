@@ -1,10 +1,10 @@
-# MassPay
+# MassPayments
 
-Dwolla MassPay allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
+Dwolla MassPayments allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
 
-Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.
+Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPayment to be completed between 8-16 minutes.
 
-MassPay offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. A key benefit is that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur an ACH debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
+MassPayment offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. A key benefit is that a bank-funded MassPayment only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur an ACH debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
 
 ### Mass payment resource
 
