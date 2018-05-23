@@ -32,17 +32,32 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 }
 ```
 
-### Event topics - ([Partner Dwolla Account](#accounts))
+### Partner Dwolla Account Event topics
 
-| Topic          | Description                                                                                                       |
-|------------------|---------------------------------------------------------------------------------------------------------------|
+##### Accounts
+
+| Topic          | Description           |
+|--------------|-------------------------|
+| account_suspended | An account was suspended. |
+| account_activated | A Dwolla account moves from deactivated or suspended to active state of verification. |
+
+##### Funding Sources
+
+| Topic          | Description           |
+|--------------|-------------------------|
 | funding_source_added | A funding source was added to a Dwolla account. |
 | funding_source_removed |  A funding source was removed from a Dwolla account. |
 | funding_source_verified | A funding source was marked as `verified`. |
+| funding_source_negative | A Partner's account `balance` has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for their accounts. If a Partner balance funding source has gone negative, they are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source. |
 | microdeposits_added | Two <=10¢ transfers to a Dwolla account’s linked bank account were initiated. |
 | microdeposits_failed | The two <=10¢ transfers to a Dwolla account’s linked bank account failed to clear successfully. |
 | microdeposits_completed | The two <=10¢ transfers to a Dwolla account’s linked bank account have cleared successfully. |
 | microdeposits_maxattempts | The account has reached their max verification attempts limit of three. The account can no longer verify their funding source with the completed micro-deposit amounts. |
+
+##### Transfers
+
+| Topic          | Description           |
+|--------------|-------------------------|
 | bank_transfer_created | A bank transfer was created. |
 | bank_transfer_cancelled | A pending bank transfer has been cancelled, and will not process further. |
 | bank_transfer_failed | A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). |
@@ -52,16 +67,21 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | transfer_failed | A transfer failed to clear successfully. |
 | transfer_reclaimed | The transfer was returned to the sender after remaining unclaimed by the intended recipient for a period of time. |
 | transfer_completed | A transfer has cleared successfully. |
+
+##### Mass Payments
+
+| Topic          | Description           |
+|--------------|-------------------------|
 | mass_payment_created | A mass payment was created. |
 | mass_payment_completed | A mass payment completed. |
 | mass_payment_cancelled | A created and deferred mass payment was cancelled. |
-| account_suspended | An account was suspended. |
-| account_activated | A Dwolla account moves from deactivated or suspended to active state of verification. |
 
-### Event topics - ([Customers](#customers))
+### Customer Account Event topics
 
-| Topic          | Description                                                                                                       |
-|------------------|---------------------------------------------------------------------------------------------------------------|
+##### Customers
+
+| Topic          | Description                    |
+|------------------|-------------------------------------------------------------------|
 | customer_created | A Customer was created. |
 | customer_verification_document_needed | Additional documentation is needed to verify a Customer. |
 | customer_verification_document_uploaded | A verification document was uploaded for a Customer. |
@@ -72,13 +92,36 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_suspended | A Customer was suspended. |
 | customer_activated | A Customer moves from deactivated or suspended to an active status. |
 | customer_deactivated | A Customer was deactivated.
+
+##### Beneficial Owners
+
+| Topic          | Description                    |
+|------------------|-------------------------------------------------------------------|
+| customer_beneficial_owner_created | Beneficial owner successfully created. |
+| customer_beneficial_owner_verification_document_needed | Additional documentation is needed to verify an  individual beneficial owner. |
+| customer_beneficial_owner_verification_document_uploaded | A verification document was uploaded for beneficial owner. |
+| customer_beneficial_owner_verification_document_failed | A verification document has been rejected for a beneficial owner. |
+| customer_beneficial_owner_verification_document_approved | A verification document was approved for a beneficial owner. |
+| customer_beneficial_owner_reverification_needed | A previously `verifed` beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days. |
+| customer_beneficial_owner_verified | A beneficial owner has been verified. |
+
+##### Funding Sources
+
+| Topic          | Description                    |
+|------------------|-------------------------------------------------------------------|
 | customer_funding_source_added | A funding source was added to a Customer. |
 | customer_funding_source_removed | A funding source was removed from a Customer. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
+| customer_funding_source_negative | A Customer's `balance` has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by their application. If a Customer balance funding source has gone negative, Partners are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source. |
 | customer_microdeposits_added | Two <=10¢ transfers to a Customer’s linked bank account were initiated. |
 | customer_microdeposits_failed | The two <=10¢ transfers to a Customer’s linked bank account failed to clear successfully. |
 | customer_microdeposits_completed | The two <=10¢ transfers to a Customer’s linked bank account have cleared successfully. |
 | customer_microdeposits_maxattempts | The Customer has reached their max verification attempts limit of three. The Customer can no longer verify their funding source with the completed micro-deposit amounts. |
+
+##### Transfers
+
+| Topic          | Description                    |
+|------------------|-------------------------------------------------------------------|
 | customer_bank_transfer_created | A bank transfer was created for a Customer. Represents funds moving either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_bank_transfer_creation_failed | An attempt to initiate a transfer to a verified Customer's bank was made, but failed. Transfers initiated to a verified Customer's bank must pass through the verified Customer's balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a verified Customer's bank if the funds available in the balance are less than the transfer amount. |
 | customer_bank_transfer_cancelled | A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
@@ -88,25 +131,23 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. |
+
+##### Mass Payments
+
+| Topic          | Description                    |
+|------------------|-------------------------------------------------------------------|
 | customer_mass_payment_created | A Verified Customer's mass payment was created. |
 | customer_mass_payment_completed | A Verified Customer's mass payment completed. |
 | customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
 | customer_balance_inquiry_completed | Upon checking a Customer's bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of `processing`. This event will be triggered when the bank balance check has completed processing. |
-| customer_bill_payment_created | Represents a `pending` bill payment transaction status. This is only part of the bill payment integration. |
-| customer_bill_payment_completed | Represents a `confirmed` bill payment transaction status and a `processed` Dwolla transfer status. |
-| customer_bill_payment_failed | Represents a `rejected` bill payment transaction status and a `failed` Dwolla transfer status. |
 
-### Event topics - ([Beneficial Owners](#beneficial-owners))
+### Dwolla Integration Event topics
 
 | Topic | Description |
 |---------|-----------------|
-| customer_beneficial_owner_created | Beneficial owner successfully created. |
-| customer_beneficial_owner_verification_document_needed | Additional documentation is needed to verify an  individual beneficial owner. |
-| customer_beneficial_owner_verification_document_uploaded | A verification document was uploaded for beneficial owner. |
-| customer_beneficial_owner_verification_document_failed | A verification document has been rejected for a beneficial owner. |
-| customer_beneficial_owner_verification_document_approved | A verification document was approved for a beneficial owner. |
-| customer_beneficial_owner_reverification_needed | A previously `verifed` beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days. |
-| customer_beneficial_owner_verified | A beneficial owner has been verified. |
+| customer_bill_payment_created | Represents a `pending` bill payment transaction status. This is only part of the bill payment integration. |
+| customer_bill_payment_completed | Represents a `confirmed` bill payment transaction status and a `processed` Dwolla transfer status. |
+| customer_bill_payment_failed | Represents a `rejected` bill payment transaction status and a `failed` Dwolla transfer status. |
 
 ## List events
 

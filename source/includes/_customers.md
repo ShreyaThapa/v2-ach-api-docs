@@ -111,7 +111,11 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a business name if applicable. `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the controller for that business. For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a `businessName` if applicable.
+
+`Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.
+
+For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 ### HTTP request
 `POST https://api.dwolla.com/customers`
@@ -128,8 +132,8 @@ This section details how to create a new Customer. To create `Unverified Custome
 ### Request parameters - verified Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer or if business, the Dwolla Admin's first name. |
-| lastName | yes | string | Customer or if business, Dwolla Admin's last name. |
+| firstName | yes | string | An individual Customer's first name. If business, the Account Admin's first name. |
+| lastName | yes | string | An individual Customer's last name. If business, the Account Admin's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
 | type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
@@ -158,7 +162,7 @@ For more information on business verified Customers, refer to our [developer res
 ##### Controller JSON object
 
 | Parameter | Required | Type | Description |
-| ---------------|--------------|--------|----------------|
+|----------------|--------------|--------|----------------|
 |  firstName | yes  |  String |  The legal first name of the controller. |
 |  lastName | yes  |  String |  The legal last name of the controller. |
 |  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
