@@ -132,7 +132,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. |
 
-##### MassPayments
+##### Mass Payments
 
 | Topic          | Description                    |
 |------------------|-------------------------------------------------------------------|
