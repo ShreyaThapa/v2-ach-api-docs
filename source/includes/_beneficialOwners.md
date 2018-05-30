@@ -747,7 +747,7 @@ $certifyCustomer = $customersApi->changeOwnershipStatus(['status' => 'certified'
 
 ## Create a document for a beneficial owner
 
-Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, `.tif`, or `.pdf` up to 10MB in size.
+Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
 
 ### HTTP request
 `POST https://api.dwolla.com/beneficial-owners/{id}/documents`

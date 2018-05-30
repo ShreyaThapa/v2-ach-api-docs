@@ -12,7 +12,7 @@ With a transfer of money, at least one party must complete the identity verifica
 
 For more information on Dwolla API account types, reference the [account types](https://developers.dwolla.com/resources/account-types/access-api-accounts.html) resource article.
 
-### Receive-only
+### Receive-only Customers
 Receive-only customers are restricted to a "payouts only" business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla `Account` that created it.
 
 ### Migrating Dwolla user Accounts to Dwolla API Customers
@@ -111,14 +111,24 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 ## Create a customer
 
-This section details how to create a new Customer. To create `Unverified Customers`, you need to provide only the customer's full name and email address, as well as a `businessName` if applicable.
+This section details how to create a new Customer. To create `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+
+`Unverified Customers` will only need to provide the customer's full name and email address, as well as a `businessName` if applicable.
 
 `Verified Customers` require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For businesses, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.
 
-For `Receive-only Customers`, you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
-
 ### HTTP request
 `POST https://api.dwolla.com/customers`
+
+### Request parameters - receive-only
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-----------|
+| firstName | yes | string | Customer's first name. |
+| lastName | yes | string | Customer's last name. |
+| email | yes | string | Customer's email address. |
+| type | yes | string | Value of `receive-only`. |
+| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
+| ipAddress | no | string | Customer's IP address. |
 
 ### Request parameters - unverified Customer
 | Parameter | Required | Type | Description |
@@ -129,37 +139,55 @@ For `Receive-only Customers`, you'll provide the customer's full name, `type` wi
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 
-### Request parameters - verified Customer
+### Request parameters - verified personal Customer
+
+For an in-depth look at personal verified Customers creation and status handling, refer to our [developer resource article](https://developers.dwolla.com/resources/personal-verified-customer.html).
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | An individual Customer's first name. If business, the Account Admin's first name. |
-| lastName | yes | string | An individual Customer's last name. If business, the Account Admin's last name. |
+| firstName | yes | string | An individual Customer's first name. |
+| lastName | yes | string | An individual Customer's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
-| type | yes | string | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
+| type | yes | string | The Verified Customer type. Set to `personal` if creating a verified personal Customer. |
 | address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
 | address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
-| postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
-| dateOfBirth | yes | string | Customer or if business, the controller's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
+| postalCode | yes | string | Postal code of Customer's permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. `50314`. |
+| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. |
-| phone | no | string | Customer or if business, controller's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
+| phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
-### Additional request parameters for verified Customer with type=business
+### Request paremters - verified business Customer
 
-For more information on business verified Customers, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer.html)
+For an in-depth look at business verified Customers creation and status handling, refer to our [developer resource article](https://developers.dwolla.com/resources/business-verified-customer.html).
+A verified business Customer must input information on the controller and the Business entity for Dwolla.
 
 | Parameter | Required | Type | Description |
-| ---------------|--------------|--------|----------------|
-| businessName | yes | string | Registered business name. |
-| doingBusinessAs | no | string | Alternative business name. |
-| businessType | yes | string | Business structure. Possible values are `corporation`, `llc`, `partnership`, and `soleProprietorship`. |
-| businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](https://docsv2.dwolla.com/#list-business-classifications) to learn how to generate this Id. |
-| ein | yes | string | Employer Identification Number. **Note:** If the `businessType` is `soleProprietorship`, then ein can be omitted from the request. |
-| controller | conditional | object | A controller JSON object. |
+|-----------|----------|----------------|-----------|
+| firstName | yes | string |The legal first name of the Account Admin or individual signing up the business verified Customer. |
+| lastName | yes | string | The legal last name of the Account Admin or individual signing up the business verified Customer. |
+| email | yes |string	| email address of individual creating and managing the Customer account. |
+| ipAddress | no |string | ipAddress of registering user is recommended. |
+| type | yes | string | Value of: business, |
+| address1 | yes |string | Street number, street name of business’ physical address. |
+| address2 | no |string | Apartment, floor, suite, bldg. # of business’ physical address. |
+| city | yes |string | City of business’ physical address. |
+| state | yes |string | Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
+| postalCode | yes |string | Business’ US five-digit ZIP or ZIP + 4 code. |
+| businessName | yes |string | Registered business name. |
+| doingBusinessAs | no |string | Preferred business name – also known as fictitious name, or assumed name. |
+| businessType | yes |string | Business structure. Possible values are `corporation`, `llc`, `partnership`, and `soleProprietorship`. |
+| businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](https://docsv2.dwolla.com/#list-business-classifications) to learn how to generate this Id.  |
+| ein | yes |string | Employer Identification Number. **Note:** If the `businessType` is `soleProprietorship`, then ein and controller can be omitted from the request. |
+| website | no |string | Business’ website |
+| phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
+| controller | conditional |object | A controller JSON object. Controllers are not required if `businessType` is `soleProprietorship`
 
 ##### Controller JSON object
+
+A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.
 
 | Parameter | Required | Type | Description |
 |----------------|--------------|--------|----------------|
@@ -174,7 +202,7 @@ For more information on business verified Customers, refer to our [developer res
 ##### Controller address JSON object
 
 | Parameter | Required | Type | Description |
-| ---------------|--------------|--------|----------------|
+|----------------|--------------|--------|----------------|
 |  address1 | yes | string | Street number, street name of controller’s physical address. |
 |  address2 | no | string | Apartment, floor, suite, bldg. # of controller’s physical address. |
 |  address3 | no | string | Third line of the street address of the controller's physical address. |
@@ -185,26 +213,96 @@ For more information on business verified Customers, refer to our [developer res
 
 ##### Controller passport JSON object
 
+A controller will only need to input Passport information if they are non-US persons and do not have a social security number.
+
 | Parameter | Required | Type | Description |
-| ---------------|--------------|--------|----------------|
+|----------------|--------------|--------|----------------|
 |  number  | conditional | string | Required if controller is a non-US person and has no Social Security number. |
 |  country | conditional | string | Country of issued passport. |
-
-### Request parameters - receive-only
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer's first name. |
-| lastName | yes | string | Customer's last name. |
-| email | yes | string | Customer's email address. |
-| type | yes | string | Value of `receive-only`. |
-| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
-| ipAddress | no | string | Customer's IP address. |
 
 ### HTTP status and error codes
 | HTTP Status | Message |
 |--------------|-------------|
 | 400 | Duplicate customer or validation error.
 | 403 | Not authorized to create customers.
+
+### Receive-only customer
+
+```raw
+POST https://api-sandbox.dwolla.com/customers
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "firstName": "Jane",
+  "lastName": "Merchant",
+  "email": "jmerchant@nomail.net",
+  "type": "receive-only",
+  "businessName": "Jane Corp llc",
+  "ipAddress": "99.99.99.99"
+}
+
+HTTP/1.1 201 Created
+Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+request_body = {
+  :firstName => 'Jane',
+  :lastName => 'Merchant',
+  :email => 'jmerchant@nomail.net',
+  :type => 'receive-only',
+  :businessName => 'Jane Corp llc',
+  :ipAddress => '99.99.99.99'
+}
+
+customer = app_token.post "customers", request_body
+customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+```
+```php
+<?php
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+
+$customer = $customersApi->create([
+  'firstName' => 'Jane',
+  'lastName' => 'Merchant',
+  'email' => 'jmerchant@nomail.net',
+  'type' => 'receive-only',
+  'businessName' => 'Jane Corp llc',
+  'ipAddress' => '99.99.99.99'
+]);
+$customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+request_body = {
+  'firstName': 'Jane',
+  'lastName': 'Merchant',
+  'email': 'jmerchant@nomail.net',
+  'type': 'receive-only',
+  'businessName': 'Jane Corp llc',
+  'ipAddress': '99.99.99.99'
+}
+
+customer = app_token.post('customers', request_body)
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+```
+```javascript
+var requestBody = {
+  firstName: 'Jane',
+  lastName: 'Merchant',
+  email: 'jmerchant@nomail.net',
+  type: 'receive-only',
+  businessName: 'Jane Corp llc',
+  ipAddress: '99.99.99.99'
+};
+
+appToken
+  .post('customers', requestBody)
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+```
 
 ### Unverified Customer
 
@@ -276,7 +374,7 @@ appToken
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 
-### Verified Customer
+### Verified Personal Customer
 
 ```raw
 POST https://api-sandbox.dwolla.com/customers
@@ -396,82 +494,189 @@ appToken
   .post('customers', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
-### Receive-only customer
+
+### Verified Business Customer
 
 ```raw
 POST https://api-sandbox.dwolla.com/customers
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+Authorization: Bearer 0Sn0W6kzNic+oWhDbQcVSKLRUpGjIdl/YyrHqrDDoRnQwE7Q
 
 {
-  "firstName": "Jane",
-  "lastName": "Merchant",
-  "email": "jmerchant@nomail.net",
-  "type": "receive-only",
-  "businessName": "Jane Corp llc",
-  "ipAddress": "99.99.99.99"
+    "firstName": "Account",
+    "lastName": "Admin",
+    "email": "accountAdmin@email.com",
+    "ipAddress": "143.156.7.8",
+    "type": "business",
+    "address1": "99-99 33rd St",
+    "city": "Some City",
+    "state": "NY",
+    "postalCode": "11101",
+    "controller": {
+        "firstName": "John",
+        "lastName": "Controller",
+        "title": "CEO",
+        "ssn": "6789",
+        "dateOfBirth": "1980-01-31",
+        "address": {
+            "address1": "1749 18th st",
+            "address2": "apt 12",
+            "city": "Des Moines",
+            "stateProvinceRegion": "IA",
+            "postalCode": "50266",
+            "country": "US"
+        }
+    },
+    "businessClassification": "9ed3f670-7d6f-11e3-b1ce-5404a6144203",
+    "businessType": "llc",
+    "businessName":"Jane Corp",
+    "ein":"00-0000000"
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-request_body = {
-  :firstName => 'Jane',
-  :lastName => 'Merchant',
-  :email => 'jmerchant@nomail.net',
-  :type => 'receive-only',
-  :businessName => 'Jane Corp llc',
-  :ipAddress => '99.99.99.99'
-}
-
-customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5
 ```
 ```php
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
+$new_customer = 'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e';
+$new_customer = $customersApi->create([
+  'firstName' => 'Account',
+  'lastName' => 'Admin',
+  'email' => 'accountAdmin@email.com',
+  'type' => 'business',
+  'address1' => '99-99 33rd St',
+  'city' => 'Some City',
+  'state' => 'NY',
+  'postalCode' => '11101',
+  'controller' =>
+  [
+      'firstName' => 'John',
+      'lastName'=> 'Controller',
+      'title' => 'CEO',
+      'dateOfBirth' => '1990-10-10',
+      'ssn' => '1234',
+      'address' =>
+      [
+          'address1' => '18749 18th st',
+          'address2' => 'apt 12',
+          'city' => 'Des Moines',
+          'stateProvinceRegion' => 'IA',
+          'postalCode' => '50265',
+          'country' => 'US'
+      ],
+  ],
+  'phone' => '5554321234',
+  'businessClassification' => '9ed3f670-7d6f-11e3-b1ce-5404a6144203',
+  'businessType' => 'llc',
+  'businessName' => 'Jane Corp',
+  'ein' => '00-0000000']);
 
-$customer = $customersApi->create([
-  'firstName' => 'Jane',
-  'lastName' => 'Merchant',
-  'email' => 'jmerchant@nomail.net',
-  'type' => 'receive-only',
-  'businessName' => 'Jane Corp llc',
-  'ipAddress' => '99.99.99.99'
-]);
-$customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ?>
 ```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 request_body = {
-  'firstName': 'Jane',
-  'lastName': 'Merchant',
-  'email': 'jmerchant@nomail.net',
-  'type': 'receive-only',
-  'businessName': 'Jane Corp llc',
-  'ipAddress': '99.99.99.99'
+  :firstName => 'Account',
+  :lastName => 'Admin',
+  :email => 'accountAdmin@email.com',
+  :type => 'business',
+  :address1 => '99-99 33rd St',
+  :city => 'Some City',
+  :state => 'NY',
+  :postalCode => '11101',
+  :controller => {
+      :firstName => 'John',
+      :lastName => 'Controller',
+      :title => 'CEO',
+      :dateOfBirth => '1980-01-31',
+      :ssn => '1234',
+      :address => {
+        :address1 => '1749 18th st',
+        :address2 => 'apt 12',
+        :city => 'Des Moines',
+        :stateProvinceRegion => 'IA',
+        :postalCode => '50266',
+        :country => 'US',
+      }
+  },
+  :businessClassification => '9ed38155-7d6f-11e3-83c3-5404a6144203',
+  :businessType => 'llc',
+  :businessName => 'Jane Corp',
+  :ein => '12-3456789'
 }
 
+customer = app_token.post "customers", request_body
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5"
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+request_body = {
+  'firstName': 'Account',
+  'lastName': 'Admin',
+  'email': 'accountAdmin@email.com',
+  'type': 'business',
+  'address1': '99-99 33rd St',
+  'city': 'Some City',
+  'state': 'NY',
+  'postalCode': '11101',
+  'controller': {
+      'firstName': 'John',
+      'lastName': 'Controller',
+      'title': 'CEO',
+      'dateOfBirth': '1980-01-31',
+      'ssn': '1234',
+      'address': {
+        'address1': '1749 18th st',
+        'address2': 'apt12',
+        'city': 'Des Moines',
+        'stateProvinceRegion': 'IA',
+        'postalCode': '50266',
+        'country': 'US'
+      }
+  },
+  'businessClassification': '9ed38155-7d6f-11e3-83c3-5404a6144203',
+  'businessType': 'llc',
+  'businessName': 'Jane Corp',
+  'ein': '12-3456789'
+}
 customer = app_token.post('customers', request_body)
-customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'
 ```
 ```javascript
 var requestBody = {
-  firstName: 'Jane',
-  lastName: 'Merchant',
-  email: 'jmerchant@nomail.net',
-  type: 'receive-only',
-  businessName: 'Jane Corp llc',
-  ipAddress: '99.99.99.99'
+  firstName: 'Account',
+  lastName: 'Admin',
+  email: 'accountAdmin@email.com',
+  type: 'business',
+  address1: '99-99 33rd St',
+  city: 'Some City',
+  state: 'NY',
+  postalCode: '11101',
+  controller: {
+      firstName: 'John',
+      lastName: 'Controller',
+      title: 'CEO',
+      dateOfBirth: '1980-01-31',
+      ssn: '1234'
+      address: {
+        address1: '1749 18th st',
+        address2: 'apt 12',
+        city: 'Des Moines',
+        stateProvinceRegion: 'IA',
+        postalCode: '50266',
+        country: 'US',
+      }
+  },
+  businessClassification: '9ed38155-7d6f-11e3-83c3-5404a6144203',
+  businessType: 'llc',
+  businessName: 'Jane Corp',
+  ein: '12-3456789'
 };
-
 appToken
   .post('customers', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'
 ```
 
 ## List business classifications

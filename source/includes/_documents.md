@@ -30,7 +30,7 @@ For more information on handling the Customer verifiation status of `document`, 
 
 ## Create a document
 
-Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, `.tif`, or `.pdf` up to 10MB in size.
+Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
 
 ### HTTP request
 
