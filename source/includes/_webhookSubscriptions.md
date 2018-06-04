@@ -6,7 +6,7 @@ Create a webhook subscription to receive `POST` requests from Dwolla (called web
 Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after **400 consecutive failures**. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling [this endpoint](https://docsv2.dwolla.com/#update-a-webhook-subscription).
 
 ### Acknowledgement and retries
-When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.
+When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.
 
 Dwolla will re-attempt delivery 8 times over the course of 72 hours according the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call [retrieve a webhook by its Id](#retrieve-a-webhook).
 
@@ -61,7 +61,6 @@ request_body = {
   :url => "http://myawesomeapplication.com/destination",
   :secret => "your webhook secret"
 }
-
 subscription = app_token.post "webhook-subscriptions", request_body
 subscription.headers[:location] # => "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
 ```
@@ -70,7 +69,6 @@ var requestBody = {
   url: 'http://myawesomeapplication.com/destination',
   secret: 'your webhook secret'
 };
-
 applicationToken
   .post('webhook-subscriptions', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
@@ -81,14 +79,12 @@ request_body = {
   'url': 'http://myapplication.com/webhooks',
   'secret': 'sshhhhhh'
 }
-
 retries = app_token.post('webhook-subscriptions', request_body)
 retries.body['total'] # => 1
 ```
 ```php
 <?php
 $webhookApi = new DwollaSwagger\WebhooksubscriptionsApi($apiClient);
-
 $subscription = $webhookApi->create(array (
   'url' => 'http://myapplication.com/webhooks',
   'secret' => 'sshhhhhh',
@@ -181,7 +177,6 @@ This section details how to pause a webhook subscription. When a webhook subscri
 | paused | yes | string | Specify a value of `true` to pause the associated webhook subscription or `false` to unpause a paused subscription. |
 
 ### Request and response
-
 ```raw
 POST https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
 Accept: application/vnd.dwolla.v1.hal+json
