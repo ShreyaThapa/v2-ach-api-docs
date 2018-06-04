@@ -1611,7 +1611,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.</p>
 
 <p>For more information on Dwolla API account types, reference the <a href="https://developers.dwolla.com/resources/account-types/access-api-accounts.html">account types</a> resource article.</p>
-<h3 id='receive-only'>Receive-only</h3>
+<h3 id='receive-only-customers'>Receive-only Customers</h3>
 <p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla <code class="prettyprint">Account</code> that created it.</p>
 <h3 id='migrating-dwolla-user-accounts-to-dwolla-api-customers'>Migrating Dwolla user Accounts to Dwolla API Customers</h3>
 <p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
@@ -1780,13 +1780,59 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5554321234"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer. To create <code class="prettyprint">Unverified Customers</code>, you need to provide only the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
+<p>This section details how to create a new Customer. To create <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+
+<p><code class="prettyprint">Unverified Customers</code> will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
 
 <p><code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.</p>
-
-<p>For <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers</code></p>
+<h3 id='request-parameters---receive-only'>Request parameters - receive-only</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s first name.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s last name.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s email address.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of <code class="prettyprint">receive-only</code>.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>Customer&rsquo;s IP address.</td>
+</tr>
+</tbody></table>
 <h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
 <table><thead>
 <tr>
@@ -1827,7 +1873,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Customer&rsquo;s IP address.</td>
 </tr>
 </tbody></table>
-<h3 id='request-parameters---verified-customer'>Request parameters - verified Customer</h3>
+<h3 id='request-parameters---verified-personal-customer'>Request parameters - verified personal Customer</h3>
+<p>For an in-depth look at personal verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/personal-verified-customer.html">developer resource article</a>.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1840,13 +1888,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>An individual Customer&rsquo;s first name. If business, the Account Admin&rsquo;s first name.</td>
+<td>An individual Customer&rsquo;s first name.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>An individual Customer&rsquo;s last name. If business, the Account Admin&rsquo;s last name.</td>
+<td>An individual Customer&rsquo;s last name.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -1864,7 +1912,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>type</td>
 <td>yes</td>
 <td>string</td>
-<td>Either <code class="prettyprint">personal</code> or <code class="prettyprint">business</code>. If business, <a href="#additional-request-parameters-for-verified-customer-with-typebusiness">see below</a> for additional required information.</td>
+<td>The Verified Customer type. Set to <code class="prettyprint">personal</code> if creating a verified personal Customer.</td>
 </tr>
 <tr>
 <td>address1</td>
@@ -1894,13 +1942,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>postalCode</td>
 <td>yes</td>
 <td>string</td>
-<td>Postal code of Customer&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
+<td>Postal code of Customer&rsquo;s permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. <code class="prettyprint">50314</code>.</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer or if business, the controller&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
 </tr>
 <tr>
 <td>ssn</td>
@@ -1912,11 +1960,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>phone</td>
 <td>no</td>
 <td>string</td>
-<td>Customer or if business, controller&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
+<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='additional-request-parameters-for-verified-customer-with-typebusiness'>Additional request parameters for verified Customer with type=business</h3>
-<p>For more information on business verified Customers, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a></p>
+<h3 id='request-paremters---verified-business-customer'>Request paremters - verified business Customer</h3>
+<p>For an in-depth look at business verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a>.
+A verified business Customer must input information on the controller and the Business entity for Dwolla.</p>
 
 <table><thead>
 <tr>
@@ -1927,6 +1976,66 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </thead><tbody>
 <tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal first name of the Account Admin or individual signing up the business verified Customer.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal last name of the Account Admin or individual signing up the business verified Customer.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>email address of individual creating and managing the Customer account.</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>ipAddress of registering user is recommended.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of: business,</td>
+</tr>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>Street number, street name of business’ physical address.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Apartment, floor, suite, bldg. # of business’ physical address.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of business’ physical address.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Business’ US five-digit ZIP or ZIP + 4 code.</td>
+</tr>
+<tr>
 <td>businessName</td>
 <td>yes</td>
 <td>string</td>
@@ -1936,7 +2045,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>doingBusinessAs</td>
 <td>no</td>
 <td>string</td>
-<td>Alternative business name.</td>
+<td>Preferred business name – also known as fictitious name, or assumed name.</td>
 </tr>
 <tr>
 <td>businessType</td>
@@ -1948,22 +2057,36 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>businessClassification</td>
 <td>yes</td>
 <td>string</td>
-<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference our Dev Docs</a> to learn how to generate this Id.</td>
+<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference the next section of our docs</a> to learn how to generate this Id.</td>
 </tr>
 <tr>
 <td>ein</td>
 <td>yes</td>
 <td>string</td>
-<td>Employer Identification Number. <strong>Note:</strong> If the <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code>, then ein can be omitted from the request.</td>
+<td>Employer Identification Number. <strong>Note:</strong> If the <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code>, then ein and controller can be omitted from the request.</td>
+</tr>
+<tr>
+<td>website</td>
+<td>no</td>
+<td>string</td>
+<td>Business’ website</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>no</td>
+<td>string</td>
+<td>Business&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
 </tr>
 <tr>
 <td>controller</td>
 <td>conditional</td>
 <td>object</td>
-<td>A controller JSON object.</td>
+<td>A controller JSON object. Controllers are not required if <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code></td>
 </tr>
 </tbody></table>
 <h5 id='controller-json-object'>Controller JSON object</h5>
+<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2068,6 +2191,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
+<p>A controller will only need to input Passport information if they are non-US persons and do not have a social security number.</p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2089,52 +2214,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Country of issued passport.</td>
 </tr>
 </tbody></table>
-<h3 id='request-parameters---receive-only'>Request parameters - receive-only</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>firstName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s first name.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s last name.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s email address.</td>
-</tr>
-<tr>
-<td>type</td>
-<td>yes</td>
-<td>string</td>
-<td>Value of <code class="prettyprint">receive-only</code>.</td>
-</tr>
-<tr>
-<td>businessName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
-</tr>
-<tr>
-<td>ipAddress</td>
-<td>no</td>
-<td>string</td>
-<td>Customer&rsquo;s IP address.</td>
-</tr>
-</tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
 <table><thead>
 <tr>
@@ -2151,7 +2230,112 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Not authorized to create customers.</td>
 </tr>
 </tbody></table>
-<h3 id='unverified-customer'>Unverified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<h3 id='receive-only-customer'>Receive-only customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "firstName": "Jane",
+  "lastName": "Merchant",
+  "email": "jmerchant@nomail.net",
+  "type": "receive-only",
+  "businessName": "Jane Corp llc",
+  "ipAddress": "99.99.99.99"
+}
+
+HTTP/1.1 201 Created
+Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'Jane'</span><span class="p">,</span>
+  <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Merchant'</span><span class="p">,</span>
+  <span class="ss">:email</span> <span class="o">=&gt;</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
+  <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s1">'receive-only'</span><span class="p">,</span>
+  <span class="ss">:businessName</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
+  <span class="ss">:ipAddress</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
+  <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane'</span><span class="p">,</span>
+  <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Merchant'</span><span class="p">,</span>
+  <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
+  <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'receive-only'</span><span class="p">,</span>
+  <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
+  <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
+<span class="p">]);</span>
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'Jane'</span><span class="p">,</span>
+  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Merchant'</span><span class="p">,</span>
+  <span class="s">'email'</span><span class="p">:</span> <span class="s">'jmerchant@nomail.net'</span><span class="p">,</span>
+  <span class="s">'type'</span><span class="p">:</span> <span class="s">'receive-only'</span><span class="p">,</span>
+  <span class="s">'businessName'</span><span class="p">:</span> <span class="s">'Jane Corp llc'</span><span class="p">,</span>
+  <span class="s">'ipAddress'</span><span class="p">:</span> <span class="s">'99.99.99.99'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="s1">'Jane'</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Merchant'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'receive-only'</span><span class="p">,</span>
+  <span class="na">businessName</span><span class="p">:</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
+  <span class="na">ipAddress</span><span class="p">:</span> <span class="s1">'99.99.99.99'</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+</code></pre></div></div><h3 id='unverified-customer'>Unverified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2248,7 +2432,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-</code></pre></div></div><h3 id='verified-customer'>Verified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</code></pre></div></div><h3 id='verified-personal-customer'>Verified Personal Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2396,7 +2580,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-</code></pre></div></div><h3 id='receive-only-customer'>Receive-only customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</code></pre></div></div><h3 id='verified-business-customer'>Verified Business Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2407,39 +2591,41 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+Authorization: Bearer 0Sn0W6kzNic+oWhDbQcVSKLRUpGjIdl/YyrHqrDDoRnQwE7Q
 
 {
-  "firstName": "Jane",
-  "lastName": "Merchant",
-  "email": "jmerchant@nomail.net",
-  "type": "receive-only",
-  "businessName": "Jane Corp llc",
-  "ipAddress": "99.99.99.99"
+    "firstName": "Account",
+    "lastName": "Admin",
+    "email": "accountAdmin@email.com",
+    "ipAddress": "143.156.7.8",
+    "type": "business",
+    "address1": "99-99 33rd St",
+    "city": "Some City",
+    "state": "NY",
+    "postalCode": "11101",
+    "controller": {
+        "firstName": "John",
+        "lastName": "Controller",
+        "title": "CEO",
+        "ssn": "6789",
+        "dateOfBirth": "1980-01-31",
+        "address": {
+            "address1": "1749 18th st",
+            "address2": "apt 12",
+            "city": "Des Moines",
+            "stateProvinceRegion": "IA",
+            "postalCode": "50266",
+            "country": "US"
+        }
+    },
+    "businessClassification": "9ed3f670-7d6f-11e3-b1ce-5404a6144203",
+    "businessType": "llc",
+    "businessName":"Jane Corp",
+    "ein":"00-0000000"
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
-          <nav>
-              <button class="selector_switch" id="raw">raw</button>
-              <button class="selector_switch" id="php">php</button>
-              <button class="selector_switch" id="ruby">ruby</button>
-              <button class="selector_switch" id="python">python</button>
-              <button class="selector_switch" id="javascript">javascript</button>
-          </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'Jane'</span><span class="p">,</span>
-  <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Merchant'</span><span class="p">,</span>
-  <span class="ss">:email</span> <span class="o">=&gt;</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
-  <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s1">'receive-only'</span><span class="p">,</span>
-  <span class="ss">:businessName</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
-  <span class="ss">:ipAddress</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
-<span class="p">}</span>
-
-<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2450,17 +2636,81 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$new_customer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e'</span><span class="p">;</span>
+<span class="nv">$new_customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
+  <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Account'</span><span class="p">,</span>
+  <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Admin'</span><span class="p">,</span>
+  <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'accountAdmin@email.com'</span><span class="p">,</span>
+  <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'business'</span><span class="p">,</span>
+  <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+  <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Some City'</span><span class="p">,</span>
+  <span class="s1">'state'</span> <span class="o">=&gt;</span> <span class="s1">'NY'</span><span class="p">,</span>
+  <span class="s1">'postalCode'</span> <span class="o">=&gt;</span> <span class="s1">'11101'</span><span class="p">,</span>
+  <span class="s1">'controller'</span> <span class="o">=&gt;</span>
+  <span class="p">[</span>
+      <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
+      <span class="s1">'lastName'</span><span class="o">=&gt;</span> <span class="s1">'Controller'</span><span class="p">,</span>
+      <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'CEO'</span><span class="p">,</span>
+      <span class="s1">'dateOfBirth'</span> <span class="o">=&gt;</span> <span class="s1">'1990-10-10'</span><span class="p">,</span>
+      <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span><span class="p">,</span>
+      <span class="s1">'address'</span> <span class="o">=&gt;</span>
+      <span class="p">[</span>
+          <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'18749 18th st'</span><span class="p">,</span>
+          <span class="s1">'address2'</span> <span class="o">=&gt;</span> <span class="s1">'apt 12'</span><span class="p">,</span>
+          <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+          <span class="s1">'stateProvinceRegion'</span> <span class="o">=&gt;</span> <span class="s1">'IA'</span><span class="p">,</span>
+          <span class="s1">'postalCode'</span> <span class="o">=&gt;</span> <span class="s1">'50265'</span><span class="p">,</span>
+          <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'US'</span>
+      <span class="p">],</span>
+  <span class="p">],</span>
+  <span class="s1">'phone'</span> <span class="o">=&gt;</span> <span class="s1">'5554321234'</span><span class="p">,</span>
+  <span class="s1">'businessClassification'</span> <span class="o">=&gt;</span> <span class="s1">'9ed3f670-7d6f-11e3-b1ce-5404a6144203'</span><span class="p">,</span>
+  <span class="s1">'businessType'</span> <span class="o">=&gt;</span> <span class="s1">'llc'</span><span class="p">,</span>
+  <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+  <span class="s1">'ein'</span> <span class="o">=&gt;</span> <span class="s1">'00-0000000'</span><span class="p">]);</span>
 
-<span class="nv">$customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
-  <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane'</span><span class="p">,</span>
-  <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Merchant'</span><span class="p">,</span>
-  <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
-  <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'receive-only'</span><span class="p">,</span>
-  <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
-  <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
-<span class="p">]);</span>
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
-</span><span class="cp">?&gt;</span>
+<span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'Account'</span><span class="p">,</span>
+  <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Admin'</span><span class="p">,</span>
+  <span class="ss">:email</span> <span class="o">=&gt;</span> <span class="s1">'accountAdmin@email.com'</span><span class="p">,</span>
+  <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s1">'business'</span><span class="p">,</span>
+  <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+  <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Some City'</span><span class="p">,</span>
+  <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">'NY'</span><span class="p">,</span>
+  <span class="ss">:postalCode</span> <span class="o">=&gt;</span> <span class="s1">'11101'</span><span class="p">,</span>
+  <span class="ss">:controller</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
+      <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Controller'</span><span class="p">,</span>
+      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="s1">'CEO'</span><span class="p">,</span>
+      <span class="ss">:dateOfBirth</span> <span class="o">=&gt;</span> <span class="s1">'1980-01-31'</span><span class="p">,</span>
+      <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span><span class="p">,</span>
+      <span class="ss">:address</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'1749 18th st'</span><span class="p">,</span>
+        <span class="ss">:address2</span> <span class="o">=&gt;</span> <span class="s1">'apt 12'</span><span class="p">,</span>
+        <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+        <span class="ss">:stateProvinceRegion</span> <span class="o">=&gt;</span> <span class="s1">'IA'</span><span class="p">,</span>
+        <span class="ss">:postalCode</span> <span class="o">=&gt;</span> <span class="s1">'50266'</span><span class="p">,</span>
+        <span class="ss">:country</span> <span class="o">=&gt;</span> <span class="s1">'US'</span><span class="p">,</span>
+      <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">:businessClassification</span> <span class="o">=&gt;</span> <span class="s1">'9ed38155-7d6f-11e3-83c3-5404a6144203'</span><span class="p">,</span>
+  <span class="ss">:businessType</span> <span class="o">=&gt;</span> <span class="s1">'llc'</span><span class="p">,</span>
+  <span class="ss">:businessName</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+  <span class="ss">:ein</span> <span class="o">=&gt;</span> <span class="s1">'12-3456789'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2469,18 +2719,38 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'Jane'</span><span class="p">,</span>
-  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Merchant'</span><span class="p">,</span>
-  <span class="s">'email'</span><span class="p">:</span> <span class="s">'jmerchant@nomail.net'</span><span class="p">,</span>
-  <span class="s">'type'</span><span class="p">:</span> <span class="s">'receive-only'</span><span class="p">,</span>
-  <span class="s">'businessName'</span><span class="p">:</span> <span class="s">'Jane Corp llc'</span><span class="p">,</span>
-  <span class="s">'ipAddress'</span><span class="p">:</span> <span class="s">'99.99.99.99'</span>
+  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'Account'</span><span class="p">,</span>
+  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Admin'</span><span class="p">,</span>
+  <span class="s">'email'</span><span class="p">:</span> <span class="s">'accountAdmin@email.com'</span><span class="p">,</span>
+  <span class="s">'type'</span><span class="p">:</span> <span class="s">'business'</span><span class="p">,</span>
+  <span class="s">'address1'</span><span class="p">:</span> <span class="s">'99-99 33rd St'</span><span class="p">,</span>
+  <span class="s">'city'</span><span class="p">:</span> <span class="s">'Some City'</span><span class="p">,</span>
+  <span class="s">'state'</span><span class="p">:</span> <span class="s">'NY'</span><span class="p">,</span>
+  <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'11101'</span><span class="p">,</span>
+  <span class="s">'controller'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'John'</span><span class="p">,</span>
+      <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Controller'</span><span class="p">,</span>
+      <span class="s">'title'</span><span class="p">:</span> <span class="s">'CEO'</span><span class="p">,</span>
+      <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1980-01-31'</span><span class="p">,</span>
+      <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'1234'</span><span class="p">,</span>
+      <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'address1'</span><span class="p">:</span> <span class="s">'1749 18th st'</span><span class="p">,</span>
+        <span class="s">'address2'</span><span class="p">:</span> <span class="s">'apt12'</span><span class="p">,</span>
+        <span class="s">'city'</span><span class="p">:</span> <span class="s">'Des Moines'</span><span class="p">,</span>
+        <span class="s">'stateProvinceRegion'</span><span class="p">:</span> <span class="s">'IA'</span><span class="p">,</span>
+        <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'50266'</span><span class="p">,</span>
+        <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span>
+      <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'businessClassification'</span><span class="p">:</span> <span class="s">'9ed38155-7d6f-11e3-83c3-5404a6144203'</span><span class="p">,</span>
+  <span class="s">'businessType'</span><span class="p">:</span> <span class="s">'llc'</span><span class="p">,</span>
+  <span class="s">'businessName'</span><span class="p">:</span> <span class="s">'Jane Corp'</span><span class="p">,</span>
+  <span class="s">'ein'</span><span class="p">:</span> <span class="s">'12-3456789'</span>
 <span class="p">}</span>
-
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2490,17 +2760,37 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">firstName</span><span class="p">:</span> <span class="s1">'Jane'</span><span class="p">,</span>
-  <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Merchant'</span><span class="p">,</span>
-  <span class="na">email</span><span class="p">:</span> <span class="s1">'jmerchant@nomail.net'</span><span class="p">,</span>
-  <span class="na">type</span><span class="p">:</span> <span class="s1">'receive-only'</span><span class="p">,</span>
-  <span class="na">businessName</span><span class="p">:</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
-  <span class="na">ipAddress</span><span class="p">:</span> <span class="s1">'99.99.99.99'</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="s1">'Account'</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Admin'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'accountAdmin@email.com'</span><span class="p">,</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'business'</span><span class="p">,</span>
+  <span class="na">address1</span><span class="p">:</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+  <span class="na">city</span><span class="p">:</span> <span class="s1">'Some City'</span><span class="p">,</span>
+  <span class="na">state</span><span class="p">:</span> <span class="s1">'NY'</span><span class="p">,</span>
+  <span class="na">postalCode</span><span class="p">:</span> <span class="s1">'11101'</span><span class="p">,</span>
+  <span class="na">controller</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">firstName</span><span class="p">:</span> <span class="s1">'John'</span><span class="p">,</span>
+      <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Controller'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="s1">'CEO'</span><span class="p">,</span>
+      <span class="na">dateOfBirth</span><span class="p">:</span> <span class="s1">'1980-01-31'</span><span class="p">,</span>
+      <span class="na">ssn</span><span class="p">:</span> <span class="s1">'1234'</span>
+      <span class="na">address</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">address1</span><span class="p">:</span> <span class="s1">'1749 18th st'</span><span class="p">,</span>
+        <span class="na">address2</span><span class="p">:</span> <span class="s1">'apt 12'</span><span class="p">,</span>
+        <span class="na">city</span><span class="p">:</span> <span class="s1">'Des Moines'</span><span class="p">,</span>
+        <span class="na">stateProvinceRegion</span><span class="p">:</span> <span class="s1">'IA'</span><span class="p">,</span>
+        <span class="na">postalCode</span><span class="p">:</span> <span class="s1">'50266'</span><span class="p">,</span>
+        <span class="na">country</span><span class="p">:</span> <span class="s1">'US'</span><span class="p">,</span>
+      <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">businessClassification</span><span class="p">:</span> <span class="s1">'9ed38155-7d6f-11e3-83c3-5404a6144203'</span><span class="p">,</span>
+  <span class="na">businessType</span><span class="p">:</span> <span class="s1">'llc'</span><span class="p">,</span>
+  <span class="na">businessName</span><span class="p">:</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+  <span class="na">ein</span><span class="p">:</span> <span class="s1">'12-3456789'</span>
 <span class="p">};</span>
-
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'</span>
 </code></pre></div></div><h2 id='list-business-classifications'>List business classifications</h2>
 <p>Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a <code class="prettyprint">business</code> in order to better analyze the nature of a business.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -5787,7 +6077,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$certifyCustomer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">changeOwnershipStatus</span><span class="p">([</span><span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="s1">'certified'</span> <span class="p">],</span> <span class="nv">$customerId</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='create-a-document-for-a-beneficial-owner'>Create a document for a beneficial owner</h2>
-<p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, <code class="prettyprint">.tif</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
+<p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}/documents</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -6152,7 +6442,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-29T21:42:16.000Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-document'>Create a document</h2>
-<p>Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, <code class="prettyprint">.tif</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
+<p>Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/documents</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -10282,7 +10572,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
-<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
+<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.</p>
 
 <p>Dwolla will re-attempt delivery 8 times over the course of 72 hours according the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call <a href="#retrieve-a-webhook">retrieve a webhook by its Id</a>.</p>
 
@@ -10413,7 +10703,6 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="ss">:url</span> <span class="o">=&gt;</span> <span class="s2">"http://myawesomeapplication.com/destination"</span><span class="p">,</span>
   <span class="ss">:secret</span> <span class="o">=&gt;</span> <span class="s2">"your webhook secret"</span>
 <span class="p">}</span>
-
 <span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"webhook-subscriptions"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">subscription</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -10428,7 +10717,6 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="na">url</span><span class="p">:</span> <span class="s1">'http://myawesomeapplication.com/destination'</span><span class="p">,</span>
   <span class="na">secret</span><span class="p">:</span> <span class="s1">'your webhook secret'</span>
 <span class="p">};</span>
-
 <span class="nx">applicationToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
@@ -10445,7 +10733,6 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="s">'url'</span><span class="p">:</span> <span class="s">'http://myapplication.com/webhooks'</span><span class="p">,</span>
   <span class="s">'secret'</span><span class="p">:</span> <span class="s">'sshhhhhh'</span>
 <span class="p">}</span>
-
 <span class="n">retries</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'webhook-subscriptions'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">retries</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 1</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -10458,7 +10745,6 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$webhookApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\WebhooksubscriptionsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
-
 <span class="nv">$subscription</span> <span class="o">=</span> <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="k">array</span> <span class="p">(</span>
   <span class="s1">'url'</span> <span class="o">=&gt;</span> <span class="s1">'http://myapplication.com/webhooks'</span><span class="p">,</span>
   <span class="s1">'secret'</span> <span class="o">=&gt;</span> <span class="s1">'sshhhhhh'</span><span class="p">,</span>
