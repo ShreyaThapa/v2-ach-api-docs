@@ -709,7 +709,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='accounts'>Accounts</h1>
-<p>An <code class="prettyprint">Account</code> represents a Dwolla API partner Dwolla account that was established on dwolla.com.</p>
+<p>An <code class="prettyprint">Account</code> represents your Dwolla Master Account that was established on dwolla.com.</p>
 <h3 id='migrating-transfer-user-accounts-to-dwolla-api-customers'>Migrating Transfer user Accounts to Dwolla API Customers</h3>
 <p>Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='account-links'>Account links</h3>
@@ -938,7 +938,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla API</a> partners.</td>
+<td>An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla</a> customers.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -1606,7 +1606,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='customers'>Customers</h1>
 <p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/platform">the Dwolla API</a>, a premium product that only approved partners may access in production. To learn more about entering into a Dwolla API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/platform">the Dwolla API</a>, a premium product that only approved customers may access in production. To learn more about entering into a Dwolla API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 </li></ol><h3 id='verified-and-unverified-customers'>Verified and unverified Customers</h3>
 <p>With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.</p>
 
@@ -4015,7 +4015,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>channels</td>
 <td>no</td>
 <td>array</td>
-<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla API</a> partners.</td>
+<td>An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: &ldquo;wire&rdquo;. e.g. <code class="prettyprint">“channels”: [ “wire” ]</code>. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. <strong>Note:</strong> <code class="prettyprint">channels</code> is a premium feature that must be enabled on your account and is only available to select <a href="https://www.dwolla.com/platform">Dwolla</a> customers.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -7865,7 +7865,7 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application.</td>
+<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -7960,13 +7960,13 @@ HTTP 200 OK
 <td>clearing</td>
 <td>no</td>
 <td>object</td>
-<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla API</a> partners. Next-day ACH functionality must be enabled.</td>
+<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Next-day ACH functionality must be enabled.</td>
 </tr>
 <tr>
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
@@ -8793,7 +8793,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and a partner application.</td>
+<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -8831,7 +8831,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d028beed-8152-481d-9427-21b6c4d99644"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-mass-payment'>Initiate a mass payment</h2>
-<p>This section covers how to initiate a mass payment from a Partner Dwolla <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> and a <code class="prettyprint">correlationId</code> on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a <code class="prettyprint">correlationId</code> is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.</p>
+<p>This section covers how to initiate a mass payment from your Dwolla Master <a href="#accounts">Account</a> or Verified <a href="#customers">Customer</a> resource. A mass payment contains a list of <code class="prettyprint">items</code> representing individual payments. Optionally, mass payments can contain <code class="prettyprint">metadata</code> and a <code class="prettyprint">correlationId</code> on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a <code class="prettyprint">correlationId</code> is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.</p>
 <h3 id='deferred-mass-payment'>Deferred mass payment</h3>
 <p>A mass payment can be created with a status of <code class="prettyprint">deferred</code>, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you&rsquo;ll <a href="https://docsv2.dwolla.com/#update-a-mass-payment">update the mass payment</a> with a status of <code class="prettyprint">pending</code>. A deferred mass payment can be cancelled by updating the mass payment with a status of <code class="prettyprint">cancelled</code>.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -8873,7 +8873,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3>
@@ -8940,7 +8940,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h4 id='item-object-example'>Item object example</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -9940,7 +9940,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"topic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer_created"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"resourceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48CFDDB4-1E74-E511-80DB-0AA34A9B2388"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='partner-dwolla-account-event-topics'>Partner Dwolla Account Event topics</h3><h5 id='accounts'>Accounts</h5>
+</span></code></pre></div></div><h3 id='dwolla-master-account-event-topics'>Dwolla Master Account Event topics</h3><h5 id='accounts'>Accounts</h5>
 <table><thead>
 <tr>
 <th>Topic</th>
@@ -9949,11 +9949,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>account_suspended</td>
-<td>An account was suspended.</td>
+<td>A Dwolla Master Account was suspended.</td>
 </tr>
 <tr>
 <td>account_activated</td>
-<td>A Dwolla account moves from deactivated or suspended to active state of verification.</td>
+<td>A Dwolla Master Account moves from deactivated or suspended to active state of verification.</td>
 </tr>
 </tbody></table>
 <h5 id='funding-sources'>Funding Sources</h5>
@@ -9977,23 +9977,23 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>funding_source_negative</td>
-<td>A Partner&rsquo;s account <code class="prettyprint">balance</code> has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for their accounts. If a Partner balance funding source has gone negative, they are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source.</td>
+<td>A Dwolla Master account <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
 </tr>
 <tr>
 <td>microdeposits_added</td>
-<td>Two &lt;=10¢ transfers to a Dwolla account’s linked bank account were initiated.</td>
+<td>Two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account were initiated.</td>
 </tr>
 <tr>
 <td>microdeposits_failed</td>
-<td>The two &lt;=10¢ transfers to a Dwolla account’s linked bank account failed to clear successfully.</td>
+<td>The two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account failed to clear successfully.</td>
 </tr>
 <tr>
 <td>microdeposits_completed</td>
-<td>The two &lt;=10¢ transfers to a Dwolla account’s linked bank account have cleared successfully.</td>
+<td>The two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account have cleared successfully.</td>
 </tr>
 <tr>
 <td>microdeposits_maxattempts</td>
-<td>The account has reached their max verification attempts limit of three. The account can no longer verify their funding source with the completed micro-deposit amounts.</td>
+<td>The funding source has reached its max verification attempts limit of three. The funding source can no longer be verified with the completed micro-deposit amounts.</td>
 </tr>
 </tbody></table>
 <h5 id='transfers'>Transfers</h5>
@@ -10165,7 +10165,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customer_funding_source_negative</td>
-<td>A Customer&rsquo;s <code class="prettyprint">balance</code> has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by their application. If a Customer balance funding source has gone negative, Partners are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source.</td>
+<td>A Customer&rsquo;s <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by your application. If a Customer balance funding source has gone negative, you are responsible for making the Dwolla Customer account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
 </tr>
 <tr>
 <td>customer_microdeposits_added</td>
@@ -10568,9 +10568,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most Partners maintain one webhook subsciption, you can have up to <strong>ten</strong> active webhook subsciptions at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to <strong>ten</strong> active webhook subscription at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
-<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
+<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
 <p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.</p>
 

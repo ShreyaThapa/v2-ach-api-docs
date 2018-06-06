@@ -2826,7 +2826,7 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application.</td>
+<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -2900,7 +2900,7 @@ HTTP 200 OK
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
@@ -3601,7 +3601,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and a partner application.</td>
+<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -3682,7 +3682,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3>
@@ -3739,7 +3739,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
 <h4 id='item-object-example'>Item object example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -4976,9 +4976,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are a Dwolla API partner, you will use these events to notify your customers via email as described in the Dwolla API terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. If you are a Dwolla API customer, you will use these events to notify your customers via email as described in the Dwolla API terms of service. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h5 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h5>
-<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API partners. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
+<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us to ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
 <p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 20 seconds of the attempt, another attempt will be made.</p>
 
