@@ -32,14 +32,14 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 }
 ```
 
-### Partner Dwolla Account Event topics
+### Dwolla Master Account Event topics
 
 ##### Accounts
 
 | Topic          | Description           |
 |--------------|-------------------------|
-| account_suspended | An account was suspended. |
-| account_activated | A Dwolla account moves from deactivated or suspended to active state of verification. |
+| account_suspended | A Dwolla Master Account was suspended. |
+| account_activated | A Dwolla Master Account moves from deactivated or suspended to active state of verification. |
 
 ##### Funding Sources
 
@@ -48,11 +48,11 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | funding_source_added | A funding source was added to a Dwolla account. |
 | funding_source_removed |  A funding source was removed from a Dwolla account. |
 | funding_source_verified | A funding source was marked as `verified`. |
-| funding_source_negative | A Partner's account `balance` has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for their accounts. If a Partner balance funding source has gone negative, they are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source. |
-| microdeposits_added | Two <=10¢ transfers to a Dwolla account’s linked bank account were initiated. |
-| microdeposits_failed | The two <=10¢ transfers to a Dwolla account’s linked bank account failed to clear successfully. |
-| microdeposits_completed | The two <=10¢ transfers to a Dwolla account’s linked bank account have cleared successfully. |
-| microdeposits_maxattempts | The account has reached their max verification attempts limit of three. The account can no longer verify their funding source with the completed micro-deposit amounts. |
+| funding_source_negative | A Dwolla Master account `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
+| microdeposits_added | Two <=10¢ transfers to a Dwolla Master account’s linked bank account were initiated. |
+| microdeposits_failed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account failed to clear successfully. |
+| microdeposits_completed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account have cleared successfully. |
+| microdeposits_maxattempts | The funding source has reached its max verification attempts limit of three. The funding source can no longer be verified with the completed micro-deposit amounts. |
 
 ##### Transfers
 
@@ -112,7 +112,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_funding_source_added | A funding source was added to a Customer. |
 | customer_funding_source_removed | A funding source was removed from a Customer. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
-| customer_funding_source_negative | A Customer's `balance` has gone negative. Partners are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by their application. If a Customer balance funding source has gone negative, Partners are responsible for making the Dwolla account whole. Dwolla will notify Partners via webhook and separate email of the negative balance. If no action is taken, Dwolla will debit the Partner’s billing source. |
+| customer_funding_source_negative | A Customer's `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by your application. If a Customer balance funding source has gone negative, you are responsible for making the Dwolla Customer account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
 | customer_microdeposits_added | Two <=10¢ transfers to a Customer’s linked bank account were initiated. |
 | customer_microdeposits_failed | The two <=10¢ transfers to a Customer’s linked bank account failed to clear successfully. |
 | customer_microdeposits_completed | The two <=10¢ transfers to a Customer’s linked bank account have cleared successfully. |
