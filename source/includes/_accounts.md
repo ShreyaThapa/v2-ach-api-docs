@@ -1,6 +1,6 @@
 # Accounts
 
-An `Account` represents a Dwolla API partner Dwolla account that was established on dwolla.com.
+An `Account` represents your Dwolla Master Account that was established on dwolla.com.
 
 ### Migrating Transfer user Accounts to Dwolla API Customers
 Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).

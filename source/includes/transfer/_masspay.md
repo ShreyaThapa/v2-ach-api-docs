@@ -16,7 +16,7 @@ MassPayment offers a significant advantage over repeatedly calling the [Transfer
 | metadata | A metadata JSON object. |
 | total | The sum amount of all items in the mass payment. |
 | totalFees | The sum amount of all fees charged for the mass payment. |
-| correlationId | A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and a partner application. |
+| correlationId | A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and your application. |
 
 ```noselect
 {
@@ -76,7 +76,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items | yes | array | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item) |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | status | no | string | Acceptable value is: `deferred`. |
-| correlationId | no | string | A unique string value attached to a mass payment which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| correlationId | no | string | A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination values
 
@@ -96,7 +96,7 @@ Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or
 | _links | A _links JSON object describing the desired `destination` of a mass payment. [See above](#source-and-destination-values) for possible values for `destination`. |
 | amount | An amount JSON object containing `currency` and `value` keys.
 | metadata | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).
-| correlationId | A unique string value attached to a mass payment item which can be used for traceability between Dwolla and a partner application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| correlationId | A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 #### Item object example:
 ```noselect

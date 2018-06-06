@@ -12,7 +12,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | created | ISO-8601 timestamp |
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
-| correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and a partner application. |
+| correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
 
 ```noselect
 {
@@ -55,7 +55,7 @@ This section covers how to initiate a transfer from a Dwolla [Account](#accounts
 | amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination types
 
