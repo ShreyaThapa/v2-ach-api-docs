@@ -140,7 +140,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 | routingNumber | yes | string | The bank account's routing number. |
 | bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
 | name | yes | string | Arbitrary nickname for the funding source. |
-| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla API](https://www.dwolla.com/platform) partners. |
+| channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
 
 ### HTTP status and error codes
 | HTTP Status | Message |
