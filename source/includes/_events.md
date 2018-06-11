@@ -49,6 +49,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | funding_source_removed |  A funding source was removed from a Dwolla account. |
 | funding_source_verified | A funding source was marked as `verified`. |
 | funding_source_negative | A Dwolla Master account `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
+| funding_source_updated | A funding source has been updated. This can also be fired as a result of a correction after a bank transfer processes. For example, a financial institution can issue a correction to change the bank account `type` from `checking` to `savings`. |
 | microdeposits_added | Two <=10¢ transfers to a Dwolla Master account’s linked bank account were initiated. |
 | microdeposits_failed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account failed to clear successfully. |
 | microdeposits_completed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account have cleared successfully. |
@@ -113,6 +114,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_funding_source_removed | A funding source was removed from a Customer. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
 | customer_funding_source_negative | A Customer's `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by your application. If a Customer balance funding source has gone negative, you are responsible for making the Dwolla Customer account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
+| customer_funding_source_updated | A Customer's funding source has been updated. This can also be fired as a result of a correction after a bank transfer processes. For example, a financial institution can issue a correction to change the bank account `type` from `checking` to `savings`. |
 | customer_microdeposits_added | Two <=10¢ transfers to a Customer’s linked bank account were initiated. |
 | customer_microdeposits_failed | The two <=10¢ transfers to a Customer’s linked bank account failed to clear successfully. |
 | customer_microdeposits_completed | The two <=10¢ transfers to a Customer’s linked bank account have cleared successfully. |
