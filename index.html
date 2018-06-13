@@ -9980,6 +9980,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A Dwolla Master account <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
 </tr>
 <tr>
+<td>funding_source_updated</td>
+<td>A funding source has been updated. This can also be fired as a result of a correction after a bank transfer processes. For example, a financial institution can issue a correction to change the bank account <code class="prettyprint">type</code> from <code class="prettyprint">checking</code> to <code class="prettyprint">savings</code>.</td>
+</tr>
+<tr>
 <td>microdeposits_added</td>
 <td>Two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account were initiated.</td>
 </tr>
@@ -10166,6 +10170,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_funding_source_negative</td>
 <td>A Customer&rsquo;s <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for Customer accounts created by your application. If a Customer balance funding source has gone negative, you are responsible for making the Dwolla Customer account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
+</tr>
+<tr>
+<td>customer_funding_source_updated</td>
+<td>A Customer&rsquo;s funding source has been updated. This can also be fired as a result of a correction after a bank transfer processes. For example, a financial institution can issue a correction to change the bank account <code class="prettyprint">type</code> from <code class="prettyprint">checking</code> to <code class="prettyprint">savings</code>.</td>
 </tr>
 <tr>
 <td>customer_microdeposits_added</td>
