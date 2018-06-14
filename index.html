@@ -7141,7 +7141,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test Checking - 1234"</span>
 </code></pre></div></div><h2 id='retrieve-a-funding-source-balance'>Retrieve a funding source balance</h2>
-<p>This section covers how to retrieve the <code class="prettyprint">balance</code> of a funding source. The funding source can be either of type <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</p>
+<p>This section covers how to retrieve the <code class="prettyprint">balance</code> of a funding source. The funding source type <code class="prettyprint">balance</code> only exists for <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer</a> accounts and represents a balance held in the Dwolla network. </p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/funding-sources/{id}/balance</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
