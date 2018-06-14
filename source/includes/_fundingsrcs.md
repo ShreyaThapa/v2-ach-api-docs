@@ -222,7 +222,7 @@ appToken
 
 ## Retrieve a funding source balance
 
-This section covers how to retrieve the `balance` of a funding source. The funding source can be either of type `balance` or `bank`.
+This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network. 
 
 ### HTTP request
 `GET https://api.dwolla.com/funding-sources/{id}/balance`
