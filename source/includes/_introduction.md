@@ -10,7 +10,7 @@ Requests must be made over HTTPS.  Any non-secure requests are met with a redire
 
 <ol class = "alerts">
     <li class="alert icon-alert-info">
-      Dwolla will discontinue support for TLS 1.0 and TLS 1.1 across the platform on June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher. This change will occur in Dwolla’s sandbox environment on May 30, 2018. We recommend that you test your Dwolla integrations to ensure a seamless transition.
+      Dwolla has discontinued support for TLS 1.0 and TLS 1.1 across the platform as of June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher.
   </li>
 </ol>
 
