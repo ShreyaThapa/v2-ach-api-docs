@@ -147,7 +147,7 @@
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
 <p>Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
-<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla will discontinue support for TLS 1.0 and TLS 1.1 across the platform on June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher. This change will occur in Dwolla’s sandbox environment on May 30, 2018. We recommend that you test your Dwolla integrations to ensure a seamless transition.</p>
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla has discontinued support for TLS 1.0 and TLS 1.1 across the platform as of June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher.</p>
 </li></ol><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -1606,15 +1606,18 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='customers'>Customers</h1>
 <p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines functionality for <a href="https://www.dwolla.com/platform">the Dwolla API</a>, a premium product that only approved customers may access in production. To learn more about entering into a Dwolla API agreement, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
-</li></ol><h3 id='verified-and-unverified-customers'>Verified and unverified Customers</h3>
-<p>With a transfer of money, at least one party must complete the identity verification process, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Customer is sending funds to or receiving funds from your account, the Customer can remain unverified because your account is already verified. However, if you need to transfer funds between your Customers, at least one of them will need to be verified.</p>
+<h3 id='customer-types'>Customer types</h3>
+<p>With a transfer of money, <em>at least one party must complete the identity verification process</em>, either the sender or the receiver. This can be either the Dwolla Master Account itself or a <code class="prettyprint">verified</code> Customer type. Based on your business model and funds flow, it’s your decision about which party completes this process&ndash; you may even want to have both parties complete the identity verification process. A brief description of each Customer type is below, but for a more in-depth overview of each Customer type and what their capabilities are, check out our <a href="https://developers.dwolla.com/resources/account-types.html">developer resource article</a>.</p>
+<h5 id='receive-only-customers'>Receive-only Customers</h5>
+<p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; funds flow. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account. This Customer type can only interact with verified Customers and a Dwolla Master Account.</p>
+<h5 id='unverified-customers'>Unverified Customers</h5>
+<p>Unverified Customers have a default sending transaction limit of $5,000 per week. A week is defined as Monday to Sunday UTC time. As this Customer is not identity verified, they will only be able to transact with verified Customers or your Dwolla Master Account.</p>
+<h5 id='verified-customers'>Verified Customers</h5>
+<p>Verified Customers are defined by their ability to both send and receive money, thus, being able to fit all funds flows. They can also interact with any Customer type and hold a <code class="prettyprint">balance</code> funding source within the Dwolla network. Think of the Dwolla <code class="prettyprint">balance</code> as a &ldquo;wallet&rdquo; which a Customer can send, receive, or hold funds to within the Dwolla network. With no weekly transfer limits, this Customer type is flexible for high transaction volumes.</p>
 
-<p>For more information on Dwolla API account types, reference the <a href="https://developers.dwolla.com/resources/account-types/access-api-accounts.html">account types</a> resource article.</p>
-<h3 id='receive-only-customers'>Receive-only Customers</h3>
-<p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; business model. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account from the Dwolla <code class="prettyprint">Account</code> that created it.</p>
+<p>A verified Customer can be created as a type of either <code class="prettyprint">Personal</code> or <code class="prettyprint">Business</code>.</p>
 <h3 id='migrating-dwolla-user-accounts-to-dwolla-api-customers'>Migrating Dwolla user Accounts to Dwolla API Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading from our V1 API or Transfer API to the current V2 Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='customer-links'>Customer links</h3>
 <table><thead>
 <tr>
@@ -1780,14 +1783,32 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5554321234"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer. To create <code class="prettyprint">Receive-only Customers</code>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p>This section details how to create a new Customer.</p>
 
-<p><code class="prettyprint">Unverified Customers</code> will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
+<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Customers</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 
-<p><code class="prettyprint">Verified Customers</code> require additional information that will give Dwolla the ability to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For businesses, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.</p>
+<p><a href="/#request-parameters---unverified-customer"><strong>To create <code class="prettyprint">Unverified Customers</code></strong></a>, you will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
+
+<p><a href="/#request-parameters---verified-strongpersonalstrong-customer"><strong>To create <code class="prettyprint">Verified Customers</code></strong></a>, Dwolla will require additional information to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For <a href="/#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only">businesses</a>, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers</code></p>
-<h3 id='request-parameters---receive-only'>Request parameters - receive-only</h3>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Duplicate customer or validation error.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Not authorized to create customers.</td>
+</tr>
+</tbody></table>
+<h3 id='request-parameters---receive-only-customer'>Request parameters - receive-only Customer</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1833,404 +1854,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Customer&rsquo;s IP address.</td>
 </tr>
 </tbody></table>
-<h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>firstName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s first name.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s last name.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s email address.</td>
-</tr>
-<tr>
-<td>businessName</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
-</tr>
-<tr>
-<td>ipAddress</td>
-<td>no</td>
-<td>string</td>
-<td>Customer&rsquo;s IP address.</td>
-</tr>
-</tbody></table>
-<h3 id='request-parameters---verified-personal-customer'>Request parameters - verified personal Customer</h3>
-<p>For an in-depth look at personal verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/personal-verified-customer.html">developer resource article</a>.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>firstName</td>
-<td>yes</td>
-<td>string</td>
-<td>An individual Customer&rsquo;s first name.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>yes</td>
-<td>string</td>
-<td>An individual Customer&rsquo;s last name.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s email address.</td>
-</tr>
-<tr>
-<td>ipAddress</td>
-<td>no</td>
-<td>string</td>
-<td>Customer&rsquo;s IP address.</td>
-</tr>
-<tr>
-<td>type</td>
-<td>yes</td>
-<td>string</td>
-<td>The Verified Customer type. Set to <code class="prettyprint">personal</code> if creating a verified personal Customer.</td>
-</tr>
-<tr>
-<td>address1</td>
-<td>yes</td>
-<td>string</td>
-<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
-</tr>
-<tr>
-<td>address2</td>
-<td>no</td>
-<td>string</td>
-<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
-</tr>
-<tr>
-<td>city</td>
-<td>yes</td>
-<td>string</td>
-<td>City of Customer&rsquo;s permanent residence.</td>
-</tr>
-<tr>
-<td>state</td>
-<td>yes</td>
-<td>string</td>
-<td>Two letter abbreviation of the state in which the Customer resides, e.g. <code class="prettyprint">CA</code>.</td>
-</tr>
-<tr>
-<td>postalCode</td>
-<td>yes</td>
-<td>string</td>
-<td>Postal code of Customer&rsquo;s permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. <code class="prettyprint">50314</code>.</td>
-</tr>
-<tr>
-<td>dateOfBirth</td>
-<td>yes</td>
-<td>string</td>
-<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
-</tr>
-<tr>
-<td>ssn</td>
-<td>yes</td>
-<td>string</td>
-<td>Last four digits of the Customer&rsquo;s Social Security Number.</td>
-</tr>
-<tr>
-<td>phone</td>
-<td>no</td>
-<td>string</td>
-<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
-</tr>
-</tbody></table>
-<h3 id='request-paremters---verified-business-customer'>Request paremters - verified business Customer</h3>
-<p>For an in-depth look at business verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a>.
-A verified business Customer must input information on the controller and the Business entity for Dwolla.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>firstName</td>
-<td>yes</td>
-<td>string</td>
-<td>The legal first name of the Account Admin or individual signing up the business verified Customer.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>yes</td>
-<td>string</td>
-<td>The legal last name of the Account Admin or individual signing up the business verified Customer.</td>
-</tr>
-<tr>
-<td>email</td>
-<td>yes</td>
-<td>string</td>
-<td>email address of individual creating and managing the Customer account.</td>
-</tr>
-<tr>
-<td>ipAddress</td>
-<td>no</td>
-<td>string</td>
-<td>ipAddress of registering user is recommended.</td>
-</tr>
-<tr>
-<td>type</td>
-<td>yes</td>
-<td>string</td>
-<td>Value of: business,</td>
-</tr>
-<tr>
-<td>address1</td>
-<td>yes</td>
-<td>string</td>
-<td>Street number, street name of business’ physical address.</td>
-</tr>
-<tr>
-<td>address2</td>
-<td>no</td>
-<td>string</td>
-<td>Apartment, floor, suite, bldg. # of business’ physical address.</td>
-</tr>
-<tr>
-<td>city</td>
-<td>yes</td>
-<td>string</td>
-<td>City of business’ physical address.</td>
-</tr>
-<tr>
-<td>state</td>
-<td>yes</td>
-<td>string</td>
-<td>Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
-</tr>
-<tr>
-<td>postalCode</td>
-<td>yes</td>
-<td>string</td>
-<td>Business’ US five-digit ZIP or ZIP + 4 code.</td>
-</tr>
-<tr>
-<td>businessName</td>
-<td>yes</td>
-<td>string</td>
-<td>Registered business name.</td>
-</tr>
-<tr>
-<td>doingBusinessAs</td>
-<td>no</td>
-<td>string</td>
-<td>Preferred business name – also known as fictitious name, or assumed name.</td>
-</tr>
-<tr>
-<td>businessType</td>
-<td>yes</td>
-<td>string</td>
-<td>Business structure. Possible values are <code class="prettyprint">corporation</code>, <code class="prettyprint">llc</code>, <code class="prettyprint">partnership</code>, and <code class="prettyprint">soleProprietorship</code>.</td>
-</tr>
-<tr>
-<td>businessClassification</td>
-<td>yes</td>
-<td>string</td>
-<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference the next section of our docs</a> to learn how to generate this Id.</td>
-</tr>
-<tr>
-<td>ein</td>
-<td>yes</td>
-<td>string</td>
-<td>Employer Identification Number. <strong>Note:</strong> If the <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code>, then ein and controller can be omitted from the request.</td>
-</tr>
-<tr>
-<td>website</td>
-<td>no</td>
-<td>string</td>
-<td>Business’ website</td>
-</tr>
-<tr>
-<td>phone</td>
-<td>no</td>
-<td>string</td>
-<td>Business&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
-</tr>
-<tr>
-<td>controller</td>
-<td>conditional</td>
-<td>object</td>
-<td>A controller JSON object. Controllers are not required if <code class="prettyprint">businessType</code> is <code class="prettyprint">soleProprietorship</code></td>
-</tr>
-</tbody></table>
-<h5 id='controller-json-object'>Controller JSON object</h5>
-<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>firstName</td>
-<td>yes</td>
-<td>String</td>
-<td>The legal first name of the controller.</td>
-</tr>
-<tr>
-<td>lastName</td>
-<td>yes</td>
-<td>String</td>
-<td>The legal last name of the controller.</td>
-</tr>
-<tr>
-<td>title</td>
-<td>yes</td>
-<td>String</td>
-<td>Job title of the business verified Customer’s controller.  IE - Chief Financial Officer</td>
-</tr>
-<tr>
-<td>dateOfBirth</td>
-<td>yes</td>
-<td>String</td>
-<td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
-</tr>
-<tr>
-<td>ssn</td>
-<td>conditional</td>
-<td>String</td>
-<td>Last four-digits of controller’s social security number. Required for US persons.</td>
-</tr>
-<tr>
-<td>address</td>
-<td>yes</td>
-<td>object</td>
-<td>An <a href="/#controller-address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
-</tr>
-<tr>
-<td>passport</td>
-<td>condititional</td>
-<td>object</td>
-<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
-</tr>
-</tbody></table>
-<h5 id='controller-address-json-object'>Controller address JSON object</h5>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>address1</td>
-<td>yes</td>
-<td>string</td>
-<td>Street number, street name of controller’s physical address.</td>
-</tr>
-<tr>
-<td>address2</td>
-<td>no</td>
-<td>string</td>
-<td>Apartment, floor, suite, bldg. # of controller’s physical address.</td>
-</tr>
-<tr>
-<td>address3</td>
-<td>no</td>
-<td>string</td>
-<td>Third line of the street address of the controller&rsquo;s physical address.</td>
-</tr>
-<tr>
-<td>city</td>
-<td>yes</td>
-<td>string</td>
-<td>City of controller’s physical address.</td>
-</tr>
-<tr>
-<td>stateProvinceRegion</td>
-<td>yes</td>
-<td>string</td>
-<td>Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
-</tr>
-<tr>
-<td>postalCode</td>
-<td>no</td>
-<td>string</td>
-<td>Controller’s’ US five-digit ZIP or ZIP + 4 code.</td>
-</tr>
-<tr>
-<td>country</td>
-<td>yes</td>
-<td>string</td>
-<td>Country of controller’s physical address</td>
-</tr>
-</tbody></table>
-<h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
-<p>A controller will only need to input Passport information if they are non-US persons and do not have a social security number.</p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>number</td>
-<td>conditional</td>
-<td>string</td>
-<td>Required if controller is a non-US person and has no Social Security number.</td>
-</tr>
-<tr>
-<td>country</td>
-<td>conditional</td>
-<td>string</td>
-<td>Country of issued passport.</td>
-</tr>
-</tbody></table>
-<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
-<table><thead>
-<tr>
-<th>HTTP Status</th>
-<th>Message</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Duplicate customer or validation error.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Not authorized to create customers.</td>
-</tr>
-</tbody></table>
-<h3 id='receive-only-customer'>Receive-only customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<h5 id='request-and-response---receive-only-customer'>Request and response - receive-only Customer</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2335,7 +1959,47 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-</code></pre></div></div><h3 id='unverified-customer'>Unverified Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</code></pre></div></div><h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s first name.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s last name.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s email address.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>Customer&rsquo;s IP address.</td>
+</tr>
+</tbody></table>
+<h5 id='request-and-response---unverified-customer'>Request and response - unverified Customer</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2432,7 +2096,97 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-</code></pre></div></div><h3 id='verified-personal-customer'>Verified Personal Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</code></pre></div></div><h3 id='request-parameters---verified-strongpersonalstrong-customer'>Request parameters - verified <strong>personal</strong> Customer</h3>
+<p>For an in-depth look at personal verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/personal-verified-customer.html">developer resource article</a>.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>An individual Customer&rsquo;s first name.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>An individual Customer&rsquo;s last name.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s email address.</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>Customer&rsquo;s IP address.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>yes</td>
+<td>string</td>
+<td>The Verified Customer type. Set to <code class="prettyprint">personal</code> if creating a verified personal Customer.</td>
+</tr>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of Customer&rsquo;s permanent residence.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>yes</td>
+<td>string</td>
+<td>Two letter abbreviation of the state in which the Customer resides, e.g. <code class="prettyprint">CA</code>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Postal code of Customer&rsquo;s permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. <code class="prettyprint">50314</code>.</td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>yes</td>
+<td>string</td>
+<td>Last four digits of the Customer&rsquo;s Social Security Number.</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>no</td>
+<td>string</td>
+<td>Customer&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
+</tr>
+</tbody></table>
+<h5 id='request-and-response---verified-strongpersonalstrong-customer'>Request and response - verified <strong>personal</strong> Customer</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2580,7 +2334,533 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
-</code></pre></div></div><h3 id='verified-business-customer'>Verified Business Customer</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</code></pre></div></div><h3 id='request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only'>Request parameters - verified <strong>business</strong> Customer (sole proprietorship only)</h3>
+<p>For an in-depth look at business verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a>. Dwolla will verify the identity of both the Business Owner and the Business entity.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal first name of the business owner.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal last name of the business owner.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>email address of the business owner.</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>ipAddress of registering user is recommended.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of: <code class="prettyprint">business</code></td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>yes</td>
+<td>string</td>
+<td>The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>yes</td>
+<td>string</td>
+<td>Last four-digits of the business owner&rsquo;s social security number.</td>
+</tr>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>Street number, street name of business’ physical address.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Apartment, floor, suite, bldg. # of business’ physical address</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of business’ physical address.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Business’ US five-digit ZIP or ZIP + 4 code.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>yes</td>
+<td>string</td>
+<td>Registered business name.</td>
+</tr>
+<tr>
+<td>doingBusinessAs</td>
+<td>no</td>
+<td>string</td>
+<td>Preferred business name &ndash; also known as fictitious name, or assumed name.</td>
+</tr>
+<tr>
+<td>businessType</td>
+<td>yes</td>
+<td>string</td>
+<td>Business structure. Value of <code class="prettyprint">soleProprietorship</code>.</td>
+</tr>
+<tr>
+<td>businessClassification</td>
+<td>yes</td>
+<td>string</td>
+<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference our Dev Docs</a> to learn how to generate this Id.</td>
+</tr>
+<tr>
+<td>ein</td>
+<td>no</td>
+<td>string</td>
+<td>Employer Identification Number. Optional for <code class="prettyprint">soleProprietorship</code> business Customers</td>
+</tr>
+<tr>
+<td>website</td>
+<td>no</td>
+<td>string</td>
+<td>Business’ website</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>no</td>
+<td>string</td>
+<td>Business&rsquo;s 10 digit phone number. No hyphens or other separators, e.g. 3334447777.</td>
+</tr>
+</tbody></table>
+<h5 id='request-and-response---verified-strongbusinessstrong-customer-sole-proprietorship-only'>Request and response - verified <strong>business</strong> Customer (sole proprietorship only)</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer 0Sn0W6kzNic+oWhDbQcVSKLRUpGjIdl/YyrHqrDDoRnQwE7Q
+
+{
+    "firstName": "Business",
+    "lastName": "Owner",
+    "email": "solePropBusiness@email.com",
+    "ipAddress": "143.156.7.8",
+    "type": "business",
+    "dateOfBirth": "1980-01-31",
+    "ssn": "6789",
+    "address1": "99-99 33rd St",
+    "city": "Some City",
+    "state": "NY",
+    "postalCode": "11101",
+    "businessClassification": "9ed3f670-7d6f-11e3-b1ce-5404a6144203",
+    "businessType": "soleProprietorship",
+    "businessName":"Jane Corp",
+    "ein":"00-0000000"
+}
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$new_customer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e'</span><span class="p">;</span>
+<span class="nv">$new_customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
+    <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Business'</span><span class="p">,</span>
+    <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Owner'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'solePropBusiness@email.com'</span><span class="p">,</span>
+    <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'143.156.7.8'</span><span class="p">,</span>
+    <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'business'</span><span class="p">,</span>
+    <span class="s1">'dateOfBirth'</span> <span class="o">=&gt;</span> <span class="s1">'1980-01-31'</span><span class="p">,</span>
+    <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'6789'</span><span class="p">,</span>
+    <span class="s1">'address1'</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="s1">'city'</span> <span class="o">=&gt;</span> <span class="s1">'Some City'</span><span class="p">,</span>
+    <span class="s1">'state'</span> <span class="o">=&gt;</span> <span class="s1">'NY'</span><span class="p">,</span>
+    <span class="s1">'postalCode'</span> <span class="o">=&gt;</span> <span class="s1">'11101'</span><span class="p">,</span>
+    <span class="s1">'businessClassification'</span> <span class="o">=&gt;</span> <span class="s1">'9ed3f670-7d6f-11e3-b1ce-5404a6144203'</span><span class="p">,</span>
+    <span class="s1">'businessType'</span> <span class="o">=&gt;</span> <span class="s1">'soleProprietorship'</span><span class="p">,</span>
+    <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+    <span class="s1">'ein'</span> <span class="o">=&gt;</span> <span class="s1">'00-0000000'</span><span class="p">]);</span>
+
+<span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">:firstName</span> <span class="o">=&gt;</span> <span class="s1">'Business'</span><span class="p">,</span>
+    <span class="ss">:lastName</span> <span class="o">=&gt;</span> <span class="s1">'Owner'</span><span class="p">,</span>
+    <span class="ss">:email</span> <span class="o">=&gt;</span> <span class="s1">'solePropBusiness@email.com'</span><span class="p">,</span>
+    <span class="ss">:ipAddress</span> <span class="o">=&gt;</span> <span class="s1">'143.156.7.8'</span><span class="p">,</span>
+    <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="s1">'business'</span><span class="p">,</span>
+    <span class="ss">:dateOfBirth</span> <span class="o">=&gt;</span> <span class="s1">'1980-01-31'</span><span class="p">,</span>
+    <span class="ss">:ssn</span> <span class="o">=&gt;</span> <span class="s1">'6789'</span><span class="p">,</span>
+    <span class="ss">:address1</span> <span class="o">=&gt;</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="ss">:city</span> <span class="o">=&gt;</span> <span class="s1">'Some City'</span><span class="p">,</span>
+    <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">'NY'</span><span class="p">,</span>
+    <span class="ss">:postalCode</span> <span class="o">=&gt;</span> <span class="s1">'11101'</span><span class="p">,</span>
+    <span class="ss">:businessClassification</span> <span class="o">=&gt;</span> <span class="s1">'9ed3f670-7d6f-11e3-b1ce-5404a6144203'</span><span class="p">,</span>
+    <span class="ss">:businessType</span> <span class="o">=&gt;</span> <span class="s1">'soleProprietorship'</span><span class="p">,</span>
+    <span class="ss">:businessName</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+    <span class="ss">:ein</span> <span class="o">=&gt;</span> <span class="s1">'00-0000000'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'Business'</span><span class="p">,</span>
+  <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Owner'</span><span class="p">,</span>
+  <span class="s">'email'</span><span class="p">:</span> <span class="s">'solePropBusiness@email.com'</span><span class="p">,</span>
+  <span class="s">'ipAddress'</span><span class="p">:</span> <span class="s">'143.156.7.8'</span><span class="p">,</span>
+  <span class="s">'type'</span><span class="p">:</span> <span class="s">'business'</span><span class="p">,</span>
+  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1980-01-31'</span><span class="p">,</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'6789'</span><span class="p">,</span>
+  <span class="s">'address1'</span><span class="p">:</span> <span class="s">'99-99 33rd St'</span><span class="p">,</span>
+  <span class="s">'city'</span><span class="p">:</span> <span class="s">'Some City'</span><span class="p">,</span>
+  <span class="s">'state'</span><span class="p">:</span> <span class="s">'NY'</span><span class="p">,</span>
+  <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'11101'</span><span class="p">,</span>
+  <span class="s">'businessClassification'</span><span class="p">:</span> <span class="s">'9ed3f670-7d6f-11e3-b1ce-5404a6144203'</span><span class="p">,</span>
+  <span class="s">'businessType'</span><span class="p">:</span> <span class="s">'soleProprietorship'</span><span class="p">,</span>
+  <span class="s">'businessName'</span><span class="p">:</span> <span class="s">'Jane Corp'</span><span class="p">,</span>
+  <span class="s">'ein'</span><span class="p">:</span> <span class="s">'00-0000000'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">firstName</span><span class="p">:</span> <span class="s1">'Business'</span><span class="p">,</span>
+    <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Owner'</span><span class="p">,</span>
+    <span class="na">email</span><span class="p">:</span> <span class="s1">'solePropBusiness@email.com'</span><span class="p">,</span>
+    <span class="na">ipAddress</span><span class="p">:</span> <span class="s1">'143.156.7.8'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'business'</span><span class="p">,</span>
+    <span class="na">dateOfBirth</span><span class="p">:</span> <span class="s1">'1980-01-31'</span><span class="p">,</span>
+    <span class="na">ssn</span><span class="p">:</span> <span class="s1">'6789'</span><span class="p">,</span>
+    <span class="na">address1</span><span class="p">:</span> <span class="s1">'99-99 33rd St'</span><span class="p">,</span>
+    <span class="na">city</span><span class="p">:</span> <span class="s1">'Some City'</span><span class="p">,</span>
+    <span class="na">state</span><span class="p">:</span> <span class="s1">'NY'</span><span class="p">,</span>
+    <span class="na">postalCode</span><span class="p">:</span> <span class="s1">'11101'</span><span class="p">,</span>
+    <span class="na">businessClassification</span><span class="p">:</span> <span class="s1">'9ed3f670-7d6f-11e3-b1ce-5404a6144203'</span><span class="p">,</span>
+    <span class="na">businessType</span><span class="p">:</span> <span class="s1">'soleProprietorship'</span><span class="p">,</span>
+    <span class="na">businessName</span><span class="p">:</span> <span class="s1">'Jane Corp'</span><span class="p">,</span>
+    <span class="na">ein</span><span class="p">:</span> <span class="s1">'00-0000000'</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'</span>
+</code></pre></div></div><h3 id='request-parameters---verified-business-customer-businesstypellc-corporation-or-partnership'>Request parameters - verified business Customer (businessType=llc, corporation or partnership)</h3>
+<p>For an in-depth look at business verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a>.
+A verified business Customer must input information on the controller and the Business entity for Dwolla. Dwolla will verify the identity of both the Controller and the Business Entity.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal first name of the Account Admin or business owner signing up the business verified Customer.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>string</td>
+<td>The legal last name of the Account Admin or individual signing up the business verified Customer.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>yes</td>
+<td>string</td>
+<td>email address of individual creating and managing the Customer account.</td>
+</tr>
+<tr>
+<td>ipAddress</td>
+<td>no</td>
+<td>string</td>
+<td>ipAddress of registering user is recommended.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>yes</td>
+<td>string</td>
+<td>Value of: <code class="prettyprint">business</code></td>
+</tr>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>Street number, street name of business’ physical address.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Apartment, floor, suite, bldg. # of business’ physical address.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of business’ physical address.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>yes</td>
+<td>string</td>
+<td>Business’ US five-digit ZIP or ZIP + 4 code.</td>
+</tr>
+<tr>
+<td>businessName</td>
+<td>yes</td>
+<td>string</td>
+<td>Registered business name.</td>
+</tr>
+<tr>
+<td>doingBusinessAs</td>
+<td>no</td>
+<td>string</td>
+<td>Preferred business name – also known as fictitious name, or assumed name.</td>
+</tr>
+<tr>
+<td>businessType</td>
+<td>yes</td>
+<td>string</td>
+<td>Business structure. Possible values are <code class="prettyprint">corporation</code>, <code class="prettyprint">llc</code>, <code class="prettyprint">partnership</code>.</td>
+</tr>
+<tr>
+<td>businessClassification</td>
+<td>yes</td>
+<td>string</td>
+<td>The industry classification Id that corresponds to Customer’s business. <a href="https://docsv2.dwolla.com/#list-business-classifications">Reference the next section of our docs</a> to learn how to generate this Id.</td>
+</tr>
+<tr>
+<td>ein</td>
+<td>yes</td>
+<td>string</td>
+<td>Employer Identification Number.</td>
+</tr>
+<tr>
+<td>website</td>
+<td>no</td>
+<td>string</td>
+<td>Business’ website</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>no</td>
+<td>string</td>
+<td>Business&rsquo;s 10 digit phone number.  No hyphens or other separators, e.g. <code class="prettyprint">3334447777</code>.</td>
+</tr>
+<tr>
+<td>controller</td>
+<td>conditional</td>
+<td>object</td>
+<td>A controller JSON object.</td>
+</tr>
+</tbody></table>
+<h5 id='controller-json-object'>Controller JSON object</h5>
+<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>firstName</td>
+<td>yes</td>
+<td>String</td>
+<td>The legal first name of the controller.</td>
+</tr>
+<tr>
+<td>lastName</td>
+<td>yes</td>
+<td>String</td>
+<td>The legal last name of the controller.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>yes</td>
+<td>String</td>
+<td>Job title of the business verified Customer’s controller.  IE - Chief Financial Officer</td>
+</tr>
+<tr>
+<td>dateOfBirth</td>
+<td>yes</td>
+<td>String</td>
+<td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>conditional</td>
+<td>String</td>
+<td>Last four-digits of controller’s social security number. Required for US persons.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>yes</td>
+<td>object</td>
+<td>An <a href="/#controller-address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
+</tr>
+<tr>
+<td>passport</td>
+<td>conditional</td>
+<td>object</td>
+<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
+</tr>
+</tbody></table>
+<h5 id='controller-address-json-object'>Controller address JSON object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address1</td>
+<td>yes</td>
+<td>string</td>
+<td>Street number, street name of controller’s physical address.</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>no</td>
+<td>string</td>
+<td>Apartment, floor, suite, bldg. # of controller’s physical address.</td>
+</tr>
+<tr>
+<td>address3</td>
+<td>no</td>
+<td>string</td>
+<td>Third line of the street address of the controller&rsquo;s physical address.</td>
+</tr>
+<tr>
+<td>city</td>
+<td>yes</td>
+<td>string</td>
+<td>City of controller’s physical address.</td>
+</tr>
+<tr>
+<td>stateProvinceRegion</td>
+<td>yes</td>
+<td>string</td>
+<td>Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+</tr>
+<tr>
+<td>postalCode</td>
+<td>no</td>
+<td>string</td>
+<td>Controller’s’ US five-digit ZIP or ZIP + 4 code.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>yes</td>
+<td>string</td>
+<td>Country of controller’s physical address</td>
+</tr>
+</tbody></table>
+<h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
+<p>A controller will only need to input Passport information if they are non-US persons and do not have a social security number.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>number</td>
+<td>conditional</td>
+<td>string</td>
+<td>Required if controller is a non-US person and has no Social Security number.</td>
+</tr>
+<tr>
+<td>country</td>
+<td>conditional</td>
+<td>string</td>
+<td>Country of issued passport.</td>
+</tr>
+</tbody></table>
+<h3 id='verified-business-customer-businesstype-llc-corporation-or-partnership'>Verified Business Customer (businessType= llc, corporation or partnership)</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -2828,48 +3108,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               "name": "Distilleries"
             },
             {
-              "id": "9ed3f66a-7d6f-11e3-8acd-5404a6144203",
-              "name": "Breweries"
-            },
-            {
-              "id": "9ed3f66d-7d6f-11e3-9101-5404a6144203",
-              "name": "Alcoholic beverage drinking places"
-            },
-            {
-              "id": "9ed3f66e-7d6f-11e3-9480-5404a6144203",
-              "name": "Beer, wine, and liquor store"
-            },
-            {
-              "id": "9ed3f66b-7d6f-11e3-95ac-5404a6144203",
-              "name": "Wineries"
-            },
-            {
-              "id": "9ed3f674-7d6f-11e3-9619-5404a6144203",
-              "name": "Tobacco"
-            },
-            {
-              "id": "9ed3f673-7d6f-11e3-adb1-5404a6144203",
-              "name": "Restaurant"
-            },
-            {
-              "id": "9ed3f676-7d6f-11e3-af8e-5404a6144203",
-              "name": "Supplement store"
-            },
-            {
-              "id": "9ed3f675-7d6f-11e3-afad-5404a6144203",
-              "name": "Pharmacy and drugstore"
-            },
-            {
-              "id": "9ed3f670-7d6f-11e3-b1ce-5404a6144203",
-              "name": "Coffee and tea"
-            },
-            {
-              "id": "9ed3f66f-7d6f-11e3-b1df-5404a6144203",
-              "name": "Catering services"
-            },
-            {
-              "id": "9ed3f672-7d6f-11e3-b67a-5404a6144203",
-              "name": "Specialty and miscellaneous food store"
+              ...........
             }
           ]
         },
@@ -2977,64 +3216,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "name": "Music"
       },
       {
-        "id": "9ed3cf5c-7d6f-11e3-8d0e-5404a6144203",
-        "name": "Gambling"
-      },
-      {
-        "id": "9ed3cf53-7d6f-11e3-8ee9-5404a6144203",
-        "name": "Cable, satellite, and other pay TV and radio broadcasting"
-      },
-      {
-        "id": "9ed3cf59-7d6f-11e3-9158-5404a6144203",
-        "name": "Slot machines"
-      },
-      {
-        "id": "9ed3cf57-7d6f-11e3-921d-5404a6144203",
-        "name": "Theater tickets"
-      },
-      {
-        "id": "9ed3cf4f-7d6f-11e3-97ea-5404a6144203",
-        "name": "Motion picture and video"
-      },
-      {
-        "id": "9ed3cf5a-7d6f-11e3-9a99-5404a6144203",
-        "name": "Digital content"
-      },
-      {
-        "id": "9ed3cf5b-7d6f-11e3-a368-5404a6144203",
-        "name": "Entertainers"
-      },
-      {
-        "id": "9ed3a867-7d6f-11e3-a6e4-5404a6144203",
-        "name": "Memorabilia"
-      },
-      {
-        "id": "9ed3cf52-7d6f-11e3-b0da-5404a6144203",
-        "name": "Music store - CDs, cassettes and albums"
-      },
-      {
-        "id": "9ed3cf5d-7d6f-11e3-b35e-5404a6144203",
-        "name": "Online gaming"
-      },
-      {
-        "id": "9ed3cf55-7d6f-11e3-b43c-5404a6144203",
-        "name": "Adult digital content"
-      },
-      {
-        "id": "9ed3cf51-7d6f-11e3-b49f-5404a6144203",
-        "name": "Movie store - DVDs, videotapes"
-      },
-      {
-        "id": "9ed3cf5e-7d6f-11e3-b9d5-5404a6144203",
-        "name": "Video games and systems"
-      },
-      {
-        "id": "9ed3cf56-7d6f-11e3-ba87-5404a6144203",
-        "name": "Concert tickets"
-      },
-      {
-        "id": "9ed3cf54-7d6f-11e3-bf23-5404a6144203",
-        "name": "Cable and other subscription programming"
+        ...........
       }
     ]
   },
@@ -8756,7 +8938,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='mass-payments'>Mass payments</h1>
 <p>Dwolla mass payments allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user&rsquo;s specified funding source and processed asynchronously upon submission.</p>
-
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla Mass Payments are meant for batches of multiple payments. If you are initiating a single payment to a singular Customer, we recommend using our <a href="/#initiate-a-transfer">/transfers endpoint</a>.</p>
+</li></ol>
 <p>Your mass payment will initially be pending and then processed.  As the service processes your mass payment, each <code class="prettyprint">item</code> is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item mass payment to be completed between 8-16 minutes.</p>
 
 <p>A mass payment offers a significant advantage over repeatedly calling the <a href="#transfers">Transfers</a> endpoint for each individual transaction. A key benefit is that a bank-funded mass payment only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur an ACH debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
@@ -9976,6 +10159,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A funding source was marked as <code class="prettyprint">verified</code>.</td>
 </tr>
 <tr>
+<td>funding_source_unverified</td>
+<td>A funding source has been systematically <code class="prettyprint">unverified</code>. This is generally a result of a transfer failure. <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">View our developer resource article</a> to learn more.</td>
+</tr>
+<tr>
 <td>funding_source_negative</td>
 <td>A Dwolla Master account <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
 </tr>
@@ -10166,6 +10353,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_funding_source_verified</td>
 <td>A Customer’s funding source was marked as verified.</td>
+</tr>
+<tr>
+<td>customer_funding_source_unverified</td>
+<td>A funding source has been systematically <code class="prettyprint">unverified</code>. This is generally a result of a transfer failure. <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">View our developer resource article</a> to learn more.</td>
 </tr>
 <tr>
 <td>customer_funding_source_negative</td>
