@@ -480,7 +480,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 |--------------|-------------|
 | _links | A _links [JSON object](#links) |
 | created | ISO-8601 timestamp |
-| status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `procesed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
+| status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `processed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
 | failure | Determines if micro-deposits fail to complete to a bank. Failure is an object that contains a `code` and `description`, which represents the ACH return code and description of the return. |
 
 ### HTTP status and error codes

@@ -48,7 +48,7 @@ To prevent an operation from being performed more than once, Dwolla supports pas
 
 For example, if a request to [initiate a transfer](#initiate-a-transfer) fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.
 
-If you reattempt a `POST` request with the same value for the `Idempotency-Key`, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`). Idempotency keys are intented to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original `POST`, you will receive a `409 Conflict` error response on the subsequent request.
+If you reattempt a `POST` request with the same value for the `Idempotency-Key`, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`). Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original `POST`, you will receive a `409 Conflict` error response on the subsequent request.
 
 #### Example transfer using an Idempotency Key
 ```noselect
@@ -135,8 +135,9 @@ The `path` field is a JSON pointer to the specific field in the request that has
         "errors": [
             {
                 "code": "Required",
-                "message": "FirstName is required.",
+                "message": "FirstName required.",
                 "path": "/firstName",
+                "_links": {}
             }
         ]
     }
