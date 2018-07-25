@@ -237,7 +237,7 @@ applicationToken.post(`${webhookUrl}/retries`);
 This section covers how to retrieve webhook retries by id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request

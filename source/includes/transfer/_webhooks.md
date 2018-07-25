@@ -37,7 +37,7 @@ When a new [event](#events) is created and there is an active [webhook subscript
 This section covers how to retrieve a single webhook.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request
@@ -184,7 +184,7 @@ applicationToken
 This section details how to retry a webhook by id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request
@@ -245,7 +245,7 @@ applicationToken.post(`${webhookUrl}/retries`);
 This section covers how to retrieve webhook retries by id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request

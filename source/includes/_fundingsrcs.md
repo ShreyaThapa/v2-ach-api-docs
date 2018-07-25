@@ -2,6 +2,23 @@
 
 Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Accounts](#create-a-funding-source-for-an-account) and [Customers](#create-a-funding-source-for-a-customer) resources.
 
+### Funding source links
+
+| Link                       | Description                                                                   |
+|----------------------------|-------------------------------------------------------------------------------|
+| self                       | URL of the funding source resource.                                           |
+| customer                   | GET this link to [retrieve details](#retrieve-a-customer) of the Customer.                            |
+| remove                     | POST this link to [remove the funding source](#remove-a-funding-source) from the Customer.                |
+| with-available-balance     | (Verified Customer only) GET this link to [retrieve the Customer's Balance funding source.](#retrieve-a-funding-source) |
+| balance                    | (Verified Customer only) GET this link to [retrieve the balance](#retrieve-a-funding-source-balance) of the Customer's Balance funding source. |
+| transfer-from-balance      | (Verified Customer only) if this exists, the Customer can transfer funds from their balance. |
+| transfer-to-balance        | (Verified Customer only) if this exists, funds can be transferred to their balance. |
+| transfer-send              | If this exists, the Customer can send funds to another Customer. |
+| transfer-receive           | The Customer can receive funds from another Customer.            |
+| initiate-micro-deposits    | POST to this link to [initiate micro-deposits](#initiate-micro-deposits) on an unverified funding source. |
+| verify-micro-deposits      | Micro-deposits have been sent to this funding source. POST to this link with the [verify micro-deposit amounts](#verify-micro-deposits) and complete bank funding source verification. |
+| failed-verification-micro-deposits | Micro-deposits attempts have failed due to too many failed attempts. [Remove the bank and re-add to attempt verification again.](https://developers.dwolla.com/resources/funding-source-verification/micro-deposit-verification.html) |
+
 ### Funding source resource
 
 | Parameter | Description |
@@ -305,11 +322,10 @@ This section covers how to initiate micro-deposits for bank verification. Refere
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to initiate micro-deposits to. |
 
-
 ### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
-| 201 | Created | Micro deposits initiated |
+| 201 | Created | Micro-deposits initiated, will take 1-2 days to clear to destination bank. |
 | 404 | NotFound | Funding source not found |
 
 #### Request and response
@@ -364,16 +380,15 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 | amount1 | yes | string | An amount JSON object of first micro-deposit. Contains `value` and `currency`. |
 | amount2 | yes | string | An amount JSON object of second micro-deposit. Contains `value` and `currency`. |
 
-
 ### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
-| 200 | OK | Micro deposits verified  |
-| 202 | TryAgainLater | "Invalid wait time." |
+| 200 | OK | Micro-deposits successfully verified.  |
+| 202 | TryAgainLater | Micro-deposits have not left the Dwolla network and have not been sent to destination bank. A Customer can verify these amounts after deposits have cleared to their bank. |
 | 400 | ValidationError | InvalidAmount, "Wrong amount(s)." |
 | 403 | InvalidResourceState | "Too many attempts.", "Bank already verified." |
-| 404 | NotFound | Micro deposits not initiated,Funding source not found |
-| 500 | Unknown | "Verify microdeposits returned an unknown error." |
+| 404 | NotFound | Micro-deposits not initiated,Funding source not found |
+| 500 | Unknown | "Verify micro-deposits returned an unknown error." |
 
 #### Request and response
 

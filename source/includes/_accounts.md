@@ -10,7 +10,7 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 |------|------------|
 | self | URL of the Account resource
 | receive | Follow the link to create a transfer to this Account.
-| funding-sources | GET this link to list the Accounts's funding sources.
+| funding-sources | GET this link to list the Account's funding sources.
 | transfers | GET this link to list the Account's transfers
 | customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers.
 | send | Follow the link to create a transfer to this Account.
