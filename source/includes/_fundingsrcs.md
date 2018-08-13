@@ -2,6 +2,22 @@
 
 Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Accounts](#create-a-funding-source-for-an-account) and [Customers](#create-a-funding-source-for-a-customer) resources.
 
+### Funding source links
+
+| Link                       | Description                                                                   |
+|----------------------------|-------------------------------------------------------------------------------|
+| self                       | URL of the funding source resource.                                           |
+| customer                   | GET this link to [retrieve details](#retrieve-a-customer) of the Customer.                            |
+| remove                     | POST to this link to [remove the funding source](#remove-a-funding-source) from the Customer.                |
+| balance                    | (Verified Customer only) GET this link to [retrieve the amount available in the balance](#retrieve-a-funding-source-balance) of the Customer's Balance funding source. |
+| transfer-from-balance      | (Verified Customer only) if this link exists, the Customer can transfer funds from their balance. |
+| transfer-to-balance        | (Verified Customer only) if this link exists, funds can be transferred to the Customer's balance. |
+| transfer-send              | If this link exists, the Customer can send funds to another Customer. |
+| transfer-receive           | The Customer can receive funds from another Customer.            |
+| initiate-micro-deposits    | POST to this link to [initiate micro-deposits](#initiate-micro-deposits) on an unverified funding source. |
+| verify-micro-deposits      | Micro-deposits have completed to this funding source and are eligible for verification. POST to this link with the [verify micro-deposit amounts](#verify-micro-deposits) and complete bank funding source verification. |
+| failed-verification-micro-deposits | Micro-deposits attempts have failed due to too many failed attempts. [Remove the bank and re-add to attempt verification again.](https://developers.dwolla.com/resources/funding-source-verification/micro-deposit-verification.html) |
+
 ### Funding source resource
 
 | Parameter | Description |
@@ -222,7 +238,7 @@ appToken
 
 ## Retrieve a funding source balance
 
-This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network. 
+This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network.
 
 ### HTTP request
 `GET https://api.dwolla.com/funding-sources/{id}/balance`
@@ -305,11 +321,10 @@ This section covers how to initiate micro-deposits for bank verification. Refere
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to initiate micro-deposits to. |
 
-
 ### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
-| 201 | Created | Micro deposits initiated |
+| 201 | Created | Micro-deposits initiated, will take 1-2 days to settle to destination bank. |
 | 404 | NotFound | Funding source not found |
 
 #### Request and response
@@ -364,16 +379,15 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 | amount1 | yes | string | An amount JSON object of first micro-deposit. Contains `value` and `currency`. |
 | amount2 | yes | string | An amount JSON object of second micro-deposit. Contains `value` and `currency`. |
 
-
 ### HTTP status and error codes
 | HTTP Status | Code | Description |
 |--------------|-------------|-------------------|
-| 200 | OK | Micro deposits verified  |
-| 202 | TryAgainLater | "Invalid wait time." |
+| 200 | OK | Micro-deposits successfully verified.  |
+| 202 | TryAgainLater | Micro-deposits have not have not settled to destination bank. A Customer can verify these amounts after micro-deposits have processed to their bank. |
 | 400 | ValidationError | InvalidAmount, "Wrong amount(s)." |
 | 403 | InvalidResourceState | "Too many attempts.", "Bank already verified." |
-| 404 | NotFound | Micro deposits not initiated,Funding source not found |
-| 500 | Unknown | "Verify microdeposits returned an unknown error." |
+| 404 | NotFound | Micro-deposits not initiated,Funding source not found |
+| 500 | Unknown | "Verify micro-deposits returned an unknown error." |
 
 #### Request and response
 
@@ -480,7 +494,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 |--------------|-------------|
 | _links | A _links [JSON object](#links) |
 | created | ISO-8601 timestamp |
-| status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `procesed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
+| status | Possible values: `pending`, `processed`, or `failed`. `pending` represents micro-deposits initiated and are en route to their destination. `processed` represents micro-deposits have reached the destination account and are awaiting verification. `failed` represents micro-deposits failed to clear successfully to the destination. |
 | failure | Determines if micro-deposits fail to complete to a bank. Failure is an object that contains a `code` and `description`, which represents the ACH return code and description of the return. |
 
 ### HTTP status and error codes

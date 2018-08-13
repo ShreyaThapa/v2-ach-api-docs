@@ -1,6 +1,6 @@
 # Accounts
 
-An `Account` represents a Dwolla account that was either established on dwolla.com, or created inline with the capture of the user account's permissions via Dwolla's OAuth flow. A user account grants authorization to an application via [OAuth](#oauth), which gives the application permission to interact with the API on their behalf.
+An `Account` represents a Dwolla account that was either established on dwolla.com, or created inline with the capture of the user account's permissions via Dwolla's OAuth flow. A user account grants authorization to an application via OAuth, which gives the application permission to interact with the API on their behalf.
 
 ### Verified and unverified Accounts
 

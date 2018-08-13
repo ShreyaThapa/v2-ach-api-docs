@@ -8,8 +8,8 @@ Before you can get started with making OAuth requests, you’ll need to first re
 #### Dwolla's authorization flows
 The OAuth 2 protocol defines four main authorization grant types, more commonly referred to as OAuth flows. Dwolla implements two of the four grant types depending on how your application accesses data within the API.
 
-* **Flow 1 (Account authorization):** - Using the [authorization code grant flow](/guides/auth/authorization-code-flow.html), your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user's behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth.
-* **Flow 2 (Application authorization):** - Using the [client credentials grant flow](/guides/auth/client-credentials-flow.html), your application will obtain authorization to interact with the API on its own behalf. This is a server-to-server flow with interaction between an application and the Dwolla API; also known as 2-legged OAuth. An application will exchange it’s `client_id`, `client_secret`, and `grant_type=client_credentials` for an application access token. An application access token is for managing webhooks, webhook-subscriptions, and events.
+* **Flow 1 (Account authorization):** - Using the authorization code grant flow, your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user's behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth.
+* **Flow 2 (Application authorization):** - Using the client credentials grant flow, your application will obtain authorization to interact with the API on its own behalf. This is a server-to-server flow with interaction between an application and the Dwolla API; also known as 2-legged OAuth. An application will exchange it’s `client_id`, `client_secret`, and `grant_type=client_credentials` for an application access token. An application access token is for managing webhooks, webhook-subscriptions, and events.
 
 #### Token lifetimes
 
@@ -17,7 +17,7 @@ The OAuth 2 protocol defines four main authorization grant types, more commonly 
 
 **Refresh tokens** are *long lived*: 60 days.
 
-A refresh token can be used within 60 days to generate a new OAuth account account access_token and refresh_token pair.  So long as you [refresh your authorization](#refresh-authorization) at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.
+A refresh token can be used within 60 days to generate a new OAuth account account access_token and refresh_token pair.  So long as you refresh your authorization at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.
 
 ## Account authorization
 

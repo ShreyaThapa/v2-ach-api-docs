@@ -35,7 +35,7 @@ Dwolla will re-attempt delivery 8 times over the course of 72 hours according th
 This section details how to create a webhook subscription to deliver [webhooks](#webhooks) to a specified URL.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request
@@ -106,7 +106,7 @@ $subscription; # => "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c1
 This section details how to retrieve a webhook subscription by its id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request
@@ -180,7 +180,7 @@ $retrieved->created; # => 2015-10-28T16:20:47+00:00
 This section details how to pause a webhook subscription. When a webhook subscription is paused Dwolla will continue to create webhooks but not send them to your subscribed webhook url. This is useful if your webhook endpoint is unavailable and you want to temporarily disable webhook requests.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request
@@ -252,7 +252,7 @@ $subscription = $webhookApi->updateSubscription(array (
 This section covers how to retrieve a list of webhook subscriptions that belong to an application.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request
@@ -322,7 +322,7 @@ $retrieved->total; # => 1
 Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. If using an SDK, the request was successful unless an exception was thrown stating otherwise.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request
@@ -374,7 +374,7 @@ $webhookApi->deleteById('https://api-sandbox.dwolla.com/webhook-subscriptions/5a
 This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request

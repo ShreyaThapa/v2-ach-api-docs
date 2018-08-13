@@ -100,11 +100,12 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | Topic          | Description                    |
 |------------------|-------------------------------------------------------------------|
 | customer_beneficial_owner_created | Beneficial owner successfully created. |
-| customer_beneficial_owner_verification_document_needed | Additional documentation is needed to verify an  individual beneficial owner. |
+| customer_beneficial_owner_removed | An individual beneficial owner has been successfully removed from the Customer |
+| customer_beneficial_owner_verification_document_needed | Additional documentation is needed to verify an individual beneficial owner. |
 | customer_beneficial_owner_verification_document_uploaded | A verification document was uploaded for beneficial owner. |
 | customer_beneficial_owner_verification_document_failed | A verification document has been rejected for a beneficial owner. |
 | customer_beneficial_owner_verification_document_approved | A verification document was approved for a beneficial owner. |
-| customer_beneficial_owner_reverification_needed | A previously `verifed` beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days. |
+| customer_beneficial_owner_reverification_needed | A previously `verified` beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days. |
 | customer_beneficial_owner_verified | A beneficial owner has been verified. |
 
 ##### Funding Sources
@@ -144,14 +145,6 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_mass_payment_completed | A Verified Customer's mass payment completed. |
 | customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
 | customer_balance_inquiry_completed | Upon checking a Customer's bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of `processing`. This event will be triggered when the bank balance check has completed processing. |
-
-### Dwolla Integration Event topics
-
-| Topic | Description |
-|---------|-----------------|
-| customer_bill_payment_created | Represents a `pending` bill payment transaction status. This is only part of the bill payment integration. |
-| customer_bill_payment_completed | Represents a `confirmed` bill payment transaction status and a `processed` Dwolla transfer status. |
-| customer_bill_payment_failed | Represents a `rejected` bill payment transaction status and a `failed` Dwolla transfer status. |
 
 ## List events
 
@@ -300,7 +293,7 @@ This section covers how to retrieve an event by id.
 ### Request and response
 
 ```raw
-GET htttps://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095
+GET https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 

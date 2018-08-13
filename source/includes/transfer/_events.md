@@ -62,7 +62,7 @@ When the state of a resource changes, we create a new event resource to record t
 Retrieve a list of events for the application.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP request
@@ -210,7 +210,7 @@ applicationToken
 This section covers how to retrieve an event by id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint requires an OAuth [application access token](#application-access-token).</li>
+    <li class="alert icon-alert-alert">This endpoint requires an OAuth application access token.</li>
 </ol>
 
 ### HTTP Request
