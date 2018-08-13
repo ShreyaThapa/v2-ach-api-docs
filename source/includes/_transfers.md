@@ -12,8 +12,6 @@ A transfer represents money being transferred from a `source` to a `destination`
 | source-funding-source      | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `source` of the transfer. |
 | destination-funding-source | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `destination` of the transfer. |
 | cancel                     | POST to this link to [cancel the transfer](#cancel-a-transfer) (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.) |
-| funding-transfer           | Represents funds moving from a Verified Customer's bank to their Dwolla balance. |
-| funded-transfer            | Represents funds moving from a Verified Customer's Dwolla balance into their bank. |
 | fees                       | GET this link to [retrieve the facilitator fees](#list-fees-for-a-transfer) associated with the transfer. |
 
 ### Transfer resource
@@ -51,20 +49,6 @@ A transfer represents money being transferred from a `source` to a `destination`
 }
 ```
 
-### Amount JSON object
-
-| Parameter | Description |
-|-----------|------------|
-| value | Amount of money |
-| currency | String, `USD` |
-
-### clearing JSON object
-
-| Parameter | Description |
-|-----------|------------|
-| source | String, `standard` |
-| destination | String, `next-available` |
-
 ## Initiate a transfer
 
 This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
@@ -81,6 +65,33 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 | fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
 | clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled. |
 | correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| achDetails | no | object | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
+
+### amount JSON object
+
+| Parameter | Description |
+|-----------|------------|
+| value | Amount of money |
+| currency | String, `USD` |
+
+### clearing JSON object
+
+| Parameter | Description |
+|-----------|------------|
+| source | String, `standard` |
+| destination | String, `next-available` |
+
+#### achDetails object
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| source | no | object | Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an [addenda JSON object](#addenda-object). |
+| destination | no | object | Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an [addenda JSON object](#addenda-object).|
+
+### addenda object
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~! * ' ( ) ; : @ & = + $ , / ? % # [ ]`.
+
 
 ### Source and destination types
 
