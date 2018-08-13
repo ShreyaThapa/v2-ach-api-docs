@@ -8099,14 +8099,6 @@ HTTP 200 OK
 <td>POST to this link to <a href="#cancel-a-transfer">cancel the transfer</a> (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.)</td>
 </tr>
 <tr>
-<td>funding-transfer</td>
-<td>Represents funds moving from a Verified Customer&rsquo;s bank to their Dwolla balance.</td>
-</tr>
-<tr>
-<td>funded-transfer</td>
-<td>Represents funds moving from a Verified Customer&rsquo;s Dwolla balance into their bank.</td>
-</tr>
-<tr>
 <td>fees</td>
 <td>GET this link to <a href="#list-fees-for-a-transfer">retrieve the facilitator fees</a> associated with the transfer.</td>
 </tr>
@@ -8170,39 +8162,7 @@ HTTP 200 OK
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='amount-json-object'>Amount JSON object</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>value</td>
-<td>Amount of money</td>
-</tr>
-<tr>
-<td>currency</td>
-<td>String, <code class="prettyprint">USD</code></td>
-</tr>
-</tbody></table>
-<h3 id='clearing-json-object'>clearing JSON object</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>source</td>
-<td>String, <code class="prettyprint">standard</code></td>
-</tr>
-<tr>
-<td>destination</td>
-<td>String, <code class="prettyprint">next-available</code></td>
-</tr>
-</tbody></table>
-<h2 id='initiate-a-transfer'>Initiate a transfer</h2>
+</span></code></pre></div></div><h2 id='initiate-a-transfer'>Initiate a transfer</h2>
 <p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Dwolla API <a href="#customers">Customer</a> resource.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/transfers</code></p>
@@ -8250,6 +8210,82 @@ HTTP 200 OK
 <td>no</td>
 <td>string</td>
 <td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+</tr>
+<tr>
+<td>achDetails</td>
+<td>no</td>
+<td>object</td>
+<td>An <a href="#achdetails-object">ACH details JSON object</a> which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution.</td>
+</tr>
+</tbody></table>
+<h3 id='amount-json-object'>amount JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>Amount of money</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>String, <code class="prettyprint">USD</code></td>
+</tr>
+</tbody></table>
+<h3 id='clearing-json-object'>clearing JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>String, <code class="prettyprint">standard</code></td>
+</tr>
+<tr>
+<td>destination</td>
+<td>String, <code class="prettyprint">next-available</code></td>
+</tr>
+</tbody></table>
+<h4 id='achdetails-object'>achDetails object</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+<tr>
+<td>destination</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+</tbody></table>
+<h3 id='addenda-object'>addenda object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addenda</td>
+<td>no</td>
+<td>object</td>
+<td>An addenda object contains a <code class="prettyprint">values</code> key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3>
