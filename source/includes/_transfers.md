@@ -11,10 +11,10 @@ A transfer represents money being transferred from a `source` to a `destination`
 | destination                | GET this link to [retrieve the Customer](#retrieve-a-customer) that was the `destination` of the transfer. |
 | source-funding-source      | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `source` of the transfer. |
 | destination-funding-source | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `destination` of the transfer. |
-| cancel                     | POST this link to [cancel the transfer](#cancel-a-transfer) (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.) |
-| funding-transfer           | Represents funds moving out of a Verified Customer's bank to their Dwolla balance. |
+| cancel                     | POST to this link to [cancel the transfer](#cancel-a-transfer) (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.) |
+| funding-transfer           | Represents funds moving from a Verified Customer's bank to their Dwolla balance. |
 | funded-transfer            | Represents funds moving from a Verified Customer's Dwolla balance into their bank. |
-| fees                       | Follow this link to [retrieve the facilitator fees](#list-fees-for-a-transfer) associated with the transfer. |
+| fees                       | GET this link to [retrieve the facilitator fees](#list-fees-for-a-transfer) associated with the transfer. |
 
 ### Transfer resource
 
@@ -23,7 +23,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | id | Transfer unique identifier. |
 | status | Either `processed`, `pending`, `cancelled`, or `failed`. |
 | amount | An amount JSON object. See below. |
-| created | ISO-8601 timestamp. |w
+| created | ISO-8601 timestamp. |
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
 | correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
