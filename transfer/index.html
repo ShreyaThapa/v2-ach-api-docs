@@ -115,7 +115,7 @@
         <section class="cnt-two-col__content">
           
             <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Dwolla Transfer documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage <a href="https://developers.dwolla.com/guides/auth/authorization-code-flow.html">OAuth</a> to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/platform">Dwolla API</a>.</p>
+<p>Welcome to the Dwolla Transfer documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage OAuth to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should <a href="http://dwolla.com/contact">contact Sales</a> to learn more about our <a href="https://www.dwolla.com/platform">Dwolla API</a>.</p>
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
@@ -484,15 +484,15 @@ mvn install package
 <p>The OAuth 2 protocol defines four main authorization grant types, more commonly referred to as OAuth flows. Dwolla implements two of the four grant types depending on how your application accesses data within the API.</p>
 
 <ul>
-<li><strong>Flow 1 (Account authorization):</strong> - Using the <a href="/guides/auth/authorization-code-flow.html">authorization code grant flow</a>, your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user&rsquo;s behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth.</li>
-<li><strong>Flow 2 (Application authorization):</strong> - Using the <a href="/guides/auth/client-credentials-flow.html">client credentials grant flow</a>, your application will obtain authorization to interact with the API on its own behalf. This is a server-to-server flow with interaction between an application and the Dwolla API; also known as 2-legged OAuth. An application will exchange it’s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token is for managing webhooks, webhook-subscriptions, and events.</li>
+<li><strong>Flow 1 (Account authorization):</strong> - Using the authorization code grant flow, your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user&rsquo;s behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth.</li>
+<li><strong>Flow 2 (Application authorization):</strong> - Using the client credentials grant flow, your application will obtain authorization to interact with the API on its own behalf. This is a server-to-server flow with interaction between an application and the Dwolla API; also known as 2-legged OAuth. An application will exchange it’s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token is for managing webhooks, webhook-subscriptions, and events.</li>
 </ul>
 <h4 id='token-lifetimes'>Token lifetimes</h4>
 <p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour.</p>
 
 <p><strong>Refresh tokens</strong> are <em>long lived</em>: 60 days.</p>
 
-<p>A refresh token can be used within 60 days to generate a new OAuth account account access_token and refresh_token pair.  So long as you <a href="#refresh-authorization">refresh your authorization</a> at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.</p>
+<p>A refresh token can be used within 60 days to generate a new OAuth account account access_token and refresh_token pair.  So long as you refresh your authorization at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.</p>
 <h2 id='account-authorization'>Account authorization</h2><h3 id='step-1-request-user-authorization'>Step 1: Request user authorization</h3>
 <p>To start the OAuth process, construct the initiation URL which the user will visit in order to grant permission to your application.  It describes the permissions your application requires (<code class="prettyprint">scope</code>), who the client application is (<code class="prettyprint">client_id</code>), and where the user should be redirected to after they grant or deny permissions to your application (<code class="prettyprint">redirect_uri</code>).</p>
 <h3 id='url-format'>URL Format:</h3>
@@ -1108,7 +1108,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='accounts'>Accounts</h1>
-<p>An <code class="prettyprint">Account</code> represents a Dwolla account that was either established on dwolla.com, or created inline with the capture of the user account&rsquo;s permissions via Dwolla&rsquo;s OAuth flow. A user account grants authorization to an application via <a href="#oauth">OAuth</a>, which gives the application permission to interact with the API on their behalf.</p>
+<p>An <code class="prettyprint">Account</code> represents a Dwolla account that was either established on dwolla.com, or created inline with the capture of the user account&rsquo;s permissions via Dwolla&rsquo;s OAuth flow. A user account grants authorization to an application via OAuth, which gives the application permission to interact with the API on their behalf.</p>
 <h3 id='verified-and-unverified-accounts'>Verified and unverified Accounts</h3>
 <p>With a transfer of money, at least one party must complete the identity verification process through creation of a Transfer CIP Verified account, either the sender or the receiver. It’s your decision about which party completes this process, based on your business model, and you may want to have both parties complete the identity verification process. In cases where a Dwolla user <code class="prettyprint">Account</code> is sending funds to or receiving funds from your <code class="prettyprint">Account</code>, the <code class="prettyprint">Account</code> can remain unverified because your account is already verified. However, if you need to transfer funds between your users, at least one of them will need to have a Transfer CIP Verified Dwolla account.</p>
 
@@ -4660,7 +4660,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tbody></table>
 <h2 id='list-events'>List events</h2>
 <p>Retrieve a list of events for the application.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/events</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -4852,7 +4852,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 4</span>
 </code></pre></div></div><h2 id='retrieve-an-event'>Retrieve an event</h2>
 <p>This section covers how to retrieve an event by id.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/events/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5058,7 +5058,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tbody></table>
 <h2 id='create-a-webhook-subscription'>Create a webhook subscription</h2>
 <p>This section details how to create a webhook subscription to deliver <a href="#webhooks">webhooks</a> to a specified URL.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/webhook-subscriptions</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5166,7 +5166,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='retrieve-a-webhook-subscription'>Retrieve a webhook subscription</h2>
 <p>This section details how to retrieve a webhook subscription by its id.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhook-subscriptions/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5279,7 +5279,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='update-a-webhook-subscription'>Update a webhook subscription</h2>
 <p>This section details how to pause a webhook subscription. When a webhook subscription is paused Dwolla will continue to create webhooks but not send them to your subscribed webhook url. This is useful if your webhook endpoint is unavailable and you want to temporarily disable webhook requests.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/webhook-subscriptions/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5388,7 +5388,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='list-webhook-subscriptions'>List webhook subscriptions</h2>
 <p>This section covers how to retrieve a list of webhook subscriptions that belong to an application.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhook-subscriptions</code></p>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5479,7 +5479,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='delete-a-webhook-subscription'>Delete a webhook subscription</h2>
 <p>Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. If using an SDK, the request was successful unless an exception was thrown stating otherwise.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">DELETE https://api.dwolla.com/webhook-subscriptions/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5570,7 +5570,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='list-webhooks-for-a-webhook-subscription'>List webhooks for a webhook subscription</h2>
 <p>This section covers how to view all fired <a href="#webhooks">webhooks</a> for a webhook subscription.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5794,7 +5794,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tbody></table>
 <h2 id='retrieve-a-webhook'>Retrieve a webhook</h2>
 <p>This section covers how to retrieve a single webhook.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhooks/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -5980,7 +5980,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span> <span class="c1">// =&gt; 'transfer_created'</span>
 </code></pre></div></div><h2 id='retry-a-webhook'>Retry a webhook</h2>
 <p>This section details how to retry a webhook by id.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/webhooks/{id}/retries</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -6080,7 +6080,7 @@ Location: https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8/r
 <span class="nx">applicationToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="se">)</span><span class="err">;
 </span></code></pre></div></div><h2 id='list-retries-for-a-webhook'>List retries for a webhook</h2>
 <p>This section covers how to retrieve webhook retries by id.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhooks/{id}/retries</code></p>
 <h3 id='request-parameters'>Request parameters</h3>

@@ -175,7 +175,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <p>For example, if a request to <a href="#initiate-a-transfer">initiate a transfer</a> fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.</p>
 
-<p>If you reattempt a <code class="prettyprint">POST</code> request with the same value for the <code class="prettyprint">Idempotency-Key</code>, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - <code class="prettyprint">Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a</code>). Idempotency keys are intented to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original <code class="prettyprint">POST</code>, you will receive a <code class="prettyprint">409 Conflict</code> error response on the subsequent request.</p>
+<p>If you reattempt a <code class="prettyprint">POST</code> request with the same value for the <code class="prettyprint">Idempotency-Key</code>, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - <code class="prettyprint">Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a</code>). Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original <code class="prettyprint">POST</code>, you will receive a <code class="prettyprint">409 Conflict</code> error response on the subsequent request.</p>
 <h4 id='example-transfer-using-an-idempotency-key'>Example transfer using an Idempotency Key</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
     "_links": {
         "destination": {
@@ -319,9 +319,10 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
         </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
                 </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Required"</span><span class="p">,</span><span class="w">
-                </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FirstName is required."</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FirstName required."</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/firstName"</span><span class="p">,</span><span class="w">
-            </span><span class="err">}</span><span class="w">
+                </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -632,7 +633,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
 <hr>
 
             <h1 id='root'>Root</h1>
-<p>The &ldquo;root&rdquo; serves as an entry point to the API, providing your application with the ability to fetch and discover resources available based on the OAuth <code class="prettyprint">access_token</code> provided in the request. If an <a href="#application-access-token">application access token</a> is provided in the request, the API will return links to resources that belong to the Dwolla application (i.e. &ldquo;events&rdquo; and &ldquo;webhook-subscriptions&rdquo;).</p>
+<p>The &ldquo;root&rdquo; serves as an entry point to the API, providing your application with the ability to fetch and discover resources available based on the OAuth <code class="prettyprint">access_token</code> provided in the request. If an application access token is provided in the request, the API will return links to resources that belong to the Dwolla application (i.e. &ldquo;events&rdquo; and &ldquo;webhook-subscriptions&rdquo;).</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/</code></p>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -729,7 +730,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>funding-sources</td>
-<td>GET this link to list the Accounts&rsquo;s funding sources.</td>
+<td>GET this link to list the Account&rsquo;s funding sources.</td>
 </tr>
 <tr>
 <td>transfers</td>
@@ -6583,7 +6584,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             <h1 id='documents'>Documents</h1>
 <p>Verified Customers of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> and of status <code class="prettyprint">document</code> require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.</p>
 
-<p>For more information on handling the Customer verifiation status of <code class="prettyprint">document</code>, reference our <a href="https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html">Customer verification</a> resource article.</p>
+<p>For more information on handling the Customer verification status of <code class="prettyprint">document</code>, reference our <a href="https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html">Customer verification</a> resource article.</p>
 <h3 id='document-resource'>Document resource</h3>
 <table><thead>
 <tr>
@@ -6950,6 +6951,58 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
             <h1 id='funding-sources'>Funding sources</h1>
 <p>Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the <a href="#create-a-funding-source-for-an-account">Accounts</a> and <a href="#create-a-funding-source-for-a-customer">Customers</a> resources.</p>
+<h3 id='funding-source-links'>Funding source links</h3>
+<table><thead>
+<tr>
+<th>Link</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>self</td>
+<td>URL of the funding source resource.</td>
+</tr>
+<tr>
+<td>customer</td>
+<td>GET this link to <a href="#retrieve-a-customer">retrieve details</a> of the Customer.</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>POST to this link to <a href="#remove-a-funding-source">remove the funding source</a> from the Customer.</td>
+</tr>
+<tr>
+<td>balance</td>
+<td>(Verified Customer only) GET this link to <a href="#retrieve-a-funding-source-balance">retrieve the amount available in the balance</a> of the Customer&rsquo;s Balance funding source.</td>
+</tr>
+<tr>
+<td>transfer-from-balance</td>
+<td>(Verified Customer only) if this link exists, the Customer can transfer funds from their balance.</td>
+</tr>
+<tr>
+<td>transfer-to-balance</td>
+<td>(Verified Customer only) if this link exists, funds can be transferred to the Customer&rsquo;s balance.</td>
+</tr>
+<tr>
+<td>transfer-send</td>
+<td>If this link exists, the Customer can send funds to another Customer.</td>
+</tr>
+<tr>
+<td>transfer-receive</td>
+<td>The Customer can receive funds from another Customer.</td>
+</tr>
+<tr>
+<td>initiate-micro-deposits</td>
+<td>POST to this link to <a href="#initiate-micro-deposits">initiate micro-deposits</a> on an unverified funding source.</td>
+</tr>
+<tr>
+<td>verify-micro-deposits</td>
+<td>Micro-deposits have completed to this funding source and are eligible for verification. POST to this link with the <a href="#verify-micro-deposits">verify micro-deposit amounts</a> and complete bank funding source verification.</td>
+</tr>
+<tr>
+<td>failed-verification-micro-deposits</td>
+<td>Micro-deposits attempts have failed due to too many failed attempts. <a href="https://developers.dwolla.com/resources/funding-source-verification/micro-deposit-verification.html">Remove the bank and re-add to attempt verification again.</a></td>
+</tr>
+</tbody></table>
 <h3 id='funding-source-resource'>Funding source resource</h3>
 <table><thead>
 <tr>
@@ -7323,7 +7376,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test Checking - 1234"</span>
 </code></pre></div></div><h2 id='retrieve-a-funding-source-balance'>Retrieve a funding source balance</h2>
-<p>This section covers how to retrieve the <code class="prettyprint">balance</code> of a funding source. The funding source type <code class="prettyprint">balance</code> only exists for <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer</a> accounts and represents a balance held in the Dwolla network. </p>
+<p>This section covers how to retrieve the <code class="prettyprint">balance</code> of a funding source. The funding source type <code class="prettyprint">balance</code> only exists for <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer</a> accounts and represents a balance held in the Dwolla network.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/funding-sources/{id}/balance</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -7470,7 +7523,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>201</td>
 <td>Created</td>
-<td>Micro deposits initiated</td>
+<td>Micro-deposits initiated, will take 1-2 days to settle to destination bank.</td>
 </tr>
 <tr>
 <td>404</td>
@@ -7586,12 +7639,12 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
 <tr>
 <td>200</td>
 <td>OK</td>
-<td>Micro deposits verified</td>
+<td>Micro-deposits successfully verified.</td>
 </tr>
 <tr>
 <td>202</td>
 <td>TryAgainLater</td>
-<td>&ldquo;Invalid wait time.&rdquo;</td>
+<td>Micro-deposits have not have not settled to destination bank. A Customer can verify these amounts after micro-deposits have processed to their bank.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -7606,12 +7659,12 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
 <tr>
 <td>404</td>
 <td>NotFound</td>
-<td>Micro deposits not initiated,Funding source not found</td>
+<td>Micro-deposits not initiated,Funding source not found</td>
 </tr>
 <tr>
 <td>500</td>
 <td>Unknown</td>
-<td>&ldquo;Verify microdeposits returned an unknown error.&rdquo;</td>
+<td>&ldquo;Verify micro-deposits returned an unknown error.&rdquo;</td>
 </tr>
 </tbody></table>
 <h4 id='request-and-response'>Request and response</h4><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -7766,7 +7819,7 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>status</td>
-<td>Possible values: <code class="prettyprint">pending</code>, <code class="prettyprint">processed</code>, or <code class="prettyprint">failed</code>. <code class="prettyprint">pending</code> represents micro-deposits initiated and are en route to their destination. <code class="prettyprint">procesed</code> represents micro-deposits have reached the destination account and are awaiting verification. <code class="prettyprint">failed</code> represents micro-deposits failed to clear successfully to the destination.</td>
+<td>Possible values: <code class="prettyprint">pending</code>, <code class="prettyprint">processed</code>, or <code class="prettyprint">failed</code>. <code class="prettyprint">pending</code> represents micro-deposits initiated and are en route to their destination. <code class="prettyprint">processed</code> represents micro-deposits have reached the destination account and are awaiting verification. <code class="prettyprint">failed</code> represents micro-deposits failed to clear successfully to the destination.</td>
 </tr>
 <tr>
 <td>failure</td>
@@ -8014,6 +8067,50 @@ HTTP 200 OK
 
             <h1 id='transfers'>Transfers</h1>
 <p>A transfer represents money being transferred from a <code class="prettyprint">source</code> to a <code class="prettyprint">destination</code>. Transfers are available for the <code class="prettyprint">Customer</code> and <code class="prettyprint">Account</code> resources.</p>
+<h3 id='transfer-links'>Transfer Links</h3>
+<table><thead>
+<tr>
+<th>Link</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>self</td>
+<td>URL of the transfer.</td>
+</tr>
+<tr>
+<td>source</td>
+<td>GET this link to <a href="#retrieve-a-customer">retrieve the Customer</a> that was the <code class="prettyprint">source</code> of the transfer.</td>
+</tr>
+<tr>
+<td>destination</td>
+<td>GET this link to <a href="#retrieve-a-customer">retrieve the Customer</a> that was the <code class="prettyprint">destination</code> of the transfer.</td>
+</tr>
+<tr>
+<td>source-funding-source</td>
+<td>GET this link to <a href="#retrieve-a-funding-source">retrieve the funding source</a> that was the <code class="prettyprint">source</code> of the transfer.</td>
+</tr>
+<tr>
+<td>destination-funding-source</td>
+<td>GET this link to <a href="#retrieve-a-funding-source">retrieve the funding source</a> that was the <code class="prettyprint">destination</code> of the transfer.</td>
+</tr>
+<tr>
+<td>cancel</td>
+<td>POST to this link to <a href="#cancel-a-transfer">cancel the transfer</a> (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.)</td>
+</tr>
+<tr>
+<td>funding-transfer</td>
+<td>Represents funds moving from a Verified Customer&rsquo;s bank to their Dwolla balance.</td>
+</tr>
+<tr>
+<td>funded-transfer</td>
+<td>Represents funds moving from a Verified Customer&rsquo;s Dwolla balance into their bank.</td>
+</tr>
+<tr>
+<td>fees</td>
+<td>GET this link to <a href="#list-fees-for-a-transfer">retrieve the facilitator fees</a> associated with the transfer.</td>
+</tr>
+</tbody></table>
 <h3 id='transfer-resource'>Transfer resource</h3>
 <table><thead>
 <tr>
@@ -8023,19 +8120,19 @@ HTTP 200 OK
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>Transfer unique identifier</td>
+<td>Transfer unique identifier.</td>
 </tr>
 <tr>
 <td>status</td>
-<td>Either <code class="prettyprint">processed</code>, <code class="prettyprint">pending</code>, <code class="prettyprint">cancelled</code>, <code class="prettyprint">failed</code>, or <code class="prettyprint">reclaimed</code></td>
+<td>Either <code class="prettyprint">processed</code>, <code class="prettyprint">pending</code>, <code class="prettyprint">cancelled</code>, or <code class="prettyprint">failed</code>.</td>
 </tr>
 <tr>
 <td>amount</td>
-<td>An amount JSON object. See below</td>
+<td>An amount JSON object. See below.</td>
 </tr>
 <tr>
 <td>created</td>
-<td>ISO-8601 timestamp</td>
+<td>ISO-8601 timestamp.</td>
 </tr>
 <tr>
 <td>metadata</td>
@@ -8048,6 +8145,10 @@ HTTP 200 OK
 <tr>
 <td>correlationId</td>
 <td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
+</tr>
+<tr>
+<td>individualAchId</td>
+<td>The individual identifier for that ACH entry, a unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -10311,8 +10412,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Beneficial owner successfully created.</td>
 </tr>
 <tr>
+<td>customer_beneficial_owner_removed</td>
+<td>An individual beneficial owner has been successfully removed from the Customer</td>
+</tr>
+<tr>
 <td>customer_beneficial_owner_verification_document_needed</td>
-<td>Additional documentation is needed to verify an  individual beneficial owner.</td>
+<td>Additional documentation is needed to verify an individual beneficial owner.</td>
 </tr>
 <tr>
 <td>customer_beneficial_owner_verification_document_uploaded</td>
@@ -10328,7 +10433,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>customer_beneficial_owner_reverification_needed</td>
-<td>A previously <code class="prettyprint">verifed</code> beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days.</td>
+<td>A previously <code class="prettyprint">verified</code> beneficial owner status has changed due to either a change in the beneficial owner’s information or at request for more information from Dwolla. The individual will need to verify their identity within 30 days.</td>
 </tr>
 <tr>
 <td>customer_beneficial_owner_verified</td>
@@ -10449,26 +10554,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_balance_inquiry_completed</td>
 <td>Upon checking a Customer&rsquo;s bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of <code class="prettyprint">processing</code>. This event will be triggered when the bank balance check has completed processing.</td>
-</tr>
-</tbody></table>
-<h3 id='dwolla-integration-event-topics'>Dwolla Integration Event topics</h3>
-<table><thead>
-<tr>
-<th>Topic</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>customer_bill_payment_created</td>
-<td>Represents a <code class="prettyprint">pending</code> bill payment transaction status. This is only part of the bill payment integration.</td>
-</tr>
-<tr>
-<td>customer_bill_payment_completed</td>
-<td>Represents a <code class="prettyprint">confirmed</code> bill payment transaction status and a <code class="prettyprint">processed</code> Dwolla transfer status.</td>
-</tr>
-<tr>
-<td>customer_bill_payment_failed</td>
-<td>Represents a <code class="prettyprint">rejected</code> bill payment transaction status and a <code class="prettyprint">failed</code> Dwolla transfer status.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
@@ -10682,7 +10767,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET htttps://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -11859,7 +11944,7 @@ Location: https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d5
 <span class="nx">applicationToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="se">)</span><span class="err">;
 </span></code></pre></div></div><h2 id='list-retries-for-a-webhook'>List retries for a webhook</h2>
 <p>This section covers how to retrieve webhook retries by id.</p>
-<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth <a href="#application-access-token">application access token</a>.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
 </li></ol><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhooks/{id}/retries</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -11998,7 +12083,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
                  <a href="https://www.dwolla.com/updates">Blog</a>
                  <a href="https://www.dwolla.com/case-studies">Case Studies</a>
                  <a href="https://developers.dwolla.com">Developers</a>
-                 <a href="https://www.dwolla.com/contact">Contact sales</a>
+                 <a href="https://www.dwolla.com/contact">Contact Us</a>
              </nav>
              <nav>
                <h6>Company</h6>
