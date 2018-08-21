@@ -51,8 +51,8 @@ Create a document for a Customer pending verification by uploading a photo of th
 | 400         | maximumNumberOfResources | Max of four files upload allowed. Please wait for Dwolla to manually check the documents. |
 | 400         | invalidFileType          | File types supported: `.jpg`, `.jpeg`, `.png`, or `.pdf`. |
 | 403         | invalidResourceState     | Resource cannot be modified. Document creation not allowed for already `verified` Customers or non-`verified` Customer types. |
-| 403         | notFound                 | Customer not found. Check CustomerId. |
-| 404         | notAuthorized            | Not authorized to create documents. |
+| 403         | notAuthorized            | Not authorized to create documents. |
+| 404         | notFound                 | Customer not found. Check CustomerId. |
 | 413         | fileTooLarge             | Document requests are limited to 10 mb. |
 
 ### Request and response
