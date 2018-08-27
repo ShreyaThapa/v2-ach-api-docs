@@ -6644,6 +6644,50 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>File contents.</td>
 </tr>
 </tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>A document resource was created.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>maximumNumberOfResources</td>
+<td>Max of four files upload allowed. Please wait for Dwolla to manually check the documents.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>invalidFileType</td>
+<td>File types supported: <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>invalidResourceState</td>
+<td>Resource cannot be modified. Document creation not allowed for already <code class="prettyprint">verified</code> Customers or non-<code class="prettyprint">verified</code> Customer types.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>notAuthorized</td>
+<td>Not authorized to create documents.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>notFound</td>
+<td>Customer not found. Check CustomerId.</td>
+</tr>
+<tr>
+<td>413</td>
+<td>fileTooLarge</td>
+<td>Document requests are limited to 10 mb.</td>
+</tr>
+</tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
