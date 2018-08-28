@@ -120,7 +120,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 
 This section details how to create a new Customer.
 
-[**To create `Receive-only Customers`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name, `type` with the value of `receive-only`, and `businessName` if applicable.
+[**To create `Receive-only Customers`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 [**To create `Unverified Customers`**](/#request-parameters---unverified-customer), you will only need to provide the customer's full name and email address, as well as a `businessName` if applicable.
 
