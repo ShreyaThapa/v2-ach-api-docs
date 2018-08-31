@@ -1786,7 +1786,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
 <p>This section details how to create a new Customer.</p>
 
-<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Customers</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Customers</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 
 <p><a href="/#request-parameters---unverified-customer"><strong>To create <code class="prettyprint">Unverified Customers</code></strong></a>, you will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
 
@@ -10637,7 +10637,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
-<p>Retrieve a list of events for the application.</p>
+<p>Retrieve a list of events for the application. <strong>Note:</strong> Dwolla will only guarantee access to events through the API over a rolling 30-day period.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/events</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -11516,7 +11516,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$webhookApi</span><span class="o">-&gt;</span><span class="na">deleteById</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='list-webhooks-for-a-webhook-subscription'>List webhooks for a webhook subscription</h2>
-<p>This section covers how to view all fired <a href="#webhooks">webhooks</a> for a webhook subscription.</p>
+<p>This section covers how to view all fired <a href="#webhooks">webhooks</a> for a webhook subscription. <strong>Note:</strong> Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
