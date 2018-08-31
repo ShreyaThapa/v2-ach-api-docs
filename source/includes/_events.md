@@ -148,7 +148,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 
 ## List events
 
-Retrieve a list of events for the application.
+Retrieve a list of events for the application. **Note:** Dwolla will only guarantee access to events through the API over a rolling 30-day period.
 
 ### HTTP request
 

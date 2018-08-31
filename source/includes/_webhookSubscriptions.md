@@ -346,7 +346,7 @@ $webhookApi->deleteById('https://api-sandbox.dwolla.com/webhook-subscriptions/5a
 
 ## List webhooks for a webhook subscription
 
-This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription.
+This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription. **Note:** Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks`
