@@ -1,19 +1,17 @@
-# Accounts
+# Master Account
 
-An `Account` represents your Dwolla Master Account that was established on dwolla.com.
-
-### Migrating Transfer user Accounts to Dwolla API Customers
-Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
+An `Account` represents your Dwolla Master Account which owns the application.
 
 ### Account links
+
 | Link | Description|
 |------|------------|
-| self | URL of the Account resource
-| receive | Follow the link to create a transfer to this Account.
-| funding-sources | GET this link to list the Account's funding sources.
-| transfers | GET this link to list the Account's transfers
-| customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers.
-| send | Follow the link to create a transfer to this Account.
+| self | URL of the Account resource |
+| receive | Follow the link to create a transfer to this Account. |
+| funding-sources | GET this link to list the Account's funding sources. |
+| transfers | GET this link to list the Account's transfers. |
+| customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers. |
+| send | Follow the link to create a transfer to this Account. |
 
 ```noselect
 {
@@ -42,22 +40,27 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 }
 ```
 
-## Retrieve account details
+## Retrieve Master Account details
 
-This section shows you how to retrieve basic account information belonging to the authorized user Account.
+This section shows you how to retrieve basic account information belonging to the authorized Dwolla Master Account.
+
+To retrieve your Account ID, you will need to call the [root](#root) of the API.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
-| 403 | Not authorized to get an Account by id. |
+| 403 | Not authorized to get a Account by id. |
 | 404 | Account not found. |
 
 ### Request and response
@@ -92,6 +95,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "name": "Jane Doe"
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -99,6 +103,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-7
 account = app_token.get account_url
 account.name # => "Jane Doe"
 ```
+
 ```php
 <?php
 $accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
@@ -109,6 +114,7 @@ $account = $accountsApi->id($accountUrl);
 print($account->name); # => "Jane Doe"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -116,6 +122,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-7
 account = app_token.get(account_url)
 account.body['name']
 ```
+
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
@@ -124,16 +131,18 @@ appToken
   .then(res => res.body.name); // => 'Jane Doe'
 ```
 
-## Create a funding source for an account
+## Create a funding source for a Master Account
 
-This section details how to add a bank account to a Dwolla account. The bank account will have a status of `unverified` upon creation. Before a Dwolla account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.
+This section details how to add a bank account to a Dwolla Master Account. The bank account will have a status of `unverified` upon creation. Before a Dwolla Master Account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.
 
 For more information on micro-deposit verification, reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
 ### HTTP request
+
 `POST https://api.dwolla.com/funding-sources`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | accountNumber | yes | string | The bank account number. |
@@ -143,11 +152,11 @@ For more information on micro-deposit verification, reference the [funding sourc
 | channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
-| 400 | Duplicate funding source or validation error.
-| 403 | Not authorized to create funding source.
-
+| 400 | Duplicate funding source or validation error. |
+| 403 | Not authorized to create funding source. |
 
 ### Request and response
 
@@ -168,6 +177,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3
 ```
+
 ```php
 <?php
 $fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
@@ -181,6 +191,7 @@ $fundingSource = $fundingApi->createFundingSource([
 $fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
 ?>
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
@@ -193,6 +204,7 @@ request_body = {
 funding_source = app_token.post "funding-sources", request_body
 funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
@@ -205,6 +217,7 @@ request_body = {
 funding_source = app_token.post('funding-sources', request_body)
 funding_source.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
 ```
+
 ```javascript
 var requestBody = {
   'routingNumber': '222222226',
@@ -218,20 +231,23 @@ appToken
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
 ```
 
-## List funding sources for an account
+## List funding sources for a Master Account
 
 Retrieve a list of funding sources that belong to an Account. By default, all funding sources are returned unless the `removed` querystring parameter is set to `false` in the request.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/funding-sources`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account's unique identifier. |
 | removed | no | boolean | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /accounts/{id}/funding-sources?removed=false). |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to list funding sources.
@@ -307,6 +323,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -314,6 +331,7 @@ account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b375045
 funding_sources = app_token.get "#{account_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe's Checking"
 ```
+
 ```php
 <?php
 $accountUrl = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
@@ -324,6 +342,7 @@ $fundingSources = $fsApi->getAccountFundingSources($accountUrl);
 $fundingSources->_embedded->{'funding-sources'}[0]->name); # => "Jane Doe’s Checking"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -331,6 +350,7 @@ account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b375045
 funding_sources = app_token.get('%s/funding-sources' % account_url)
 funding_sources.body['_embedded']['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
 ```
+
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
@@ -339,14 +359,16 @@ appToken
   .then(res => res.body._embedded['funding-sources'][0].name); // => 'ABC Bank Checking'
 ```
 
-## List and search transfers for an account
+## List and search transfers for a Master Account
 
 This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional query string parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/transfers`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier to get transfers for. |
@@ -361,6 +383,7 @@ This section covers how to retrieve an Account's list of transfers. Transaction 
 | offset | no | integer | Number of search results to skip. Used for pagination. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Account not found. |
@@ -433,6 +456,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "total": 2
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
@@ -440,6 +464,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-0
 transfers = account_token.get "#{account_url}/transfers"
 transfers._embedded.transfers[0].status # => "processed"
 ```
+
 ```php
 <?php
 $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
@@ -450,6 +475,7 @@ $transfers = $transfersApi->getAccountTransfers($accountUrl);
 $transfers->_embedded->transfers[0]->status; # => "processed"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
@@ -457,6 +483,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-0
 transfers = app_token.get('%s/transfers' % account_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => "processed"
 ```
+
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
@@ -465,14 +492,16 @@ appToken
   .then(res => res.body._embedded.transfers.[0].status); // => 'processed'
 ```
 
-## List mass payments for an account
+## List mass payments for a Master Account
 
 This section covers how to retrieve an Account's list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/mass-payments`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier to get mass payments for. |
@@ -481,6 +510,7 @@ This section covers how to retrieve an Account's list of previously created mass
 | correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------------|
 | 403 | NotAuthorized | Not authorized to list mass payments. |
@@ -534,6 +564,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "total": 1
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -541,6 +572,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-7
 mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
+
 ```php
 <?php
 $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
@@ -551,6 +583,7 @@ $masspayments = $masspaymentsApi->getByAccount($accountUrl, 10, 0);
 $masspayments->_embedded->{"mass-payments"}[0]->status; # => "complete"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -558,6 +591,7 @@ account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-7
 transfers = app_token.get('%s/mass-payments' % account_url, limit = 10)
 transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```
+
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
@@ -565,4 +599,5 @@ appToken
   .get(`${accountUrl}/mass-payments`)
   .then(res => res.body._embedded['mass-payments'][0].status); // => 'complete'
 ```
+
 * * *

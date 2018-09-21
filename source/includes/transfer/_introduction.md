@@ -1,3 +1,18 @@
+# Notice of deprecation
+
+Dwolla will soon be discontinuing support for the legacy V1 // Transfer API across the platform.  
+
+* On October 1, 2018, users will no longer be able to create accounts full Dwolla accounts and direct Dwolla accounts in the old Dwolla interface.
+* On December 3, 2018 businesses will no longer be able to use the legacy Dwolla dashboard for any type of transaction.  
+
+<ol class = "alerts">
+  <li class="alert icon-alert-info">
+    Dwolla will soon be discontinuing support for the legacy V1 // Transfer API across the platform.
+  </li>
+</ol>
+
+**To avoid service disruption, your business will need to consider integrating with [Dwolla's V2 API](https://www.dwolla.com/pricing) or you will need to consider other payment services sooner than later.**
+
 # Introduction
 
 Welcome to the Dwolla Transfer documentation. Connect your software to the banking infrastructure. Transfer is for customers building applications where the end user interacts with the Dwolla branded interface. Transfer integrations leverage OAuth to facilitate user on-boarding and Dwolla account authorization. Upgrades to additional features like Next Day ACH, increased transaction limits, and priority support are available. Platforms requiring full customization of the payments experience should [contact Sales](http://dwolla.com/contact) to learn more about our [Dwolla API](https://www.dwolla.com/platform).

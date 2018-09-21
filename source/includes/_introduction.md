@@ -38,34 +38,67 @@ All requests require either an OAuth access token or a `client_id` and `client_s
 Requests that require a client_id and client_secret can be sent using the `application/x-www-form-urlencoded` Content-Type or via a JSON body with the `application/json` Content-Type.
 
 ### API Host
+
 **Production:** `https://api.dwolla.com`
 
 **Sandbox:** `https://api-sandbox.dwolla.com`
 
 ## Idempotency key
 
-To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
-
+To prevent an operation from being performed more than once, we highly recommend utilizing an idempotency key in all API calls used to create resources. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
 For example, if a request to [initiate a transfer](#initiate-a-transfer) fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.
 
-If you reattempt a `POST` request with the same value for the `Idempotency-Key`, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`). Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original `POST`, you will receive a `409 Conflict` error response on the subsequent request.
+Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value.
+It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`).
+
+<ol class = "alerts">
+    <li class="alert icon-alert-info">
+      To prevent resources from being created more than once, we highly recommend making all requests idempotent.
+    </li>
+</ol>
+
+If you reattempt a `POST` request with the same value for the `Idempotency-Key`, rather than creating new or potentially duplicate resources, you will receive a `201 Created`, with the original response of the created resource.
+
+If the Dwolla server is still processing the original `POST` request, you will receive a `409 Conflict` error response on the subsequent request.
+
+Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours.
 
 #### Example transfer using an Idempotency Key
+
 ```noselect
-curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
+POST https://api-sandbox.dwolla.com/transfers
+Accept: application/vnd.dwolla.v1.hal+json
+Content-Type: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
+
+{
     "_links": {
-        "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
-        },
         "source": {
-            "href": "http://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+        },
+        "destination": {
+            "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
         }
     },
     "amount": {
         "currency": "USD",
-        "value": "1337.00"
-    }
-}' "https://api-sandbox.dwolla.com/transfers" -v
+        "value": "10.00"
+    },
+    "metadata": {
+        "paymentId": "12345678",
+        "note": "payment for completed work Dec. 1"
+    },
+    "clearing": {
+        "destination": "next-available"
+  },
+  "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
+}
+
+...
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 
 ```
 
