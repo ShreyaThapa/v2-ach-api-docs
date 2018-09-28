@@ -48,7 +48,7 @@ body > header {
                 display: none;
                 float: right;
 
-                a {
+                header {
                     margin-right: 15px;
 
                     &:last-child {
@@ -77,8 +77,8 @@ body > header {
 
     a {
         text-decoration: none;
-        opacity: 0.5;
-        font-weight: 600;
+        opacity: 1;
+        font-weight: 300;
 
         &:hover {
             opacity: 0.85; 
@@ -95,7 +95,7 @@ body > header {
 
     .header__primary {
         padding: 25px 0;
-        @include linear-gradient($gradient-tilt, $color-gradient-orange, $color-gradient-red);
+        @include linear-gradient($gradient-tilt, $color-gradient-orange, $color-gradient-magenta);
 
         .page-wrap {
             & > div {
@@ -126,6 +126,7 @@ body > header {
                     padding: 15px 0;
                     display: block;
                     text-align: center;
+                    font-weight: 100;
                 }
 
                 &.btn {
@@ -159,15 +160,16 @@ body > header {
             color: $color-grey-dark;
             opacity: 1;
             position: relative;
+            font-weight: 600;
 
             &:hover {
                 text-decoration: none;
-                color: $color-blue;
+                color: $color-orange-burnt;
             }
 
             &.active {
-                color: $color-blue;
-                border-bottom: 3px solid $color-blue;
+                color: $color-orange-burnt;
+                border-bottom: 3px solid $color-orange-burnt;
             }
 
 

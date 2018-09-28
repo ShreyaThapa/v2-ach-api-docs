@@ -134,7 +134,7 @@ input[type="radio"] + label {
         height: 8px;
         top: 3px;
         left: 3px;
-        background-color: $color-blue;
+        background-color: $color-orange;
         border-radius: 50%;
     }
 }
@@ -186,6 +186,7 @@ input[type="radio"]:disabled:checked + label:after {
     cursor: pointer;
     border-radius: 5px;
     background: $color-grey;
+    border: solid 1px $color-grey-med;
     
     select{
         height: 100%;
@@ -217,7 +218,7 @@ input[type="radio"]:disabled:checked + label:after {
         position: absolute;
         top: 1px;
         right: 1px;
-        background: $color-grey;
+        background: $color-grey-light;
         content: "";
         pointer-events: none;
         border-radius: 5px;
@@ -245,26 +246,26 @@ input[type="radio"]:disabled:checked + label:after {
         }
     }
 
-    &--blue {
-        background: $color-blue;
+    &--grey {
+        background: $color-grey-light;
         select {
-            border: none;
-            color: $color-white;
+            border: 1px;
+            color: $color-grey-dark;
             option {
-                color:$color-white;
-                background: $color-blue;
+                color:$color-grey-mild;
+                background: $color-grey-light;
             }
         }
 
         .arrow {
-            background: $color-blue;
+            background: $color-grey-light;
 
             &:before {
-                @include arrow(6px, $color-white, "down");
+                @include arrow(6px, $color-grey-light, "down");
             }
 
             &:after {
-                @include arrow(6px, $color-blue, "down");
+                @include arrow(6px, $color-grey-mild, "down");
             }
         }
     }

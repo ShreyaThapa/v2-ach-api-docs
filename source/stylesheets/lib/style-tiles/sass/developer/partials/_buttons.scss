@@ -90,6 +90,10 @@ button::-moz-focus-inner {
         @include button($color-white, $color-white, transparent);
     }
 
+    &.clear--header {
+        @include button($color-white, none, $color-purple);
+    }
+
     &.clear--dark {
         @include button($color-orange, $color-orange, transparent);
 
