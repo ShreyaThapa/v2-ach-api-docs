@@ -2,10 +2,10 @@
 // 300 = light, 400 = normal, 600 = semi-bold, 700 = bold
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Roboto", sans-serif;
     color: $color-black;
     line-height: rem(21px);
-    -webkit-font-smoothing: antialiased
+    -webkit-font-smoothing: antialiased;
 }
 
 %poppins {
@@ -76,7 +76,7 @@ p {
 }
 
 a {
-    color: $color-orange-burnt;
+    color: $color-orange-accent;
     text-decoration: none;
     cursor: pointer;
 
@@ -92,7 +92,7 @@ a {
 }
 
 header {
-    font-weight: 100;
+    font-weight: 500;
     @extend %poppins;
 }
 
@@ -126,7 +126,7 @@ ul {
     li {
         font-size: rem(16px);
     }
-    
+
     &.bullet {
         margin-bottom: 30px;
 
@@ -214,10 +214,10 @@ table {
             @include breakpoint($SIZE_MOBILE){
                 border: 1px solid #ccc;
             }
-            
+
            &:nth-child(even) {
                 background: $color-grey;
-            } 
+            }
 
             td {
                 padding: 6px 15px;

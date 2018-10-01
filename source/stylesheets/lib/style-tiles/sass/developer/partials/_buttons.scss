@@ -30,12 +30,13 @@ button::-moz-focus-inner {
 
 .btn {
     display: inline-block;
+    margin-top: 0;
     margin-bottom: 20px;
-    padding: 10px 16px;
-    border-radius: 3px;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-size: rem(14px);
     line-height: rem(21px);
-    font-weight: 600;
+    font-weight: 400;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -61,21 +62,13 @@ button::-moz-focus-inner {
     }
 
     &.primary {
-        @include button($color-white, none, rgba($color-white, 0.4));
-        text-decoration: none;
+        @include button($color-white, none, #5e4e76);
+        box-shadow: 0 2px 4px 0 $color-button-shadow-hover, 0 0 2px 0 $color-button-shadow-hover;
 
         &:hover {
-            color: $color-orange;
-            background-color: rgba($color-white, 0.75);
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px 0 $color-button-shadow-hover, 0 2px 8px 0 $color-button-shadow-hover-b;
         }
 
-        %inverse & {
-            text-decoration: none;
-            &:hover {
-                color: $color-orange;
-            }
-        }
     }
 
     &.alternative {

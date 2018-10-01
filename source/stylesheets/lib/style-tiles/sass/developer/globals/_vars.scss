@@ -16,9 +16,9 @@ $BASE-FONT-SIZE: 14px;
 /* ------ COLORS ------- */
 //primary
 $color-orange: #F3904A;
+$color-orange-accent: #d9725c;
 $color-magenta: #AA437F;
 $color-purple: #483D66;
-$color-orange-burnt: #D9725c;
 $color-blue: #2395d6;
 $color-white: #fff;
 $color-grey: #eef3f6;
@@ -46,8 +46,23 @@ $color-alert-red: #e8b1ad;
 
 //gradients
 $gradient-tilt: 90deg;
+$gradient-tilt-background: 45deg;
 $gradient-tilt-banner: 156deg;
 $color-gradient-orange: #ff8929;
+$color-gradient-orange-header: #e98453;
 $color-gradient-red: #ce5951;
 $color-gradient-purple: #7863a9;
+$color-gradient-purple-header: #b45277;
 $color-gradient-magenta: #AA437F;
+
+// shadows
+$color-shadow-light: rgba($color-black, .1);
+$color-shadow-medium: rgba($color-black, .12);
+$color-shadow-dark: rgba($color-black, .2);
+$color-shadow-darker: rgba($color-black, .3);
+$color-shadow-darkest: rgba($color-black, .6);
+
+// ------ Button ------- //
+$color-button-shadow: $color-shadow-light;
+$color-button-shadow-hover: $color-shadow-medium;
+$color-button-shadow-hover-b: $color-shadow-dark;
