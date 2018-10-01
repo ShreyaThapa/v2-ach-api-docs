@@ -27,8 +27,8 @@
             background: $color-grey-2;
             a {
                 padding-left: 22px;
-                color: $color-blue;
-                border-left: 3px solid $color-blue;
+                color: $color-orange-accent;
+                border-left: 3px solid $color-orange-accent;
             }
         }
 
@@ -44,7 +44,7 @@
             .tocify-focus {
                 a {
                     padding-left: 42px;
-                    border-left: 3px solid $color-blue; 
+                    border-left: 3px solid $color-orange-accent;
                 }
             }
         }

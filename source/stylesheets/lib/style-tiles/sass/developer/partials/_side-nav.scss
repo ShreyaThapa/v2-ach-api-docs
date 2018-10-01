@@ -22,7 +22,7 @@ $rotation-time: 0.35s;
 
         &:hover {
             text-decoration: none;
-            color: $color-blue;
+            color: $color-orange-accent;
             background-color: $color-grey-2;
         }
     }
@@ -151,7 +151,7 @@ $rotation-time: 0.35s;
 
                         &:hover {
                             &:before {
-                                @include arrow(6px, $color-blue, "right");
+                                @include arrow(6px, $color-orange-accent, "right");
                             }
 
                             &:after {
@@ -163,9 +163,9 @@ $rotation-time: 0.35s;
                     &.active {
                         margin-right: -1px;
                         padding-left: 23px;
-                        color: $color-blue;
+                        color: $color-orange-accent;
                         background: $color-grey-2;
-                        border-left: 3px solid $color-blue;
+                        border-left: 3px solid $color-orange-accent;
 
                         @include breakpoint($SIZE_TABLET_SMALL){
                             &:after {
@@ -185,7 +185,7 @@ $rotation-time: 0.35s;
                                     transform: rotate(90deg);
                                 }
                             }
-                           
+
                         }
 
                         & + ul {
@@ -201,7 +201,7 @@ $rotation-time: 0.35s;
 
                                     &.active {
                                         padding-left: 42px;
-                                        border-left: 3px solid $color-blue;
+                                        border-left: 3px solid $color-orange-accent;
                                     }
                                 }
                             }
@@ -222,7 +222,7 @@ $rotation-time: 0.35s;
                         font-size: rem(12px);
                     }
                 }
-            }   
+            }
         }
     }
 
@@ -261,14 +261,14 @@ $rotation-time: 0.35s;
         .arrow {
             top: 3px;
         }
-    }  
+    }
     }
 
     &__dropdown {
         padding: 30px 25px;
 
         @include breakpoint($SIZE_TABLET_SMALL){
-            padding: 0; 
+            padding: 0;
         }
 
         &.open {
@@ -347,7 +347,7 @@ $rotation-time: 0.35s;
                         background-color: $color-grey-2;
 
                         &:before {
-                            @include arrow(6px, $color-blue, "right");
+                            @include arrow(6px, $color-orange-accent, "right");
                         }
 
                         &:after {
@@ -363,7 +363,7 @@ $rotation-time: 0.35s;
             cursor: pointer;
 
             button {
-                color: $color-blue;
+                color: $color-orange-accent;
             }
 
             .icon {
@@ -380,7 +380,7 @@ $rotation-time: 0.35s;
 
             &.showing {
                 button {
-                    color: $color-blue;
+                    color: $color-orange-accent;
                 }
 
                 .icon-side-nav-collapse-plus {

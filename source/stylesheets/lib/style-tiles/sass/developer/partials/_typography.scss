@@ -2,14 +2,14 @@
 // 300 = light, 400 = normal, 600 = semi-bold, 700 = bold
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Roboto", sans-serif;
     color: $color-black;
     line-height: rem(21px);
     -webkit-font-smoothing: antialiased;
 }
 
-%roboto-slab {
-    font-family: "Roboto Slab", serif;
+%poppins {
+    font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -25,15 +25,15 @@ input, select, textarea, button{
 h1, h2, h3, h4, h5, h6 {
     margin: 0 0 12px 0;
     font-weight: 600;
-    color: $color-orange;
+    color: $color-purple;
 }
 
 h1 {
     font-size: rem(35px);
     line-height: rem(40px);
     font-weight: 300;
-    color: $color-orange;
-    @extend %roboto-slab;
+    color: $color-purple;
+    @extend %poppins;
 
     @include breakpoint($SIZE_TABLET){
         font-size: rem(27px);
@@ -76,7 +76,7 @@ p {
 }
 
 a {
-    color: $color-blue;
+    color: $color-orange-accent;
     text-decoration: none;
     cursor: pointer;
 
@@ -89,6 +89,11 @@ a {
         text-decoration: underline;
         cursor: pointer;
     }
+}
+
+header {
+    font-weight: 500;
+    @extend %poppins;
 }
 
 strong {
@@ -121,7 +126,7 @@ ul {
     li {
         font-size: rem(16px);
     }
-    
+
     &.bullet {
         margin-bottom: 30px;
 
@@ -209,10 +214,10 @@ table {
             @include breakpoint($SIZE_MOBILE){
                 border: 1px solid #ccc;
             }
-            
+
            &:nth-child(even) {
                 background: $color-grey;
-            } 
+            }
 
             td {
                 padding: 6px 15px;
