@@ -29,14 +29,14 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 0 12px 0;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
-    color: $color-purple;
+    color: $color-grey-mild;
 }
 
 h1 {
     font-size: rem(35px);
     line-height: rem(40px);
     font-weight: 300;
-    color: $color-purple;
+    color: $color-grey-mild;
     @extend %poppins;
 
     @include breakpoint($SIZE_TABLET){
@@ -73,6 +73,7 @@ h6 {
 }
 
 p {
+    color: $color-grey-dark;
     margin: 0 0 25px 0;
     padding: 0;
     font-size: rem(16px);
