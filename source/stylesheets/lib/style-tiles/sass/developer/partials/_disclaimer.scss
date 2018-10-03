@@ -7,13 +7,14 @@
     h5 {
         display: block;
         font-size: rem(14px);
-        color: $color-grey-med-3;
+        color: $color-black;
     }
 
     p {
         font-size: rem(12px);
-        line-height: rem(20px);
+        line-height: rem(21px);
         color: $color-grey-med-3;
+        font-weight: 400;
     }
 }
 
