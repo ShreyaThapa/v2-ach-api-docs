@@ -7,7 +7,7 @@ body > footer, .cnt-two-col__content > footer {
     h6 {
         font-size: rem(14px);
         font-weight: 400;
-        color: $color-grey-med-3;
+        color: $color-black;
     }
 
     .page-wrap {
@@ -36,6 +36,7 @@ body > footer, .cnt-two-col__content > footer {
             }
 
             a {
+                color: $color-grey-dark;
                 margin-bottom: 6px;
                 display: block;
             }

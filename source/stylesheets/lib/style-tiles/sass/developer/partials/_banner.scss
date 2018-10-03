@@ -6,9 +6,12 @@
     h1 {
         max-width: 865px;
         margin: 0 auto 35px;
+        font-weight: 300;
+        line-height: 60px;
+        font-size: 46px;
+        font-family: 'Poppins', sans-serif;;
+        margin-bottom: 40px;
         color: $color-white;
-        font-size: rem(40px);
-        line-height: rem(46px);
 
         &.icon {
             padding-top: 100px;

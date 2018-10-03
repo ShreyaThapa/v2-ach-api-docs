@@ -9,7 +9,7 @@
 
         &:hover {
             text-decoration: none;
-            color: $color-blue;
+            color: $color-orange-accent;
         }
     }
 
@@ -32,14 +32,14 @@
             padding-left: 0;
             font-size: rem(12px);
             position: relative;
-            
+
             a {
                 padding: 9px 10px 9px 55px;
                 position: relative;
                 z-index: 1;
 
                 &.active {
-                    color: $color-blue;
+                    color: $color-orange-accent;
                     background-color: $color-grey-2;
                 }
 
@@ -53,14 +53,14 @@
                 }
 
                 &:hover {
-                    color: $color-blue;
+                    color: $color-orange-accent;
                     background-color: $color-grey-2;
                     text-decoration: none;
                 }
             }
 
             .active + .dot {
-                background-color: $color-blue;
+                background-color: $color-orange-accent;
                 &:after {
                     background: transparent;
                 }
@@ -178,13 +178,13 @@
 
         & > a {
             padding: 12px 15px;
-            color: $color-blue;
+            color: $color-orange-accent;
             font-weight: 600;
             text-align: center;
             border-bottom: 1px solid $color-grey-med;
 
             &.active {
-                background: $color-blue;
+                background: $color-orange-accent;
                 color: $color-white;
             }
         }
@@ -200,20 +200,20 @@
             margin-bottom: 5px;
             padding-left: 5px;
             font-size: rem(12px);
-            
+
             a {
                 padding: 8px 10px;
                 background: $color-grey;
                 border-radius: 5px;
 
                 &:hover {
-                    color: $color-blue;
+                    color: $color-orange-accent;
                     text-decoration: none;
                 }
 
                 &.active {
                     color: $color-white;
-                    background: $color-blue;
+                    background: $color-orange-accent;
                 }
             }
         }
@@ -223,7 +223,7 @@
             height: 70px;
             padding-bottom: 8px;
             position: relative;
-            
+
 
             span {
                 margin-bottom: 8px;

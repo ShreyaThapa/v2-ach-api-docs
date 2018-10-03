@@ -34,6 +34,7 @@ button::-moz-focus-inner {
     margin-bottom: 20px;
     padding: 10px 20px;
     border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
     font-size: rem(14px);
     line-height: rem(21px);
     font-weight: 400;
@@ -68,6 +69,11 @@ button::-moz-focus-inner {
         &:hover {
             box-shadow: 0 2px 4px 0 $color-button-shadow-hover, 0 2px 8px 0 $color-button-shadow-hover-b;
         }
+
+        &:active,
+        &:focus {
+          box-shadow: inset 0 3px 4px 0 $color-button-shadow;
+         }
 
     }
 

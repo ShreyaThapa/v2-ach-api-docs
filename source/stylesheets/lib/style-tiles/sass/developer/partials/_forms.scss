@@ -14,7 +14,7 @@ label {
     text-align: left;
     color: $color-grey-med-3;
     font-weight: 400;
-    cursor: text;      
+    cursor: text;
 }
 
 input, textarea {
@@ -134,7 +134,7 @@ input[type="radio"] + label {
         height: 8px;
         top: 3px;
         left: 3px;
-        background-color: $color-orange;
+        background-color: $color-orange-accent;
         border-radius: 50%;
     }
 }
@@ -187,7 +187,7 @@ input[type="radio"]:disabled:checked + label:after {
     border-radius: 5px;
     background: $color-grey;
     border: solid 1px $color-grey-med;
-    
+
     select{
         height: 100%;
         padding: 4px 30px 4px 8px;
@@ -302,7 +302,7 @@ input[type="radio"]:disabled:checked + label:after {
 
 .fields-list {
     overflow: hidden;
-    
+
     input, textarea, label {
         width: 100%;
         display: block;
@@ -318,7 +318,7 @@ input[type="radio"]:disabled:checked + label:after {
         font-size: rem(12px);
         font-weight: 700;
         color: $color-red;
-        
+
         border-radius: 3px;
         display: inline-block;
     }
