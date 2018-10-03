@@ -33,9 +33,8 @@ body > header {
             @extend %clearfix;
 
             .logo {
-                width: 135px;
-                height: 26px;
-                margin-top: 6px;
+                width: 169px;
+                height: 43px;
                 display: inline-block;
                 text-indent: 100%;
                 overflow: hidden;
@@ -98,8 +97,8 @@ body > header {
     }
 
     .header__primary {
-        padding: 25px 0;
-        @include linear-gradient($gradient-tilt-background, $color-gradient-orange-header, $color-gradient-purple-header);
+        padding: 30px 0;
+        @include linear-gradient($gradient-tilt-background, $color-gradient-orange-background, $color-gradient-purple-background);
 
         .page-wrap {
             & > div {
@@ -164,7 +163,7 @@ body > header {
             color: $color-grey-dark;
             opacity: 1;
             position: relative;
-            font-weight: 600;
+            font-weight: 500;
 
             &:hover {
                 text-decoration: none;
@@ -249,11 +248,11 @@ body.home > header .header__secondary {
     }
 
     & > div {
-        background: rgba($color-white, 0.5);
+        background: rgba($color-white, 0.65);
     }
 
     a {
-        color: $color-white;
+        color: $color-grey-dark;
 
         @include breakpoint($SIZE_TABLET_SMALL){
             color: $color-grey-dark;
